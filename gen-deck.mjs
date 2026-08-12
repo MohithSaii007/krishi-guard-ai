@@ -140,11 +140,12 @@ s.addImage({...img("aerial-field.jpg"),x:0,y:0,w:W,h:H,transparency:92});
 kicker(s,"04 — How It Works");
 title(s,"The intelligence loop",false,{fs:34});
 s.addText("A continuous field-to-farmer cycle that turns sensing into decision support.",{x:1.02,y:2.05,w:8,h:0.4,fontFace:BF,fontSize:14,color:CHAR,transparency:30});
-const steps=[["01","COLLECT","Soil, weather, water & crop data"],["02","CONNECT","IoT gateway gathers field information"],["03","ANALYZE","Edge AI processes agricultural data"],["04","DECIDE","AI identifies risks and requirements"],["05","ACT","Farmer receives recommendations"]];
+const steps=[["01","COLLECT","Soil, weather, water & crop data","soil"],["02","CONNECT","IoT gateway gathers field information","ring"],["03","ANALYZE","Edge AI processes agricultural data","dot"],["04","DECIDE","AI identifies risks and requirements","sun"],["05","ACT","Farmer receives recommendations","water"]];
 steps.forEach((st,i)=>{
   const x=1.0+i*2.29;
   card(s,{x,y:2.9,w:2.05,h:1.85});
   s.addText("STEP "+st[0],{x:x+0.2,y:3.08,w:1.65,h:0.26,fontFace:BF,fontSize:11,bold:true,charSpacing:1.2,color:GOLD});
+  iconBadge(s,{x:x+1.43,y:3.04,d:0.38,kind:st[3]});
   s.addText(st[1],{x:x+0.2,y:3.42,w:1.7,h:0.35,fontFace:HF,fontSize:17,bold:true,color:FOREST});
   s.addText(st[2],{x:x+0.2,y:3.85,w:1.68,h:0.8,fontFace:BF,fontSize:11,color:CHAR,transparency:30,lineSpacing:14});
   if(i<4) s.addText("→",{x:x+2.05,y:3.6,w:0.24,h:0.4,align:"center",fontFace:BF,fontSize:14,color:LEAF});
