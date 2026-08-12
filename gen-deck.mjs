@@ -255,9 +255,9 @@ s.addText("Target users & market",{x:1.32,y:2.72,w:3,h:0.35,fontFace:HF,fontSize
   s.addShape(p.ShapeType.ellipse,{x:1.36,y:y+0.14,w:0.14,h:0.14,fill:{color:LEAF}});
   s.addText(u,{x:1.66,y:y-0.04,w:2.7,h:0.5,valign:"middle",fontFace:BF,fontSize:11,bold:true,color:CHAR,transparency:18,lineSpacing:14});
 });
-s.addShape(p.ShapeType.roundRect,{x:1.3,y:5.9,w:2.95,h:0.38,rectRadius:0.08,fill:{color:LEAF,transparency:88}});
-s.addText("MARKET POTENTIAL",{x:1.3,y:5.9,w:2.95,h:0.38,align:"center",valign:"middle",fontFace:BF,fontSize:9,bold:true,charSpacing:1.2,color:FOREST});
-s.addText("Scalable across small and medium farms, FPOs and agri-MSMEs, starting with district-level pilots in Andhra Pradesh.",{x:1.3,y:5.5,w:2.95,h:0.4,fontFace:BF,fontSize:9,color:CHAR,transparency:35,lineSpacing:11});
+s.addShape(p.ShapeType.roundRect,{x:1.3,y:5.72,w:2.95,h:0.62,rectRadius:0.08,fill:{color:LEAF,transparency:90}});
+s.addText("MARKET POTENTIAL",{x:1.44,y:5.78,w:2.7,h:0.2,fontFace:BF,fontSize:9,bold:true,charSpacing:1.2,color:FOREST});
+s.addText("Small & medium farms, FPOs and agri-MSMEs — scaling from district pilots outward.",{x:1.44,y:5.98,w:2.7,h:0.34,fontFace:BF,fontSize:9,color:CHAR,transparency:30,lineSpacing:11});
 // col2
 s.addShape(p.ShapeType.roundRect,{x:4.89,y:2.45,w:3.55,h:4.0,rectRadius:0.14,fill:{color:FOREST}});
 s.addText("Prototype → Pilot → Scale",{x:5.19,y:2.74,w:3.15,h:0.32,fontFace:HF,fontSize:15,bold:true,color:WHITE});
