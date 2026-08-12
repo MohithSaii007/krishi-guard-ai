@@ -33,7 +33,7 @@ function PhoneMock() {
 
         <div className="mt-3 space-y-2.5">
           {[
-            ["IRRIGATION", "Recommended", "text-leaf"],
+            ["IRRIGATION", "Advised", "text-leaf"],
             ["RAIN FORECAST", "Low", "text-white"],
             ["CROP HEALTH", "Normal", "text-leaf"],
           ].map(([k, v, c]) => (
