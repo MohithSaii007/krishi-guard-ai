@@ -257,7 +257,7 @@ s.addText("Who is it for?",{x:1.32,y:2.72,w:3,h:0.35,fontFace:HF,fontSize:19,bol
 });
 // col2
 s.addShape(p.ShapeType.roundRect,{x:4.89,y:2.45,w:3.55,h:4.0,rectRadius:0.14,fill:{color:FOREST}});
-s.addText("Prototype → Pilot → Scale",{x:5.19,y:2.72,w:3,h:0.35,fontFace:HF,fontSize:17,bold:true,color:WHITE});
+s.addText("Prototype → Pilot → Scale",{x:5.19,y:2.74,w:3.15,h:0.32,fontFace:HF,fontSize:15,bold:true,color:WHITE});
 [["PHASE 1","IoT + Farm Monitoring"],["PHASE 2","AI Recommendations"],["PHASE 3","Advanced Crop Intelligence"]].forEach((ph,i)=>{
   const y=3.28+i*0.72;
   s.addShape(p.ShapeType.roundRect,{x:5.19,y,w:2.95,h:0.6,rectRadius:0.1,fill:{color:WHITE,transparency:93},line:{color:WHITE,width:0.75,transparency:85}});
