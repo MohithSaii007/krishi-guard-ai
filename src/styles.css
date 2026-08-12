@@ -4,6 +4,82 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ── KRISHI-GUARD AI deck design system ───────────────────────────── */
+@theme inline {
+  --color-forest: var(--forest);
+  --color-forest-deep: var(--forest-deep);
+  --color-leaf: var(--leaf);
+  --color-cream: var(--cream);
+  --color-earth: var(--earth);
+  --color-gold: var(--gold);
+  --color-charcoal: var(--charcoal);
+  --font-display: var(--font-heading);
+  --font-sans: var(--font-body);
+}
+
+:root {
+  --forest: oklch(0.323 0.061 158.3);
+  --forest-deep: oklch(0.245 0.05 158.3);
+  --leaf: oklch(0.577 0.117 138.5);
+  --cream: oklch(0.955 0.019 89.5);
+  --earth: oklch(0.462 0.058 62.4);
+  --gold: oklch(0.789 0.121 88.6);
+  --charcoal: oklch(0.238 0.014 152.6);
+  --font-heading: "Poppins", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+}
+
+.slide-content {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  position: relative;
+  font-family: var(--font-body);
+
+  --slide-title-lg: 104px;
+  --slide-title: 84px;
+  --slide-subtitle: 46px;
+  --slide-body-lg: 38px;
+  --slide-body: 30px;
+  --slide-caption: 24px;
+  --slide-kicker: 22px;
+  --slide-chrome: 20px;
+}
+
+.slide-title-lg { font-family: var(--font-heading); font-weight: 700; font-size: var(--slide-title-lg); line-height: 1; letter-spacing: -0.045em; }
+.slide-title { font-family: var(--font-heading); font-weight: 600; font-size: var(--slide-title); line-height: 1.05; letter-spacing: -0.035em; }
+.slide-subtitle { font-family: var(--font-heading); font-weight: 500; font-size: var(--slide-subtitle); line-height: 1.15; letter-spacing: -0.02em; }
+.slide-body-lg { font-size: var(--slide-body-lg); line-height: 1.25; }
+.slide-body { font-size: var(--slide-body); line-height: 1.35; }
+.slide-caption { font-size: var(--slide-caption); line-height: 1.3; }
+.slide-kicker { font-family: var(--font-heading); font-weight: 600; font-size: var(--slide-kicker); line-height: 1.1; letter-spacing: 0.18em; text-transform: uppercase; }
+.slide-chrome, .slide-badge, .slide-footer, .slide-page {
+  font-size: var(--slide-chrome); line-height: 1.15; letter-spacing: 0.06em;
+}
+.slide-badge, .slide-page { white-space: nowrap; }
+
+.slide-wrapper {
+  position: absolute;
+  width: 1920px;
+  height: 1080px;
+  left: 50%;
+  top: 50%;
+  margin-left: -960px;
+  margin-top: -540px;
+  transform-origin: center center;
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.anim { animation: slide-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+
+@media print {
+  @page { size: 1920px 1080px landscape; margin: 0; }
+  .print-slide { page-break-after: always; break-after: page; }
+}
+
 /*
  * Design system definition.
  *
