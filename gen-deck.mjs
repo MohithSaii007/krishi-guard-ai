@@ -34,9 +34,7 @@ function card(s,{x,y,w,h,fill=WHITE,line=FOREST,trans=25,radius=0.06}){
 /* ---------- 1 TITLE ---------- */
 let s=p.addSlide();
 s.addImage({...img("hero-farmer.jpg"),x:0,y:0,w:W,h:H});
-[[0,0.5,10],[0.5,0.62,22],[0.62,0.74,38],[0.74,0.86,52],[0.86,1,64]].forEach(([a,b,tr])=>{
-  s.addShape(p.ShapeType.rect,{x:W*a,y:0,w:W*(b-a),h:H,fill:{color:DEEP,transparency:tr}});
-});
+s.addImage({data:`image/png;base64,${fs.readFileSync(A+"overlay-gradient.png").toString("base64")}`,x:0,y:0,w:W,h:H});
 s.addText("AI • IoT • EDGE COMPUTING • SMART AGRICULTURE",{x:1.1,y:1.75,w:9,h:0.35,fontFace:BF,fontSize:13,bold:true,charSpacing:2.5,color:GOLD});
 s.addText([{text:"KRISHI-GUARD ",options:{color:WHITE}},{text:"AI",options:{color:GOLD}}],{x:1.05,y:2.25,w:11,h:1.35,fontFace:HF,fontSize:72,bold:true});
 s.addText("Intelligent Smart Farming & Crop Protection Ecosystem",{x:1.1,y:3.75,w:10.6,h:0.5,fontFace:HF,fontSize:24,color:WHITE,transparency:8});
