@@ -81,14 +81,18 @@ s=p.addSlide(); shell(s);
 kicker(s,"02 — Our Solution");
 title(s,"One intelligent ecosystem for the farm.",false,{w:6.2,fs:32});
 s.addText("KRISHI-GUARD AI is an AI and IoT-based smart farming ecosystem that collects agricultural information and converts it into actionable recommendations.",{x:7.4,y:1.05,w:4.95,h:1.1,fontFace:BF,fontSize:14,color:CHAR,transparency:28,lineSpacing:21});
-const ins=[["SOIL","pH • NPK • Moisture"],["WEATHER","Temp • Humidity • Rainfall"],["WATER","Water / moisture monitoring"],["CROP IMAGING","Drone / crop images"],["FARMER APP","Mobile + Voice AI"]];
+const ins=[["SOIL","pH • NPK • Moisture","soil"],["WEATHER","Temp • Humidity • Rainfall","cloud"],["WATER","Water / moisture monitoring","water"],["CROP IMAGING","Drone / crop images","ring"],["FARMER APP","Mobile + Voice AI","dot"]];
 ins.forEach((it,i)=>{
   const x=1.0+i*2.29;
-  card(s,{x,y:2.5,w:2.05,h:1.32});
-  s.addText(it[0],{x:x+0.12,y:2.72,w:1.8,h:0.3,align:"center",fontFace:BF,fontSize:12,bold:true,charSpacing:1.2,color:FOREST});
-  s.addText(it[1],{x:x+0.12,y:3.08,w:1.8,h:0.6,align:"center",fontFace:BF,fontSize:11,color:CHAR,transparency:32,lineSpacing:14});
+  card(s,{x,y:2.5,w:2.05,h:1.55});
+  iconBadge(s,{x:x+0.82,y:2.66,kind:it[2]});
+  s.addText(it[0],{x:x+0.12,y:3.16,w:1.8,h:0.3,align:"center",fontFace:BF,fontSize:12,bold:true,charSpacing:1.2,color:FOREST});
+  s.addText(it[1],{x:x+0.12,y:3.48,w:1.8,h:0.5,align:"center",fontFace:BF,fontSize:11,color:CHAR,transparency:32,lineSpacing:14});
+  // connector from each input card into the central intelligence node
+  s.addShape(p.ShapeType.line,{x:x+1.025,y:4.05,w:0,h:0.13,line:{color:LEAF,width:1,transparency:35}});
 });
-s.addShape(p.ShapeType.line,{x:6.665,y:3.9,w:0,h:0.35,line:{color:FOREST,width:1,transparency:60}});
+s.addShape(p.ShapeType.line,{x:2.025,y:4.18,w:9.28,h:0,line:{color:LEAF,width:1,transparency:35}});
+s.addShape(p.ShapeType.line,{x:6.665,y:4.18,w:0,h:0.12,line:{color:LEAF,width:1.25,transparency:20,endArrowType:"triangle"}});
 s.addShape(p.ShapeType.roundRect,{x:4.15,y:4.3,w:5.03,h:1.15,rectRadius:0.2,fill:{color:FOREST}});
 s.addText("CENTRAL INTELLIGENCE",{x:4.15,y:4.45,w:5.03,h:0.28,align:"center",fontFace:BF,fontSize:11,bold:true,charSpacing:2,color:GOLD});
 s.addText("KRISHI-GUARD AI",{x:4.15,y:4.72,w:5.03,h:0.4,align:"center",fontFace:HF,fontSize:22,bold:true,color:WHITE});
