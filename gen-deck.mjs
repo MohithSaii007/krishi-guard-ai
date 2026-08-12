@@ -34,11 +34,12 @@ function card(s,{x,y,w,h,fill=WHITE,line=FOREST,trans=25,radius=0.06}){
 /* ---------- 1 TITLE ---------- */
 let s=p.addSlide();
 s.addImage({...img("hero-farmer.jpg"),x:0,y:0,w:W,h:H});
-s.addShape(p.ShapeType.rect,{x:0,y:0,w:W*0.72,h:H,fill:{color:DEEP,transparency:12}});
-s.addShape(p.ShapeType.rect,{x:W*0.72,y:0,w:W*0.28,h:H,fill:{color:FOREST,transparency:55}});
+[[0,0.5,10],[0.5,0.62,22],[0.62,0.74,38],[0.74,0.86,52],[0.86,1,64]].forEach(([a,b,tr])=>{
+  s.addShape(p.ShapeType.rect,{x:W*a,y:0,w:W*(b-a),h:H,fill:{color:DEEP,transparency:tr}});
+});
 s.addText("AI • IoT • EDGE COMPUTING • SMART AGRICULTURE",{x:1.1,y:1.75,w:9,h:0.35,fontFace:BF,fontSize:13,bold:true,charSpacing:2.5,color:GOLD});
 s.addText([{text:"KRISHI-GUARD ",options:{color:WHITE}},{text:"AI",options:{color:GOLD}}],{x:1.05,y:2.25,w:11,h:1.35,fontFace:HF,fontSize:72,bold:true});
-s.addText("Intelligent Smart Farming & Crop Protection Ecosystem",{x:1.1,y:3.72,w:9.2,h:0.6,fontFace:HF,fontSize:26,color:WHITE,transparency:8});
+s.addText("Intelligent Smart Farming & Crop Protection Ecosystem",{x:1.1,y:3.75,w:10.6,h:0.5,fontFace:HF,fontSize:24,color:WHITE,transparency:8});
 s.addShape(p.ShapeType.line,{x:1.1,y:4.6,w:3.6,h:0,line:{color:WHITE,width:1,transparency:60}});
 s.addText("MSME IDEA HACKATHON 6.0",{x:1.1,y:5.85,w:7,h:0.3,fontFace:BF,fontSize:13,bold:true,charSpacing:2,color:GOLD});
 s.addText("Team Name  |  CSE – Data Science  |  Sri Venkateswara College of Engineering, Tirupati",{x:1.1,y:6.2,w:9,h:0.35,fontFace:BF,fontSize:13,color:WHITE,transparency:20});
@@ -160,7 +161,7 @@ footer(s,6,true);
 /* ---------- 7 FARMER EXPERIENCE ---------- */
 s=p.addSlide(); shell(s);
 kicker(s,"06 — Farmer Experience");
-title(s,"Intelligence in the farmer's hand.",false,{w:6.4,fs:32});
+title(s,"Intelligence in the farmer's hand.",false,{w:5.4,fs:28,ls:34});
 s.addText("Recommendations reach the farmer in a simple, understandable format — on mobile and by voice.",{x:1.02,y:2.15,w:5.4,h:0.7,fontFace:BF,fontSize:14,color:CHAR,transparency:30,lineSpacing:21});
 [["REAL-TIME INSIGHTS"],["ACTIONABLE RECOMMENDATIONS"],["FARMER-FRIENDLY INTERFACE"],["VOICE-ENABLED INTERACTION"]].forEach((pt,i)=>{
   const y=3.05+i*0.72;
@@ -186,7 +187,7 @@ s.addShape(p.ShapeType.roundRect,{x:PX+0.42,y:PY+2.12,w:0.47,h:0.1,rectRadius:0.
   const y=PY+2.62+i*0.44;
   s.addShape(p.ShapeType.roundRect,{x:PX+0.28,y,w:PW-0.56,h:0.36,rectRadius:0.08,fill:{color:WHITE,transparency:93}});
   s.addText(r[0],{x:PX+0.42,y,w:1.3,h:0.36,valign:"middle",fontFace:BF,fontSize:9,color:WHITE,transparency:35});
-  s.addText(r[1],{x:PX+1.35,y,w:0.8,h:0.36,align:"right",valign:"middle",fontFace:BF,fontSize:9,bold:true,color:r[2]==LEAF?"7FBF6A":WHITE});
+  s.addText(r[1],{x:PX+1.23,y,w:0.9,h:0.36,align:"right",valign:"middle",fontFace:BF,fontSize:9,bold:true,color:r[2]==LEAF?"7FBF6A":WHITE});
 });
 s.addShape(p.ShapeType.roundRect,{x:PX+0.28,y:PY+4.1,w:PW-0.56,h:0.5,rectRadius:0.25,fill:{color:GOLD}});
 s.addText("ASK IN TELUGU  •  VOICE",{x:PX+0.28,y:PY+4.1,w:PW-0.56,h:0.5,align:"center",valign:"middle",fontFace:BF,fontSize:9,bold:true,charSpacing:0.8,color:CHAR});
@@ -219,8 +220,8 @@ card(s,{x:1.0,y:2.45,w:3.55,h:4.0});
 s.addText("Who is it for?",{x:1.32,y:2.72,w:3,h:0.35,fontFace:HF,fontSize:19,bold:true,color:FOREST});
 ["FARMERS","FARMER PRODUCER ORGANIZATIONS","AGRI-MSMEs","AGRICULTURAL ORGANIZATIONS"].forEach((u,i)=>{
   const y=3.3+i*0.72;
-  s.addShape(p.ShapeType.roundRect,{x:1.32,y,w:0.42,h:0.42,rectRadius:0.1,fill:{color:LEAF,transparency:88}});
-  s.addText(u,{x:1.88,y:y-0.04,w:2.5,h:0.5,valign:"middle",fontFace:BF,fontSize:11,bold:true,color:CHAR,transparency:18,lineSpacing:14});
+  s.addShape(p.ShapeType.ellipse,{x:1.36,y:y+0.14,w:0.14,h:0.14,fill:{color:LEAF}});
+  s.addText(u,{x:1.66,y:y-0.04,w:2.7,h:0.5,valign:"middle",fontFace:BF,fontSize:11,bold:true,color:CHAR,transparency:18,lineSpacing:14});
 });
 // col2
 s.addShape(p.ShapeType.roundRect,{x:4.89,y:2.45,w:3.55,h:4.0,rectRadius:0.14,fill:{color:FOREST}});
@@ -265,7 +266,7 @@ s.addText("From Farm Data\nto Intelligent Decisions.",{x:1.05,y:1.55,w:9.5,h:1.7
 s.addText([{text:"KRISHI-GUARD ",options:{color:WHITE}},{text:"AI",options:{color:GOLD}}],{x:1.05,y:5.25,w:6,h:0.45,fontFace:HF,fontSize:24,bold:true});
 s.addText("Intelligent Smart Farming & Crop Protection Ecosystem",{x:1.08,y:5.72,w:7,h:0.3,fontFace:BF,fontSize:13,color:WHITE,transparency:28});
 s.addText("From Farm Data to Intelligent Decisions.",{x:1.08,y:6.12,w:7,h:0.4,fontFace:HF,fontSize:19,bold:true,color:GOLD});
-s.addText("THANK YOU",{x:10.3,y:6.15,w:2.0,h:0.3,align:"right",fontFace:BF,fontSize:12,bold:true,charSpacing:2,color:WHITE,transparency:35});
+s.addText("THANK YOU",{x:9.6,y:6.15,w:2.73,h:0.3,align:"right",fontFace:BF,fontSize:12,bold:true,charSpacing:1.5,color:WHITE,transparency:35});
 
 await p.writeFile({fileName:"/tmp/deck/KRISHI-GUARD-AI.pptx"});
 console.log("done");
