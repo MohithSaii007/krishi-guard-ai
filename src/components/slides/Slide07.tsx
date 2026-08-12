@@ -15,10 +15,10 @@ function PhoneMock() {
       <div className="mx-auto h-1.5 w-20 rounded-full bg-white/25" />
       <div className="mt-4">
         <div className="slide-badge text-gold">KRISHI-GUARD</div>
-        <div className="slide-body-lg mt-2 font-semibold text-white">Good Morning</div>
+        <div className="slide-subtitle mt-2 whitespace-nowrap font-semibold text-white" style={{fontSize:"38px"}}>Good Morning</div>
         <div className="slide-chrome mt-1 text-white/55">FIELD 01 • TIRUPATI</div>
 
-        <div className="mt-4 rounded-3xl bg-white/10 p-4">
+        <div className="mt-3 rounded-3xl bg-white/10 p-4">
           <div className="slide-chrome text-white/60">SOIL MOISTURE</div>
           <div className="mt-1 flex items-end gap-3">
             <span className="slide-body-lg font-semibold text-white">27%</span>
@@ -31,7 +31,7 @@ function PhoneMock() {
           </div>
         </div>
 
-        <div className="mt-4 space-y-3">
+        <div className="mt-3 space-y-2.5">
           {[
             ["IRRIGATION", "Recommended", "text-leaf"],
             ["RAIN FORECAST", "Low", "text-white"],
@@ -39,7 +39,7 @@ function PhoneMock() {
           ].map(([k, v, c]) => (
             <div
               key={k}
-              className="flex items-center justify-between gap-4 rounded-2xl bg-white/8 px-5 py-3"
+              className="flex items-center justify-between gap-4 rounded-2xl bg-white/8 px-5 py-2.5"
             >
               <span className="slide-chrome text-white/60">{k}</span>
               <span className={`slide-chrome font-semibold ${c}`}>{v}</span>
@@ -47,7 +47,7 @@ function PhoneMock() {
           ))}
         </div>
 
-        <div className="slide-badge mt-4 rounded-2xl bg-leaf py-3.5 text-center font-semibold text-white">
+        <div className="slide-badge mt-3 rounded-2xl bg-leaf py-3 text-center font-semibold text-white">
           VIEW INSIGHTS
         </div>
       </div>
@@ -66,7 +66,7 @@ export default function Slide07() {
             <br />
             Simple decisions.
           </h2>
-          <div className="mt-10 flex items-start gap-14">
+          <div className="mt-8 flex items-start gap-12">
             <PhoneMock />
             <div className="space-y-6">
               {points.map(({ icon: Icon, label }, i) => (
