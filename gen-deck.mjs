@@ -3,7 +3,7 @@ import fs from "fs";
 
 const A="src/assets/";
 const img=(f)=>({data:`image/jpeg;base64,${fs.readFileSync(A+f).toString("base64")}`});
-const FOREST="174A35", DEEP="0F3325", CREAM="F5F0E6", GOLD="D4AF37", LEAF="2D5A27", CHAR="122620", WHITE="FFFFFF";
+const FOREST="174A35", DEEP="0F3325", CREAM="F5F0E6", GOLD="D9B84A", LEAF="4F8F45", CHAR="1F2923", EARTH="7A5C3A", WHITE="FFFFFF";
 const HF="Poppins", BF="Inter";
 
 const p=new PptxGenJS();
@@ -22,13 +22,26 @@ function kicker(s,txt,dark=false){
 function title(s,txt,dark=false,opts={}){
   s.addText(txt,{x:1.0,y:1.0,w:opts.w||10.5,h:opts.h||1.1,fontFace:HF,fontSize:opts.fs||36,bold:true,color:dark?WHITE:FOREST,valign:"top",lineSpacing:opts.ls||40});
 }
-function footer(s,n,dark=false){
-  s.addShape(p.ShapeType.line,{x:1.0,y:6.86,w:11.33,h:0,line:{color:dark?WHITE:FOREST,width:0.5,transparency:85}});
-  s.addText("KRISHI-GUARD AI  |  MSME Idea Hackathon 6.0",{x:1.0,y:6.95,w:8,h:0.3,fontFace:BF,fontSize:10,color:dark?WHITE:CHAR,transparency:dark?40:45});
+function footer(s,n,dark=false,lx=1.0){
+  s.addShape(p.ShapeType.line,{x:lx,y:6.86,w:12.33-lx,h:0,line:{color:dark?WHITE:FOREST,width:0.5,transparency:85}});
+  s.addText("KRISHI-GUARD AI  |  MSME Idea Hackathon 6.0",{x:lx,y:6.95,w:8,h:0.3,fontFace:BF,fontSize:10,color:dark?WHITE:CHAR,transparency:dark?40:45});
   s.addText(`${String(n).padStart(2,"0")} / 10`,{x:11.0,y:6.95,w:1.33,h:0.3,align:"right",fontFace:BF,fontSize:10,bold:true,color:dark?GOLD:FOREST,transparency:dark?0:30});
 }
 function card(s,{x,y,w,h,fill=WHITE,line=FOREST,trans=25,radius=0.06}){
   s.addShape(p.ShapeType.roundRect,{x,y,w,h,rectRadius:0.14,fill:{color:fill,transparency:trans},line:{color:line,width:0.75,transparency:82}});
+}
+// small geometric icon badge (no icon fonts — native shapes keep it editable)
+function iconBadge(s,{x,y,d=0.42,kind="dot",dark=false}){
+  const bg = dark?WHITE:LEAF, bgT = dark?90:88, fg = dark?GOLD:LEAF;
+  s.addShape(p.ShapeType.roundRect,{x,y,w:d,h:d,rectRadius:0.12,fill:{color:bg,transparency:bgT},line:{color:fg,width:0.6,transparency:70}});
+  const c=x+d/2, m=y+d/2, r=d*0.24;
+  if(kind==="water") s.addShape(p.ShapeType.teardrop,{x:c-r,y:m-r,w:r*2,h:r*2,rotate:135,fill:{color:fg},line:{color:fg,width:0.5}});
+  else if(kind==="cloud") s.addShape(p.ShapeType.cloud,{x:c-r*1.35,y:m-r*0.95,w:r*2.7,h:r*1.9,fill:{color:fg},line:{color:fg,width:0.5}});
+  else if(kind==="alert") s.addShape(p.ShapeType.triangle,{x:c-r,y:m-r*0.9,w:r*2,h:r*1.8,fill:{color:fg},line:{color:fg,width:0.5}});
+  else if(kind==="soil") { for(let i=0;i<2;i++) s.addShape(p.ShapeType.roundRect,{x:c-r,y:m-r+i*r*1.2,w:r*2,h:r*0.55,rectRadius:0.03,fill:{color:fg,transparency:i*40},line:{color:fg,width:0.4,transparency:i*40}}); }
+  else if(kind==="ring") s.addShape(p.ShapeType.donut,{x:c-r,y:m-r,w:r*2,h:r*2,fill:{color:fg},line:{color:fg,width:0.5}});
+  else if(kind==="sun") s.addShape(p.ShapeType.sun,{x:c-r*1.15,y:m-r*1.15,w:r*2.3,h:r*2.3,fill:{color:fg},line:{color:fg,width:0.5}});
+  else s.addShape(p.ShapeType.ellipse,{x:c-r*0.7,y:m-r*0.7,w:r*1.4,h:r*1.4,fill:{color:fg},line:{color:fg,width:0.5}});
 }
 
 /* ---------- 1 TITLE ---------- */
@@ -50,31 +63,36 @@ s.addShape(p.ShapeType.rect,{x:4.0,y:0,w:1.4,h:H,fill:{color:CREAM,transparency:
 s.addText("01 — THE CHALLENGE",{x:5.75,y:0.85,w:6,h:0.3,fontFace:BF,fontSize:12,bold:true,charSpacing:2.2,color:LEAF});
 s.addText("Farming decisions are still highly uncertain.",{x:5.7,y:1.2,w:6.9,h:1.1,fontFace:HF,fontSize:32,bold:true,color:FOREST,lineSpacing:36});
 s.addText("Farmers often decide without integrated, real-time information about soil, weather, water and crop health.",{x:5.72,y:2.4,w:6.7,h:0.7,fontFace:BF,fontSize:14,color:CHAR,transparency:30,lineSpacing:20});
-const probs=[["WATER","Uncertain irrigation requirements"],["SOIL","Limited real-time soil intelligence"],["CROP HEALTH","Disease and pest risks identified late"],["WEATHER","Changing weather affects farm decisions"]];
+const probs=[["WATER","Uncertain irrigation requirements","water"],["SOIL","Limited real-time soil intelligence","soil"],["CROP HEALTH","Disease and pest risks identified late","alert"],["WEATHER","Changing weather affects farm decisions","cloud"]];
 probs.forEach((it,i)=>{
   const x=5.7+(i%2)*3.5, y=3.25+Math.floor(i/2)*1.28;
   card(s,{x,y,w:3.25,h:1.12});
-  s.addText(it[0],{x:x+0.25,y:y+0.16,w:2.8,h:0.28,fontFace:BF,fontSize:12,bold:true,charSpacing:1.4,color:FOREST});
-  s.addText(it[1],{x:x+0.25,y:y+0.5,w:2.8,h:0.5,fontFace:BF,fontSize:12,color:CHAR,transparency:30,lineSpacing:15});
+  iconBadge(s,{x:x+0.25,y:y+0.2,kind:it[2]});
+  s.addText(it[0],{x:x+0.78,y:y+0.24,w:2.3,h:0.28,fontFace:BF,fontSize:12,bold:true,charSpacing:1.4,color:FOREST});
+  s.addText(it[1],{x:x+0.25,y:y+0.66,w:2.85,h:0.4,fontFace:BF,fontSize:11,color:CHAR,transparency:30,lineSpacing:14});
 });
 s.addShape(p.ShapeType.roundRect,{x:5.7,y:5.9,w:6.75,h:0.78,rectRadius:0.1,fill:{color:FOREST}});
 s.addShape(p.ShapeType.rect,{x:5.7,y:5.9,w:0.06,h:0.78,fill:{color:GOLD}});
 s.addText("Farmers need timely, field-specific intelligence — not just raw data.",{x:5.95,y:5.9,w:6.3,h:0.78,valign:"middle",fontFace:BF,fontSize:14,color:WHITE});
-footer(s,2);
+footer(s,2,false,5.7);
 
 /* ---------- 3 SOLUTION ---------- */
 s=p.addSlide(); shell(s);
 kicker(s,"02 — Our Solution");
 title(s,"One intelligent ecosystem for the farm.",false,{w:6.2,fs:32});
 s.addText("KRISHI-GUARD AI is an AI and IoT-based smart farming ecosystem that collects agricultural information and converts it into actionable recommendations.",{x:7.4,y:1.05,w:4.95,h:1.1,fontFace:BF,fontSize:14,color:CHAR,transparency:28,lineSpacing:21});
-const ins=[["SOIL","pH • NPK • Moisture"],["WEATHER","Temp • Humidity • Rainfall"],["WATER","Water / moisture monitoring"],["CROP IMAGING","Drone / crop images"],["FARMER APP","Mobile + Voice AI"]];
+const ins=[["SOIL","pH • NPK • Moisture","soil"],["WEATHER","Temp • Humidity • Rainfall","cloud"],["WATER","Water / moisture monitoring","water"],["CROP IMAGING","Drone / crop images","ring"],["FARMER APP","Mobile + Voice AI","dot"]];
 ins.forEach((it,i)=>{
   const x=1.0+i*2.29;
-  card(s,{x,y:2.5,w:2.05,h:1.32});
-  s.addText(it[0],{x:x+0.12,y:2.72,w:1.8,h:0.3,align:"center",fontFace:BF,fontSize:12,bold:true,charSpacing:1.2,color:FOREST});
-  s.addText(it[1],{x:x+0.12,y:3.08,w:1.8,h:0.6,align:"center",fontFace:BF,fontSize:11,color:CHAR,transparency:32,lineSpacing:14});
+  card(s,{x,y:2.5,w:2.05,h:1.55});
+  iconBadge(s,{x:x+0.82,y:2.66,kind:it[2]});
+  s.addText(it[0],{x:x+0.12,y:3.16,w:1.8,h:0.3,align:"center",fontFace:BF,fontSize:12,bold:true,charSpacing:1.2,color:FOREST});
+  s.addText(it[1],{x:x+0.12,y:3.48,w:1.8,h:0.5,align:"center",fontFace:BF,fontSize:11,color:CHAR,transparency:32,lineSpacing:14});
+  // connector from each input card into the central intelligence node
+  s.addShape(p.ShapeType.line,{x:x+1.025,y:4.05,w:0,h:0.13,line:{color:LEAF,width:1,transparency:35}});
 });
-s.addShape(p.ShapeType.line,{x:6.665,y:3.9,w:0,h:0.35,line:{color:FOREST,width:1,transparency:60}});
+s.addShape(p.ShapeType.line,{x:2.025,y:4.18,w:9.28,h:0,line:{color:LEAF,width:1,transparency:35}});
+s.addShape(p.ShapeType.line,{x:6.665,y:4.18,w:0,h:0.12,line:{color:LEAF,width:1.25,transparency:20,endArrowType:"triangle"}});
 s.addShape(p.ShapeType.roundRect,{x:4.15,y:4.3,w:5.03,h:1.15,rectRadius:0.2,fill:{color:FOREST}});
 s.addText("CENTRAL INTELLIGENCE",{x:4.15,y:4.45,w:5.03,h:0.28,align:"center",fontFace:BF,fontSize:11,bold:true,charSpacing:2,color:GOLD});
 s.addText("KRISHI-GUARD AI",{x:4.15,y:4.72,w:5.03,h:0.4,align:"center",fontFace:HF,fontSize:22,bold:true,color:WHITE});
@@ -122,11 +140,12 @@ s.addImage({...img("aerial-field.jpg"),x:0,y:0,w:W,h:H,transparency:92});
 kicker(s,"04 — How It Works");
 title(s,"The intelligence loop",false,{fs:34});
 s.addText("A continuous field-to-farmer cycle that turns sensing into decision support.",{x:1.02,y:2.05,w:8,h:0.4,fontFace:BF,fontSize:14,color:CHAR,transparency:30});
-const steps=[["01","COLLECT","Soil, weather, water & crop data"],["02","CONNECT","IoT gateway gathers field information"],["03","ANALYZE","Edge AI processes agricultural data"],["04","DECIDE","AI identifies risks and requirements"],["05","ACT","Farmer receives recommendations"]];
+const steps=[["01","COLLECT","Soil, weather, water & crop data","soil"],["02","CONNECT","IoT gateway gathers field information","ring"],["03","ANALYZE","Edge AI processes agricultural data","dot"],["04","DECIDE","AI identifies risks and requirements","sun"],["05","ACT","Farmer receives recommendations","water"]];
 steps.forEach((st,i)=>{
   const x=1.0+i*2.29;
   card(s,{x,y:2.9,w:2.05,h:1.85});
   s.addText("STEP "+st[0],{x:x+0.2,y:3.08,w:1.65,h:0.26,fontFace:BF,fontSize:11,bold:true,charSpacing:1.2,color:GOLD});
+  iconBadge(s,{x:x+1.43,y:3.04,d:0.38,kind:st[3]});
   s.addText(st[1],{x:x+0.2,y:3.42,w:1.7,h:0.35,fontFace:HF,fontSize:17,bold:true,color:FOREST});
   s.addText(st[2],{x:x+0.2,y:3.85,w:1.68,h:0.8,fontFace:BF,fontSize:11,color:CHAR,transparency:30,lineSpacing:14});
   if(i<4) s.addText("→",{x:x+2.05,y:3.6,w:0.24,h:0.4,align:"center",fontFace:BF,fontSize:14,color:LEAF});
@@ -147,6 +166,10 @@ mods.forEach((m,i)=>{
   s.addShape(p.ShapeType.roundRect,{x,y,w:3.5,h:1.12,rectRadius:0.12,fill:{color:WHITE,transparency:93},line:{color:WHITE,width:0.75,transparency:82}});
   s.addText(m[0],{x:x+0.28,y:y+0.14,w:3,h:0.28,fontFace:BF,fontSize:12,bold:true,color:WHITE});
   s.addText(m[1],{x:x+0.28,y:y+0.46,w:3,h:0.56,fontFace:BF,fontSize:11,color:WHITE,transparency:38,lineSpacing:14});
+  // data-flow line between module card and the central decision engine
+  const lx = left ? 4.5 : 8.15, lw = left ? 0.62 : 0.62;
+  s.addShape(p.ShapeType.line,{x:lx,y:y+0.56,w:lw,h:0,line:{color:LEAF,width:1,transparency:45}});
+  s.addShape(p.ShapeType.ellipse,{x:(left?lx+lw:lx)-0.05,y:y+0.51,w:0.1,h:0.1,fill:{color:GOLD}});
 });
 s.addShape(p.ShapeType.ellipse,{x:5.05,y:2.55,w:3.2,h:3.2,fill:{color:DEEP},line:{color:LEAF,width:1.25,transparency:45}});
 s.addShape(p.ShapeType.ellipse,{x:5.55,y:3.05,w:2.2,h:2.2,fill:{type:"none"},line:{color:GOLD,width:0.75,transparency:70}});
@@ -161,12 +184,15 @@ s=p.addSlide(); shell(s);
 kicker(s,"06 — Farmer Experience");
 title(s,"Intelligence in the farmer's hand.",false,{w:5.4,fs:28,ls:34});
 s.addText("Recommendations reach the farmer in a simple, understandable format — on mobile and by voice.",{x:1.02,y:2.15,w:5.4,h:0.7,fontFace:BF,fontSize:14,color:CHAR,transparency:30,lineSpacing:21});
-[["REAL-TIME INSIGHTS"],["ACTIONABLE RECOMMENDATIONS"],["FARMER-FRIENDLY INTERFACE"],["VOICE-ENABLED INTERACTION"]].forEach((pt,i)=>{
+[["REAL-TIME INSIGHTS","ring"],["ACTIONABLE RECOMMENDATIONS","sun"],["FARMER-FRIENDLY INTERFACE","dot"],["VOICE-ENABLED INTERACTION","water"]].forEach((pt,i)=>{
   const y=3.05+i*0.72;
   card(s,{x:1.0,y,w:5.4,h:0.6});
-  s.addShape(p.ShapeType.ellipse,{x:1.22,y:y+0.21,w:0.16,h:0.16,fill:{color:LEAF}});
-  s.addText(pt[0],{x:1.55,y,w:4.6,h:0.6,valign:"middle",fontFace:BF,fontSize:12,bold:true,charSpacing:1,color:FOREST});
+  iconBadge(s,{x:1.14,y:y+0.11,d:0.38,kind:pt[1]});
+  s.addText(pt[0],{x:1.64,y,w:4.5,h:0.6,valign:"middle",fontFace:BF,fontSize:12,bold:true,charSpacing:1,color:FOREST});
 });
+s.addShape(p.ShapeType.roundRect,{x:1.0,y:6.0,w:5.4,h:0.62,rectRadius:0.1,fill:{color:FOREST}});
+s.addShape(p.ShapeType.rect,{x:1.0,y:6.0,w:0.06,h:0.62,fill:{color:GOLD}});
+s.addText([{text:"From raw farm data  ",options:{color:WHITE}},{text:"→  ",options:{color:GOLD}},{text:"simple farmer decisions",options:{color:WHITE}}],{x:1.25,y:6.0,w:5.1,h:0.62,valign:"middle",fontFace:BF,fontSize:13});
 // phone mock
 const PX=6.95, PY=1.0, PW=2.55, PH=5.35;
 s.addShape(p.ShapeType.roundRect,{x:PX,y:PY,w:PW,h:PH,rectRadius:0.14,fill:{color:CHAR},line:{color:CHAR,width:1}});
@@ -190,23 +216,31 @@ s.addShape(p.ShapeType.roundRect,{x:PX+0.42,y:PY+2.12,w:0.47,h:0.1,rectRadius:0.
 s.addShape(p.ShapeType.roundRect,{x:PX+0.28,y:PY+4.1,w:PW-0.56,h:0.5,rectRadius:0.25,fill:{color:GOLD}});
 s.addText("ASK IN TELUGU  •  VOICE",{x:PX+0.28,y:PY+4.1,w:PW-0.56,h:0.5,align:"center",valign:"middle",fontFace:BF,fontSize:9,bold:true,charSpacing:0.8,color:CHAR});
 s.addImage({...img("farmer-phone.jpg"),x:9.85,y:1.0,w:2.48,h:5.35,sizing:{type:"cover",w:2.48,h:5.35},rounding:false});
+s.addShape(p.ShapeType.rect,{x:9.85,y:5.4,w:2.48,h:0.95,fill:{color:DEEP,transparency:22}});
+s.addText("FIELD 01 • TIRUPATI",{x:9.98,y:5.56,w:2.25,h:0.22,fontFace:BF,fontSize:9,bold:true,charSpacing:1.2,color:GOLD});
+s.addText("Real-time farm information,\nin the farmer's hand.",{x:9.98,y:5.8,w:2.25,h:0.5,fontFace:BF,fontSize:10,color:WHITE,transparency:12,lineSpacing:13});
 footer(s,7);
 
 /* ---------- 8 DIFFERENTIATION ---------- */
 s=p.addSlide(); shell(s);
 kicker(s,"07 — What Makes It Different?");
 title(s,"More than smart farming. Integrated farm intelligence.",false,{w:9.5,fs:32});
-const cards5=[["01","IoT","Real-time farm sensing"],["02","EDGE AI","Local intelligent processing"],["03","CROP IMAGING","Visual crop monitoring"],["04","RESOURCE INTELLIGENCE","Irrigation & fertilizer guidance"],["05","FARMER INTELLIGENCE","Simple actionable guidance"]];
+const cards5=[["01","IoT","Real-time farm sensing","ring"],["02","EDGE AI","Local intelligent processing","dot"],["03","CROP IMAGING","Visual crop monitoring","sun"],["04","RESOURCE INTELLIGENCE","Irrigation & fertilizer guidance","water"],["05","FARMER INTELLIGENCE","Simple actionable guidance","soil"]];
 cards5.forEach((c,i)=>{
   const x=1.0+i*2.29;
   s.addShape(p.ShapeType.roundRect,{x,y:2.5,w:2.05,h:2.15,rectRadius:0.14,fill:{color:FOREST}});
   s.addText(c[0],{x:x+0.22,y:2.68,w:0.8,h:0.26,fontFace:BF,fontSize:12,bold:true,color:GOLD});
+  iconBadge(s,{x:x+0.22,y:3.02,d:0.44,kind:c[3],dark:true});
   s.addText(c[1],{x:x+0.22,y:3.55,w:1.65,h:0.5,fontFace:BF,fontSize:13,bold:true,color:WHITE,lineSpacing:16});
   s.addText(c[2],{x:x+0.22,y:4.05,w:1.65,h:0.52,fontFace:BF,fontSize:11,color:WHITE,transparency:38,lineSpacing:14});
 });
-card(s,{x:1.0,y:5.05,w:11.33,h:1.35});
-s.addText("+",{x:1.3,y:5.2,w:0.6,h:0.9,fontFace:HF,fontSize:38,bold:true,color:GOLD,valign:"middle"});
-s.addText("Instead of disconnected agricultural tools, KRISHI-GUARD AI brings multiple intelligence layers into one ecosystem.",{x:2.1,y:5.05,w:9.8,h:1.35,valign:"middle",fontFace:BF,fontSize:15,color:CHAR,transparency:22,lineSpacing:22});
+// central smart-farm visual + unifying statement
+s.addImage({...img("smart-farm-tech.jpg"),x:1.0,y:5.05,w:4.3,h:1.45,sizing:{type:"cover",w:4.3,h:1.45}});
+s.addShape(p.ShapeType.rect,{x:1.0,y:5.05,w:4.3,h:1.45,fill:{color:FOREST,transparency:55}});
+s.addText("ONE CONNECTED FARM ECOSYSTEM",{x:1.22,y:6.05,w:3.9,h:0.28,fontFace:BF,fontSize:10,bold:true,charSpacing:1.4,color:WHITE});
+card(s,{x:5.5,y:5.05,w:6.83,h:1.45});
+s.addText("+",{x:5.75,y:5.2,w:0.6,h:1.0,fontFace:HF,fontSize:34,bold:true,color:GOLD,valign:"middle"});
+s.addText("Instead of disconnected agricultural tools, KRISHI-GUARD AI brings multiple intelligence layers into one ecosystem.",{x:6.4,y:5.05,w:5.75,h:1.45,valign:"middle",fontFace:BF,fontSize:14,color:CHAR,transparency:22,lineSpacing:21});
 footer(s,8);
 
 /* ---------- 9 BUSINESS ---------- */
@@ -223,7 +257,7 @@ s.addText("Who is it for?",{x:1.32,y:2.72,w:3,h:0.35,fontFace:HF,fontSize:19,bol
 });
 // col2
 s.addShape(p.ShapeType.roundRect,{x:4.89,y:2.45,w:3.55,h:4.0,rectRadius:0.14,fill:{color:FOREST}});
-s.addText("Prototype → Pilot → Scale",{x:5.19,y:2.72,w:3,h:0.35,fontFace:HF,fontSize:17,bold:true,color:WHITE});
+s.addText("Prototype → Pilot → Scale",{x:5.19,y:2.74,w:3.15,h:0.32,fontFace:HF,fontSize:15,bold:true,color:WHITE});
 [["PHASE 1","IoT + Farm Monitoring"],["PHASE 2","AI Recommendations"],["PHASE 3","Advanced Crop Intelligence"]].forEach((ph,i)=>{
   const y=3.28+i*0.72;
   s.addShape(p.ShapeType.roundRect,{x:5.19,y,w:2.95,h:0.6,rectRadius:0.1,fill:{color:WHITE,transparency:93},line:{color:WHITE,width:0.75,transparency:85}});
