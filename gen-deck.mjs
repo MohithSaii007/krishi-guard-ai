@@ -22,9 +22,9 @@ function kicker(s,txt,dark=false){
 function title(s,txt,dark=false,opts={}){
   s.addText(txt,{x:1.0,y:1.0,w:opts.w||10.5,h:opts.h||1.1,fontFace:HF,fontSize:opts.fs||36,bold:true,color:dark?WHITE:FOREST,valign:"top",lineSpacing:opts.ls||40});
 }
-function footer(s,n,dark=false){
-  s.addShape(p.ShapeType.line,{x:1.0,y:6.86,w:11.33,h:0,line:{color:dark?WHITE:FOREST,width:0.5,transparency:85}});
-  s.addText("KRISHI-GUARD AI  |  MSME Idea Hackathon 6.0",{x:1.0,y:6.95,w:8,h:0.3,fontFace:BF,fontSize:10,color:dark?WHITE:CHAR,transparency:dark?40:45});
+function footer(s,n,dark=false,lx=1.0){
+  s.addShape(p.ShapeType.line,{x:lx,y:6.86,w:12.33-lx,h:0,line:{color:dark?WHITE:FOREST,width:0.5,transparency:85}});
+  s.addText("KRISHI-GUARD AI  |  MSME Idea Hackathon 6.0",{x:lx,y:6.95,w:8,h:0.3,fontFace:BF,fontSize:10,color:dark?WHITE:CHAR,transparency:dark?40:45});
   s.addText(`${String(n).padStart(2,"0")} / 10`,{x:11.0,y:6.95,w:1.33,h:0.3,align:"right",fontFace:BF,fontSize:10,bold:true,color:dark?GOLD:FOREST,transparency:dark?0:30});
 }
 function card(s,{x,y,w,h,fill=WHITE,line=FOREST,trans=25,radius=0.06}){
@@ -74,7 +74,7 @@ probs.forEach((it,i)=>{
 s.addShape(p.ShapeType.roundRect,{x:5.7,y:5.9,w:6.75,h:0.78,rectRadius:0.1,fill:{color:FOREST}});
 s.addShape(p.ShapeType.rect,{x:5.7,y:5.9,w:0.06,h:0.78,fill:{color:GOLD}});
 s.addText("Farmers need timely, field-specific intelligence — not just raw data.",{x:5.95,y:5.9,w:6.3,h:0.78,valign:"middle",fontFace:BF,fontSize:14,color:WHITE});
-footer(s,2);
+footer(s,2,false,5.7);
 
 /* ---------- 3 SOLUTION ---------- */
 s=p.addSlide(); shell(s);
@@ -216,20 +216,21 @@ s.addShape(p.ShapeType.roundRect,{x:PX+0.42,y:PY+2.12,w:0.47,h:0.1,rectRadius:0.
 s.addShape(p.ShapeType.roundRect,{x:PX+0.28,y:PY+4.1,w:PW-0.56,h:0.5,rectRadius:0.25,fill:{color:GOLD}});
 s.addText("ASK IN TELUGU  •  VOICE",{x:PX+0.28,y:PY+4.1,w:PW-0.56,h:0.5,align:"center",valign:"middle",fontFace:BF,fontSize:9,bold:true,charSpacing:0.8,color:CHAR});
 s.addImage({...img("farmer-phone.jpg"),x:9.85,y:1.0,w:2.48,h:5.35,sizing:{type:"cover",w:2.48,h:5.35},rounding:false});
-s.addShape(p.ShapeType.rect,{x:9.85,y:5.55,w:2.48,h:0.8,fill:{color:DEEP,transparency:25}});
-s.addText("FARMER • FIELD 01 • TIRUPATI",{x:9.98,y:5.72,w:2.25,h:0.24,fontFace:BF,fontSize:9,bold:true,charSpacing:1.2,color:GOLD});
-s.addText("Real-time farm information, in hand.",{x:9.98,y:5.96,w:2.25,h:0.3,fontFace:BF,fontSize:10,color:WHITE,transparency:15});
+s.addShape(p.ShapeType.rect,{x:9.85,y:5.4,w:2.48,h:0.95,fill:{color:DEEP,transparency:22}});
+s.addText("FIELD 01 • TIRUPATI",{x:9.98,y:5.56,w:2.25,h:0.22,fontFace:BF,fontSize:9,bold:true,charSpacing:1.2,color:GOLD});
+s.addText("Real-time farm information,\nin the farmer's hand.",{x:9.98,y:5.8,w:2.25,h:0.5,fontFace:BF,fontSize:10,color:WHITE,transparency:12,lineSpacing:13});
 footer(s,7);
 
 /* ---------- 8 DIFFERENTIATION ---------- */
 s=p.addSlide(); shell(s);
 kicker(s,"07 — What Makes It Different?");
 title(s,"More than smart farming. Integrated farm intelligence.",false,{w:9.5,fs:32});
-const cards5=[["01","IoT","Real-time farm sensing"],["02","EDGE AI","Local intelligent processing"],["03","CROP IMAGING","Visual crop monitoring"],["04","RESOURCE INTELLIGENCE","Irrigation & fertilizer guidance"],["05","FARMER INTELLIGENCE","Simple actionable guidance"]];
+const cards5=[["01","IoT","Real-time farm sensing","ring"],["02","EDGE AI","Local intelligent processing","dot"],["03","CROP IMAGING","Visual crop monitoring","sun"],["04","RESOURCE INTELLIGENCE","Irrigation & fertilizer guidance","water"],["05","FARMER INTELLIGENCE","Simple actionable guidance","soil"]];
 cards5.forEach((c,i)=>{
   const x=1.0+i*2.29;
   s.addShape(p.ShapeType.roundRect,{x,y:2.5,w:2.05,h:2.15,rectRadius:0.14,fill:{color:FOREST}});
   s.addText(c[0],{x:x+0.22,y:2.68,w:0.8,h:0.26,fontFace:BF,fontSize:12,bold:true,color:GOLD});
+  iconBadge(s,{x:x+0.22,y:3.02,d:0.44,kind:c[3],dark:true});
   s.addText(c[1],{x:x+0.22,y:3.55,w:1.65,h:0.5,fontFace:BF,fontSize:13,bold:true,color:WHITE,lineSpacing:16});
   s.addText(c[2],{x:x+0.22,y:4.05,w:1.65,h:0.52,fontFace:BF,fontSize:11,color:WHITE,transparency:38,lineSpacing:14});
 });
