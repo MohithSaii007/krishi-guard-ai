@@ -257,7 +257,7 @@ s.addText("Target users & market",{x:1.32,y:2.72,w:3,h:0.35,fontFace:HF,fontSize
 });
 s.addShape(p.ShapeType.roundRect,{x:1.3,y:5.72,w:2.95,h:0.62,rectRadius:0.08,fill:{color:LEAF,transparency:90}});
 s.addText("MARKET POTENTIAL",{x:1.44,y:5.78,w:2.7,h:0.2,fontFace:BF,fontSize:9,bold:true,charSpacing:1.2,color:FOREST});
-s.addText("Small & medium farms, FPOs and agri-MSMEs — scaling from district pilots outward.",{x:1.44,y:5.98,w:2.7,h:0.34,fontFace:BF,fontSize:9,color:CHAR,transparency:30,lineSpacing:11});
+s.addText("Small & medium farms, FPOs and agri-MSMEs, scaling from district pilots.",{x:1.44,y:5.98,w:2.7,h:0.32,fontFace:BF,fontSize:8.5,color:CHAR,transparency:30,lineSpacing:11});
 // col2
 s.addShape(p.ShapeType.roundRect,{x:4.89,y:2.45,w:3.55,h:4.0,rectRadius:0.14,fill:{color:FOREST}});
 s.addText("Prototype → Pilot → Scale",{x:5.19,y:2.74,w:3.15,h:0.32,fontFace:HF,fontSize:15,bold:true,color:WHITE});
@@ -301,7 +301,7 @@ s.addText("From Farm Data\nto Intelligent Decisions.",{x:1.05,y:1.55,w:9.5,h:1.7
 s.addShape(p.ShapeType.roundRect,{x:1.0,y:4.72,w:11.33,h:0.78,rectRadius:0.1,fill:{color:DEEP,transparency:30},line:{color:WHITE,width:0.75,transparency:82}});
 s.addShape(p.ShapeType.rect,{x:1.0,y:4.72,w:0.06,h:0.78,fill:{color:GOLD}});
 s.addText("CONCLUSION",{x:1.28,y:4.8,w:2,h:0.24,fontFace:BF,fontSize:9,bold:true,charSpacing:1.4,color:GOLD});
-s.addText("KRISHI-GUARD AI turns scattered farm data into timely, field-specific decisions — a practical, scalable step towards intelligent Indian agriculture.",{x:1.28,y:5.02,w:10.7,h:0.4,fontFace:BF,fontSize:13,color:WHITE,transparency:12});
+s.addText("KRISHI-GUARD AI turns scattered farm data into timely, field-specific decisions — a practical, scalable step towards intelligent Indian agriculture.",{x:1.28,y:4.99,w:10.7,h:0.4,fontFace:BF,fontSize:12.5,color:WHITE,transparency:12,lineSpacing:16});
 s.addText([{text:"KRISHI-GUARD ",options:{color:WHITE}},{text:"AI",options:{color:GOLD}}],{x:1.05,y:5.72,w:6,h:0.45,fontFace:HF,fontSize:24,bold:true});
 s.addText("Intelligent Smart Farming & Crop Protection Ecosystem",{x:1.08,y:6.18,w:7,h:0.3,fontFace:BF,fontSize:13,color:WHITE,transparency:28});
 s.addText("THANK YOU",{x:9.3,y:6.2,w:2.9,h:0.32,align:"right",fontFace:BF,fontSize:12,bold:true,charSpacing:0,color:WHITE,transparency:35});
