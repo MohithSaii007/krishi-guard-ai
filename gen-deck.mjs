@@ -184,12 +184,15 @@ s=p.addSlide(); shell(s);
 kicker(s,"06 — Farmer Experience");
 title(s,"Intelligence in the farmer's hand.",false,{w:5.4,fs:28,ls:34});
 s.addText("Recommendations reach the farmer in a simple, understandable format — on mobile and by voice.",{x:1.02,y:2.15,w:5.4,h:0.7,fontFace:BF,fontSize:14,color:CHAR,transparency:30,lineSpacing:21});
-[["REAL-TIME INSIGHTS"],["ACTIONABLE RECOMMENDATIONS"],["FARMER-FRIENDLY INTERFACE"],["VOICE-ENABLED INTERACTION"]].forEach((pt,i)=>{
+[["REAL-TIME INSIGHTS","ring"],["ACTIONABLE RECOMMENDATIONS","sun"],["FARMER-FRIENDLY INTERFACE","dot"],["VOICE-ENABLED INTERACTION","water"]].forEach((pt,i)=>{
   const y=3.05+i*0.72;
   card(s,{x:1.0,y,w:5.4,h:0.6});
-  s.addShape(p.ShapeType.ellipse,{x:1.22,y:y+0.21,w:0.16,h:0.16,fill:{color:LEAF}});
-  s.addText(pt[0],{x:1.55,y,w:4.6,h:0.6,valign:"middle",fontFace:BF,fontSize:12,bold:true,charSpacing:1,color:FOREST});
+  iconBadge(s,{x:1.14,y:y+0.11,d:0.38,kind:pt[1]});
+  s.addText(pt[0],{x:1.64,y,w:4.5,h:0.6,valign:"middle",fontFace:BF,fontSize:12,bold:true,charSpacing:1,color:FOREST});
 });
+s.addShape(p.ShapeType.roundRect,{x:1.0,y:6.0,w:5.4,h:0.62,rectRadius:0.1,fill:{color:FOREST}});
+s.addShape(p.ShapeType.rect,{x:1.0,y:6.0,w:0.06,h:0.62,fill:{color:GOLD}});
+s.addText([{text:"From raw farm data  ",options:{color:WHITE}},{text:"→  ",options:{color:GOLD}},{text:"simple farmer decisions",options:{color:WHITE}}],{x:1.25,y:6.0,w:5.1,h:0.62,valign:"middle",fontFace:BF,fontSize:13});
 // phone mock
 const PX=6.95, PY=1.0, PW=2.55, PH=5.35;
 s.addShape(p.ShapeType.roundRect,{x:PX,y:PY,w:PW,h:PH,rectRadius:0.14,fill:{color:CHAR},line:{color:CHAR,width:1}});
@@ -213,6 +216,9 @@ s.addShape(p.ShapeType.roundRect,{x:PX+0.42,y:PY+2.12,w:0.47,h:0.1,rectRadius:0.
 s.addShape(p.ShapeType.roundRect,{x:PX+0.28,y:PY+4.1,w:PW-0.56,h:0.5,rectRadius:0.25,fill:{color:GOLD}});
 s.addText("ASK IN TELUGU  •  VOICE",{x:PX+0.28,y:PY+4.1,w:PW-0.56,h:0.5,align:"center",valign:"middle",fontFace:BF,fontSize:9,bold:true,charSpacing:0.8,color:CHAR});
 s.addImage({...img("farmer-phone.jpg"),x:9.85,y:1.0,w:2.48,h:5.35,sizing:{type:"cover",w:2.48,h:5.35},rounding:false});
+s.addShape(p.ShapeType.rect,{x:9.85,y:5.55,w:2.48,h:0.8,fill:{color:DEEP,transparency:25}});
+s.addText("FARMER • FIELD 01 • TIRUPATI",{x:9.98,y:5.72,w:2.25,h:0.24,fontFace:BF,fontSize:9,bold:true,charSpacing:1.2,color:GOLD});
+s.addText("Real-time farm information, in hand.",{x:9.98,y:5.96,w:2.25,h:0.3,fontFace:BF,fontSize:10,color:WHITE,transparency:15});
 footer(s,7);
 
 /* ---------- 8 DIFFERENTIATION ---------- */
