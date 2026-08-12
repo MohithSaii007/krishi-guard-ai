@@ -264,7 +264,7 @@ s.addText("From Farm Data\nto Intelligent Decisions.",{x:1.05,y:1.55,w:9.5,h:1.7
 s.addText([{text:"KRISHI-GUARD ",options:{color:WHITE}},{text:"AI",options:{color:GOLD}}],{x:1.05,y:5.25,w:6,h:0.45,fontFace:HF,fontSize:24,bold:true});
 s.addText("Intelligent Smart Farming & Crop Protection Ecosystem",{x:1.08,y:5.72,w:7,h:0.3,fontFace:BF,fontSize:13,color:WHITE,transparency:28});
 s.addText("From Farm Data to Intelligent Decisions.",{x:1.08,y:6.12,w:7,h:0.4,fontFace:HF,fontSize:19,bold:true,color:GOLD});
-s.addText("THANK YOU",{x:9.6,y:6.15,w:2.73,h:0.3,align:"right",fontFace:BF,fontSize:12,bold:true,charSpacing:1.5,color:WHITE,transparency:35});
+s.addText("THANK YOU",{x:9.3,y:6.15,w:2.9,h:0.32,align:"right",fontFace:BF,fontSize:12,bold:true,charSpacing:0,color:WHITE,transparency:35});
 
 await p.writeFile({fileName:"/tmp/deck/KRISHI-GUARD-AI.pptx"});
 console.log("done");
