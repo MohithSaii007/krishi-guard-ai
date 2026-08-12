@@ -11,17 +11,17 @@ const points = [
 
 function PhoneMock() {
   return (
-    <div className="anim relative h-[560px] w-[320px] rounded-[46px] border-[10px] border-charcoal bg-forest-deep px-6 pb-6 pt-5 shadow-[0_50px_90px_-40px_var(--forest)]">
+    <div className="anim relative w-[320px] rounded-[46px] border-[10px] border-charcoal bg-forest-deep px-6 pb-5 pt-4 shadow-[0_50px_90px_-40px_var(--forest)]">
       <div className="mx-auto h-1.5 w-20 rounded-full bg-white/25" />
-      <div className="mt-5">
+      <div className="mt-4">
         <div className="slide-badge text-gold">KRISHI-GUARD</div>
         <div className="slide-body-lg mt-2 font-semibold text-white">Good Morning</div>
         <div className="slide-chrome mt-1 text-white/55">FIELD 01 • TIRUPATI</div>
 
-        <div className="mt-5 rounded-3xl bg-white/10 p-5">
+        <div className="mt-4 rounded-3xl bg-white/10 p-4">
           <div className="slide-chrome text-white/60">SOIL MOISTURE</div>
           <div className="mt-1 flex items-end gap-3">
-            <span className="slide-subtitle font-semibold text-white">27%</span>
+            <span className="slide-body-lg font-semibold text-white">27%</span>
             <span className="slide-chrome mb-2 rounded-full bg-gold/20 px-3 py-1.5 font-semibold text-gold">
               LOW
             </span>
@@ -39,7 +39,7 @@ function PhoneMock() {
           ].map(([k, v, c]) => (
             <div
               key={k}
-              className="flex items-center justify-between gap-4 rounded-2xl bg-white/8 px-5 py-4"
+              className="flex items-center justify-between gap-4 rounded-2xl bg-white/8 px-5 py-3"
             >
               <span className="slide-chrome text-white/60">{k}</span>
               <span className={`slide-chrome font-semibold ${c}`}>{v}</span>
@@ -47,7 +47,7 @@ function PhoneMock() {
           ))}
         </div>
 
-        <div className="slide-badge mt-5 rounded-2xl bg-leaf py-4 text-center font-semibold text-white">
+        <div className="slide-badge mt-4 rounded-2xl bg-leaf py-3.5 text-center font-semibold text-white">
           VIEW INSIGHTS
         </div>
       </div>
