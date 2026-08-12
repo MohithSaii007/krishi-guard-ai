@@ -233,9 +233,13 @@ cards5.forEach((c,i)=>{
   s.addText(c[1],{x:x+0.22,y:3.55,w:1.65,h:0.5,fontFace:BF,fontSize:13,bold:true,color:WHITE,lineSpacing:16});
   s.addText(c[2],{x:x+0.22,y:4.05,w:1.65,h:0.52,fontFace:BF,fontSize:11,color:WHITE,transparency:38,lineSpacing:14});
 });
-card(s,{x:1.0,y:5.05,w:11.33,h:1.35});
-s.addText("+",{x:1.3,y:5.2,w:0.6,h:0.9,fontFace:HF,fontSize:38,bold:true,color:GOLD,valign:"middle"});
-s.addText("Instead of disconnected agricultural tools, KRISHI-GUARD AI brings multiple intelligence layers into one ecosystem.",{x:2.1,y:5.05,w:9.8,h:1.35,valign:"middle",fontFace:BF,fontSize:15,color:CHAR,transparency:22,lineSpacing:22});
+// central smart-farm visual + unifying statement
+s.addImage({...img("smart-farm-tech.jpg"),x:1.0,y:5.05,w:4.3,h:1.45,sizing:{type:"cover",w:4.3,h:1.45}});
+s.addShape(p.ShapeType.rect,{x:1.0,y:5.05,w:4.3,h:1.45,fill:{color:FOREST,transparency:55}});
+s.addText("ONE CONNECTED FARM ECOSYSTEM",{x:1.22,y:6.05,w:3.9,h:0.28,fontFace:BF,fontSize:10,bold:true,charSpacing:1.4,color:WHITE});
+card(s,{x:5.5,y:5.05,w:6.83,h:1.45});
+s.addText("+",{x:5.75,y:5.2,w:0.6,h:1.0,fontFace:HF,fontSize:34,bold:true,color:GOLD,valign:"middle"});
+s.addText("Instead of disconnected agricultural tools, KRISHI-GUARD AI brings multiple intelligence layers into one ecosystem.",{x:6.4,y:5.05,w:5.75,h:1.45,valign:"middle",fontFace:BF,fontSize:14,color:CHAR,transparency:22,lineSpacing:21});
 footer(s,8);
 
 /* ---------- 9 BUSINESS ---------- */
