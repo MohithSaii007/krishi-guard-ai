@@ -24,7 +24,7 @@ export default function Slide02() {
           />
           <div className="absolute inset-0 bg-[linear-gradient(to_right,transparent_60%,var(--cream)_100%)]" />
         </div>
-        <div className="flex flex-col justify-center px-20 py-24">
+        <div className="flex flex-col justify-center px-20 pb-32 pt-20">
           <Kicker label="01 — The Challenge" />
           <h2 className="slide-title mt-7 max-w-[900px] text-forest">
             Farming decisions are still highly uncertain.

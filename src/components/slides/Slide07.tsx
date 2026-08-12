@@ -11,7 +11,7 @@ const points = [
 
 function PhoneMock() {
   return (
-    <div className="anim relative h-[620px] w-[336px] rounded-[46px] border-[10px] border-charcoal bg-forest-deep px-6 pb-6 pt-5 shadow-[0_50px_90px_-40px_var(--forest)]">
+    <div className="anim relative h-[560px] w-[320px] rounded-[46px] border-[10px] border-charcoal bg-forest-deep px-6 pb-6 pt-5 shadow-[0_50px_90px_-40px_var(--forest)]">
       <div className="mx-auto h-1.5 w-20 rounded-full bg-white/25" />
       <div className="mt-5">
         <div className="slide-badge text-gold">KRISHI-GUARD</div>
@@ -59,14 +59,14 @@ export default function Slide07() {
   return (
     <SlideLayout>
       <div className="grid h-full grid-cols-[58%_42%]">
-        <div className="flex flex-col justify-center px-24 py-24">
+        <div className="flex flex-col justify-center px-24 pb-28 pt-16">
           <Kicker label="06 — Farmer Experience" />
           <h2 className="slide-title mt-7 text-forest">
             Complex data.
             <br />
             Simple decisions.
           </h2>
-          <div className="mt-12 flex items-start gap-14">
+          <div className="mt-10 flex items-start gap-14">
             <PhoneMock />
             <div className="space-y-6">
               {points.map(({ icon: Icon, label }, i) => (

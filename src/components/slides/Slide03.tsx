@@ -12,7 +12,7 @@ const inputs = [
 export default function Slide03() {
   return (
     <SlideLayout>
-      <div className="flex h-full flex-col px-24 pt-20">
+      <div className="flex h-full flex-col px-24 pb-28 pt-16">
         <Kicker label="02 — Our Solution" />
         <div className="mt-7 flex items-end justify-between gap-16">
           <h2 className="slide-title max-w-[900px] text-forest">
