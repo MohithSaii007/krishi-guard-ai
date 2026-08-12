@@ -3,7 +3,7 @@ import fs from "fs";
 
 const A="src/assets/";
 const img=(f)=>({data:`image/jpeg;base64,${fs.readFileSync(A+f).toString("base64")}`});
-const FOREST="174A35", DEEP="0F3325", CREAM="F5F0E6", GOLD="D4AF37", LEAF="2D5A27", CHAR="122620", WHITE="FFFFFF";
+const FOREST="174A35", DEEP="0F3325", CREAM="F5F0E6", GOLD="D9B84A", LEAF="4F8F45", CHAR="1F2923", EARTH="7A5C3A", WHITE="FFFFFF";
 const HF="Poppins", BF="Inter";
 
 const p=new PptxGenJS();
@@ -29,6 +29,19 @@ function footer(s,n,dark=false){
 }
 function card(s,{x,y,w,h,fill=WHITE,line=FOREST,trans=25,radius=0.06}){
   s.addShape(p.ShapeType.roundRect,{x,y,w,h,rectRadius:0.14,fill:{color:fill,transparency:trans},line:{color:line,width:0.75,transparency:82}});
+}
+// small geometric icon badge (no icon fonts — native shapes keep it editable)
+function iconBadge(s,{x,y,d=0.42,kind="dot",dark=false}){
+  const bg = dark?WHITE:LEAF, bgT = dark?90:88, fg = dark?GOLD:LEAF;
+  s.addShape(p.ShapeType.roundRect,{x,y,w:d,h:d,rectRadius:0.12,fill:{color:bg,transparency:bgT},line:{color:fg,width:0.6,transparency:70}});
+  const c=x+d/2, m=y+d/2, r=d*0.24;
+  if(kind==="water") s.addShape(p.ShapeType.teardrop,{x:c-r,y:m-r,w:r*2,h:r*2,rotate:135,fill:{color:fg},line:{color:fg,width:0.5}});
+  else if(kind==="cloud") s.addShape(p.ShapeType.cloud,{x:c-r*1.35,y:m-r*0.95,w:r*2.7,h:r*1.9,fill:{color:fg},line:{color:fg,width:0.5}});
+  else if(kind==="alert") s.addShape(p.ShapeType.triangle,{x:c-r,y:m-r*0.9,w:r*2,h:r*1.8,fill:{color:fg},line:{color:fg,width:0.5}});
+  else if(kind==="soil") { for(let i=0;i<2;i++) s.addShape(p.ShapeType.roundRect,{x:c-r,y:m-r+i*r*1.2,w:r*2,h:r*0.55,rectRadius:0.03,fill:{color:fg,transparency:i*40},line:{color:fg,width:0.4,transparency:i*40}}); }
+  else if(kind==="ring") s.addShape(p.ShapeType.donut,{x:c-r,y:m-r,w:r*2,h:r*2,fill:{color:fg},line:{color:fg,width:0.5}});
+  else if(kind==="sun") s.addShape(p.ShapeType.sun,{x:c-r*1.15,y:m-r*1.15,w:r*2.3,h:r*2.3,fill:{color:fg},line:{color:fg,width:0.5}});
+  else s.addShape(p.ShapeType.ellipse,{x:c-r*0.7,y:m-r*0.7,w:r*1.4,h:r*1.4,fill:{color:fg},line:{color:fg,width:0.5}});
 }
 
 /* ---------- 1 TITLE ---------- */
