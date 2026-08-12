@@ -166,6 +166,10 @@ mods.forEach((m,i)=>{
   s.addShape(p.ShapeType.roundRect,{x,y,w:3.5,h:1.12,rectRadius:0.12,fill:{color:WHITE,transparency:93},line:{color:WHITE,width:0.75,transparency:82}});
   s.addText(m[0],{x:x+0.28,y:y+0.14,w:3,h:0.28,fontFace:BF,fontSize:12,bold:true,color:WHITE});
   s.addText(m[1],{x:x+0.28,y:y+0.46,w:3,h:0.56,fontFace:BF,fontSize:11,color:WHITE,transparency:38,lineSpacing:14});
+  // data-flow line between module card and the central decision engine
+  const lx = left ? 4.5 : 8.15, lw = left ? 0.62 : 0.62;
+  s.addShape(p.ShapeType.line,{x:lx,y:y+0.56,w:lw,h:0,line:{color:LEAF,width:1,transparency:45}});
+  s.addShape(p.ShapeType.ellipse,{x:(left?lx+lw:lx)-0.05,y:y+0.51,w:0.1,h:0.1,fill:{color:GOLD}});
 });
 s.addShape(p.ShapeType.ellipse,{x:5.05,y:2.55,w:3.2,h:3.2,fill:{color:DEEP},line:{color:LEAF,width:1.25,transparency:45}});
 s.addShape(p.ShapeType.ellipse,{x:5.55,y:3.05,w:2.2,h:2.2,fill:{type:"none"},line:{color:GOLD,width:0.75,transparency:70}});
