@@ -63,12 +63,13 @@ s.addShape(p.ShapeType.rect,{x:4.0,y:0,w:1.4,h:H,fill:{color:CREAM,transparency:
 s.addText("01 — THE CHALLENGE",{x:5.75,y:0.85,w:6,h:0.3,fontFace:BF,fontSize:12,bold:true,charSpacing:2.2,color:LEAF});
 s.addText("Farming decisions are still highly uncertain.",{x:5.7,y:1.2,w:6.9,h:1.1,fontFace:HF,fontSize:32,bold:true,color:FOREST,lineSpacing:36});
 s.addText("Farmers often decide without integrated, real-time information about soil, weather, water and crop health.",{x:5.72,y:2.4,w:6.7,h:0.7,fontFace:BF,fontSize:14,color:CHAR,transparency:30,lineSpacing:20});
-const probs=[["WATER","Uncertain irrigation requirements"],["SOIL","Limited real-time soil intelligence"],["CROP HEALTH","Disease and pest risks identified late"],["WEATHER","Changing weather affects farm decisions"]];
+const probs=[["WATER","Uncertain irrigation requirements","water"],["SOIL","Limited real-time soil intelligence","soil"],["CROP HEALTH","Disease and pest risks identified late","alert"],["WEATHER","Changing weather affects farm decisions","cloud"]];
 probs.forEach((it,i)=>{
   const x=5.7+(i%2)*3.5, y=3.25+Math.floor(i/2)*1.28;
   card(s,{x,y,w:3.25,h:1.12});
-  s.addText(it[0],{x:x+0.25,y:y+0.16,w:2.8,h:0.28,fontFace:BF,fontSize:12,bold:true,charSpacing:1.4,color:FOREST});
-  s.addText(it[1],{x:x+0.25,y:y+0.5,w:2.8,h:0.5,fontFace:BF,fontSize:12,color:CHAR,transparency:30,lineSpacing:15});
+  iconBadge(s,{x:x+0.25,y:y+0.2,kind:it[2]});
+  s.addText(it[0],{x:x+0.78,y:y+0.24,w:2.3,h:0.28,fontFace:BF,fontSize:12,bold:true,charSpacing:1.4,color:FOREST});
+  s.addText(it[1],{x:x+0.25,y:y+0.66,w:2.85,h:0.4,fontFace:BF,fontSize:11,color:CHAR,transparency:30,lineSpacing:14});
 });
 s.addShape(p.ShapeType.roundRect,{x:5.7,y:5.9,w:6.75,h:0.78,rectRadius:0.1,fill:{color:FOREST}});
 s.addShape(p.ShapeType.rect,{x:5.7,y:5.9,w:0.06,h:0.78,fill:{color:GOLD}});
