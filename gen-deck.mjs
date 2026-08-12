@@ -60,7 +60,7 @@ s.addText("01 / 10",{x:11.2,y:6.2,w:1.1,h:0.3,align:"right",fontFace:BF,fontSize
 s=p.addSlide(); shell(s);
 s.addImage({...img("farmer-inspect.jpg"),x:0,y:0,w:5.2,h:H,sizing:{type:"cover",w:5.2,h:H}});
 s.addShape(p.ShapeType.rect,{x:4.0,y:0,w:1.4,h:H,fill:{color:CREAM,transparency:35}});
-s.addText("01 — THE CHALLENGE",{x:5.75,y:0.85,w:6,h:0.3,fontFace:BF,fontSize:12,bold:true,charSpacing:2.2,color:LEAF});
+s.addText("01 — PROBLEM STATEMENT",{x:5.75,y:0.85,w:6,h:0.3,fontFace:BF,fontSize:12,bold:true,charSpacing:2.2,color:LEAF});
 s.addText("Farming decisions are still highly uncertain.",{x:5.7,y:1.2,w:6.9,h:1.1,fontFace:HF,fontSize:32,bold:true,color:FOREST,lineSpacing:36});
 s.addText("Farmers often decide without integrated, real-time information about soil, weather, water and crop health.",{x:5.72,y:2.4,w:6.7,h:0.7,fontFace:BF,fontSize:14,color:CHAR,transparency:30,lineSpacing:20});
 const probs=[["WATER","Uncertain irrigation requirements","water"],["SOIL","Limited real-time soil intelligence","soil"],["CROP HEALTH","Disease and pest risks identified late","alert"],["WEATHER","Changing weather affects farm decisions","cloud"]];
@@ -78,7 +78,7 @@ footer(s,2,false,5.7);
 
 /* ---------- 3 SOLUTION ---------- */
 s=p.addSlide(); shell(s);
-kicker(s,"02 — Our Solution");
+kicker(s,"02 — Proposed Solution");
 title(s,"One intelligent ecosystem for the farm.",false,{w:6.2,fs:32});
 s.addText("KRISHI-GUARD AI is an AI and IoT-based smart farming ecosystem that collects agricultural information and converts it into actionable recommendations.",{x:7.4,y:1.05,w:4.95,h:1.1,fontFace:BF,fontSize:14,color:CHAR,transparency:28,lineSpacing:21});
 const ins=[["SOIL","pH • NPK • Moisture","soil"],["WEATHER","Temp • Humidity • Rainfall","cloud"],["WATER","Water / moisture monitoring","water"],["CROP IMAGING","Drone / crop images","ring"],["FARMER APP","Mobile + Voice AI","dot"]];
@@ -107,7 +107,7 @@ footer(s,3);
 
 /* ---------- 4 ARCHITECTURE ---------- */
 s=p.addSlide(); shell(s,{dark:true});
-kicker(s,"03 — System Architecture",true);
+kicker(s,"03 — Technical Concept & Architecture",true);
 title(s,"From farm data to intelligent decisions.",true,{w:3.5,fs:30,ls:34});
 ["Water monitoring","Market data","Weather data"].forEach((t,i)=>{
   s.addShape(p.ShapeType.line,{x:1.0,y:3.0+i*0.42,w:0.35,h:0,line:{color:LEAF,width:1.25}});
@@ -137,7 +137,7 @@ footer(s,4,true);
 /* ---------- 5 HOW IT WORKS ---------- */
 s=p.addSlide(); shell(s);
 s.addImage({...img("aerial-field.jpg"),x:0,y:0,w:W,h:H,transparency:92});
-kicker(s,"04 — How It Works");
+kicker(s,"04 — Technical Working");
 title(s,"The intelligence loop",false,{fs:34});
 s.addText("A continuous field-to-farmer cycle that turns sensing into decision support.",{x:1.02,y:2.05,w:8,h:0.4,fontFace:BF,fontSize:14,color:CHAR,transparency:30});
 const steps=[["01","COLLECT","Soil, weather, water & crop data","soil"],["02","CONNECT","IoT gateway gathers field information","ring"],["03","ANALYZE","Edge AI processes agricultural data","dot"],["04","DECIDE","AI identifies risks and requirements","sun"],["05","ACT","Farmer receives recommendations","water"]];
@@ -223,7 +223,7 @@ footer(s,7);
 
 /* ---------- 8 DIFFERENTIATION ---------- */
 s=p.addSlide(); shell(s);
-kicker(s,"07 — What Makes It Different?");
+kicker(s,"07 — Innovation & Uniqueness");
 title(s,"More than smart farming. Integrated farm intelligence.",false,{w:9.5,fs:32});
 const cards5=[["01","IoT","Real-time farm sensing","ring"],["02","EDGE AI","Local intelligent processing","dot"],["03","CROP IMAGING","Visual crop monitoring","sun"],["04","RESOURCE INTELLIGENCE","Irrigation & fertilizer guidance","water"],["05","FARMER INTELLIGENCE","Simple actionable guidance","soil"]];
 cards5.forEach((c,i)=>{
@@ -245,16 +245,19 @@ footer(s,8);
 
 /* ---------- 9 BUSINESS ---------- */
 s=p.addSlide(); shell(s);
-kicker(s,"08 — From Prototype to Impact");
-title(s,"Users, development path & resources.",false,{fs:32});
+kicker(s,"08 — Users, Market, Development Plan & Cost");
+title(s,"Target users, market potential & resources.",false,{fs:32});
 // col1
 card(s,{x:1.0,y:2.45,w:3.55,h:4.0});
-s.addText("Who is it for?",{x:1.32,y:2.72,w:3,h:0.35,fontFace:HF,fontSize:19,bold:true,color:FOREST});
+s.addText("Target users & market",{x:1.32,y:2.72,w:3,h:0.35,fontFace:HF,fontSize:18,bold:true,color:FOREST});
 ["FARMERS","FARMER PRODUCER ORGANIZATIONS","AGRI-MSMEs","AGRICULTURAL ORGANIZATIONS"].forEach((u,i)=>{
-  const y=3.3+i*0.72;
+  const y=3.22+i*0.62;
   s.addShape(p.ShapeType.ellipse,{x:1.36,y:y+0.14,w:0.14,h:0.14,fill:{color:LEAF}});
   s.addText(u,{x:1.66,y:y-0.04,w:2.7,h:0.5,valign:"middle",fontFace:BF,fontSize:11,bold:true,color:CHAR,transparency:18,lineSpacing:14});
 });
+s.addShape(p.ShapeType.roundRect,{x:1.3,y:5.72,w:2.95,h:0.62,rectRadius:0.08,fill:{color:LEAF,transparency:90}});
+s.addText("MARKET POTENTIAL",{x:1.44,y:5.78,w:2.7,h:0.2,fontFace:BF,fontSize:9,bold:true,charSpacing:1.2,color:FOREST});
+s.addText("Small & medium farms, FPOs and agri-MSMEs, scaling from district pilots.",{x:1.44,y:5.98,w:2.7,h:0.32,fontFace:BF,fontSize:8.5,color:CHAR,transparency:30,lineSpacing:11});
 // col2
 s.addShape(p.ShapeType.roundRect,{x:4.89,y:2.45,w:3.55,h:4.0,rectRadius:0.14,fill:{color:FOREST}});
 s.addText("Prototype → Pilot → Scale",{x:5.19,y:2.74,w:3.15,h:0.32,fontFace:HF,fontSize:15,bold:true,color:WHITE});
@@ -287,18 +290,21 @@ footer(s,9);
 s=p.addSlide();
 s.addImage({...img("aerial-field.jpg"),x:0,y:0,w:W,h:H});
 s.addShape(p.ShapeType.rect,{x:0,y:0,w:W,h:H,fill:{color:DEEP,transparency:14}});
-s.addText("09 — THE IMPACT",{x:1.1,y:1.15,w:6,h:0.3,fontFace:BF,fontSize:12,bold:true,charSpacing:2.2,color:GOLD});
+s.addText("09 — EXPECTED OUTCOMES, IMPACT & CONCLUSION",{x:1.1,y:1.15,w:8,h:0.3,fontFace:BF,fontSize:12,bold:true,charSpacing:2.2,color:GOLD});
 s.addText("From Farm Data\nto Intelligent Decisions.",{x:1.05,y:1.55,w:9.5,h:1.7,fontFace:HF,fontSize:48,bold:true,color:WHITE,lineSpacing:56});
 ["SMARTER RESOURCE USE","BETTER CROP MONITORING","DATA-DRIVEN DECISIONS","FARMER EMPOWERMENT"].forEach((t,i)=>{
   const x=1.0+i*2.85;
-  s.addShape(p.ShapeType.roundRect,{x,y:3.6,w:2.6,h:1.15,rectRadius:0.14,fill:{color:WHITE,transparency:90},line:{color:WHITE,width:0.75,transparency:80}});
-  s.addShape(p.ShapeType.ellipse,{x:x+0.28,y:3.82,w:0.3,h:0.3,fill:{color:GOLD}});
-  s.addText(t,{x:x+0.28,y:4.2,w:2.1,h:0.45,fontFace:BF,fontSize:12,bold:true,charSpacing:0.8,color:WHITE,lineSpacing:15});
+  s.addShape(p.ShapeType.roundRect,{x,y:3.45,w:2.6,h:1.1,rectRadius:0.14,fill:{color:WHITE,transparency:90},line:{color:WHITE,width:0.75,transparency:80}});
+  s.addShape(p.ShapeType.ellipse,{x:x+0.28,y:3.65,w:0.3,h:0.3,fill:{color:GOLD}});
+  s.addText(t,{x:x+0.28,y:4.02,w:2.1,h:0.45,fontFace:BF,fontSize:12,bold:true,charSpacing:0.8,color:WHITE,lineSpacing:15});
 });
-s.addText([{text:"KRISHI-GUARD ",options:{color:WHITE}},{text:"AI",options:{color:GOLD}}],{x:1.05,y:5.25,w:6,h:0.45,fontFace:HF,fontSize:24,bold:true});
-s.addText("Intelligent Smart Farming & Crop Protection Ecosystem",{x:1.08,y:5.72,w:7,h:0.3,fontFace:BF,fontSize:13,color:WHITE,transparency:28});
-s.addText("From Farm Data to Intelligent Decisions.",{x:1.08,y:6.12,w:7,h:0.4,fontFace:HF,fontSize:19,bold:true,color:GOLD});
-s.addText("THANK YOU",{x:9.3,y:6.15,w:2.9,h:0.32,align:"right",fontFace:BF,fontSize:12,bold:true,charSpacing:0,color:WHITE,transparency:35});
+s.addShape(p.ShapeType.roundRect,{x:1.0,y:4.72,w:11.33,h:0.78,rectRadius:0.1,fill:{color:DEEP,transparency:30},line:{color:WHITE,width:0.75,transparency:82}});
+s.addShape(p.ShapeType.rect,{x:1.0,y:4.72,w:0.06,h:0.78,fill:{color:GOLD}});
+s.addText("CONCLUSION",{x:1.28,y:4.8,w:2,h:0.24,fontFace:BF,fontSize:9,bold:true,charSpacing:1.4,color:GOLD});
+s.addText("KRISHI-GUARD AI turns scattered farm data into timely, field-specific decisions — a practical, scalable step towards intelligent Indian agriculture.",{x:1.28,y:4.99,w:10.7,h:0.4,fontFace:BF,fontSize:12.5,color:WHITE,transparency:12,lineSpacing:16});
+s.addText([{text:"KRISHI-GUARD ",options:{color:WHITE}},{text:"AI",options:{color:GOLD}}],{x:1.05,y:5.72,w:6,h:0.45,fontFace:HF,fontSize:24,bold:true});
+s.addText("Intelligent Smart Farming & Crop Protection Ecosystem",{x:1.08,y:6.18,w:7,h:0.3,fontFace:BF,fontSize:13,color:WHITE,transparency:28});
+s.addText("THANK YOU",{x:9.3,y:6.2,w:2.9,h:0.32,align:"right",fontFace:BF,fontSize:12,bold:true,charSpacing:0,color:WHITE,transparency:35});
 
 await p.writeFile({fileName:"/tmp/deck/KRISHI-GUARD-AI.pptx"});
 console.log("done");
