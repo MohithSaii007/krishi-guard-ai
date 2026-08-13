@@ -25,7 +25,7 @@ function title(s,txt,dark=false,opts={}){
 function footer(s,n,dark=false,lx=1.0){
   s.addShape(p.ShapeType.line,{x:lx,y:6.86,w:12.33-lx,h:0,line:{color:dark?WHITE:FOREST,width:0.5,transparency:85}});
   s.addText("KRISHI-GUARD AI  |  MSME Idea Hackathon 6.0",{x:lx,y:6.95,w:8,h:0.3,fontFace:BF,fontSize:10,color:dark?WHITE:CHAR,transparency:dark?40:45});
-  s.addText(`${String(n).padStart(2,"0")} / 10`,{x:11.0,y:6.95,w:1.33,h:0.3,align:"right",fontFace:BF,fontSize:10,bold:true,color:dark?GOLD:FOREST,transparency:dark?0:30});
+  s.addText(`${String(n).padStart(2,"0")} / 12`,{x:11.0,y:6.95,w:1.33,h:0.3,align:"right",fontFace:BF,fontSize:10,bold:true,color:dark?GOLD:FOREST,transparency:dark?0:30});
 }
 function card(s,{x,y,w,h,fill=WHITE,line=FOREST,trans=25,radius=0.06}){
   s.addShape(p.ShapeType.roundRect,{x,y,w,h,rectRadius:0.14,fill:{color:fill,transparency:trans},line:{color:line,width:0.75,transparency:82}});
@@ -54,7 +54,7 @@ s.addText("Intelligent Smart Farming & Crop Protection Ecosystem",{x:1.1,y:3.75,
 s.addShape(p.ShapeType.line,{x:1.1,y:4.6,w:3.6,h:0,line:{color:WHITE,width:1,transparency:60}});
 s.addText("MSME IDEA HACKATHON 6.0",{x:1.1,y:5.85,w:7,h:0.3,fontFace:BF,fontSize:13,bold:true,charSpacing:2,color:GOLD});
 s.addText("Team Name  |  CSE – Data Science  |  Sri Venkateswara College of Engineering, Tirupati",{x:1.1,y:6.2,w:9,h:0.35,fontFace:BF,fontSize:13,color:WHITE,transparency:20});
-s.addText("01 / 10",{x:11.2,y:6.2,w:1.1,h:0.3,align:"right",fontFace:BF,fontSize:12,bold:true,color:WHITE,transparency:35});
+s.addText("01 / 12",{x:11.2,y:6.2,w:1.1,h:0.3,align:"right",fontFace:BF,fontSize:12,bold:true,color:WHITE,transparency:35});
 
 /* ---------- 2 PROBLEM ---------- */
 s=p.addSlide(); shell(s);
@@ -243,50 +243,79 @@ s.addText("+",{x:5.75,y:5.2,w:0.6,h:1.0,fontFace:HF,fontSize:34,bold:true,color:
 s.addText("Instead of disconnected agricultural tools, KRISHI-GUARD AI brings multiple intelligence layers into one ecosystem.",{x:6.4,y:5.05,w:5.75,h:1.45,valign:"middle",fontFace:BF,fontSize:14,color:CHAR,transparency:22,lineSpacing:21});
 footer(s,8);
 
-/* ---------- 9 BUSINESS ---------- */
+/* ---------- 9 TARGET USERS & MARKET ---------- */
 s=p.addSlide(); shell(s);
-kicker(s,"08 — Users, Market, Development Plan & Cost");
-title(s,"Target users, market potential & resources.",false,{fs:32});
-// col1
-card(s,{x:1.0,y:2.45,w:3.55,h:4.0});
-s.addText("Target users & market",{x:1.32,y:2.72,w:3,h:0.35,fontFace:HF,fontSize:18,bold:true,color:FOREST});
-["FARMERS","FARMER PRODUCER ORGANIZATIONS","AGRI-MSMEs","AGRICULTURAL ORGANIZATIONS"].forEach((u,i)=>{
-  const y=3.22+i*0.62;
-  s.addShape(p.ShapeType.ellipse,{x:1.36,y:y+0.14,w:0.14,h:0.14,fill:{color:LEAF}});
-  s.addText(u,{x:1.66,y:y-0.04,w:2.7,h:0.5,valign:"middle",fontFace:BF,fontSize:11,bold:true,color:CHAR,transparency:18,lineSpacing:14});
+kicker(s,"08 — Target Users & Market Potential");
+title(s,"Who it serves, and how far it can scale.",false,{fs:32});
+s.addText("KRISHI-GUARD AI is designed for the everyday Indian farm, and scales through the organisations that already support farmers.",{x:1.02,y:2.05,w:8.6,h:0.45,fontFace:BF,fontSize:14,color:CHAR,transparency:30,lineSpacing:20});
+const usersX=[["FARMERS","Individual small & medium farm owners","soil"],["FARMER PRODUCER ORGANIZATIONS","Shared monitoring across member farms","ring"],["AGRI-MSMEs","Agri-service and input businesses","dot"],["AGRICULTURAL ORGANIZATIONS","Extension, research & advisory bodies","sun"]];
+usersX.forEach((u,i)=>{
+  const x=1.0+i*2.87;
+  card(s,{x,y:2.75,w:2.62,h:1.95});
+  iconBadge(s,{x:x+0.28,y:2.98,d:0.44,kind:u[2]});
+  s.addText(u[0],{x:x+0.28,y:3.55,w:2.1,h:0.55,fontFace:BF,fontSize:12,bold:true,charSpacing:0.8,color:FOREST,lineSpacing:15});
+  s.addText(u[1],{x:x+0.28,y:4.1,w:2.1,h:0.5,fontFace:BF,fontSize:11,color:CHAR,transparency:32,lineSpacing:14});
 });
-s.addShape(p.ShapeType.roundRect,{x:1.3,y:5.72,w:2.95,h:0.62,rectRadius:0.08,fill:{color:LEAF,transparency:90}});
-s.addText("MARKET POTENTIAL",{x:1.44,y:5.78,w:2.7,h:0.2,fontFace:BF,fontSize:9,bold:true,charSpacing:1.2,color:FOREST});
-s.addText("Small & medium farms, FPOs and agri-MSMEs, scaling from district pilots.",{x:1.44,y:5.98,w:2.7,h:0.32,fontFace:BF,fontSize:8.5,color:CHAR,transparency:30,lineSpacing:11});
-// col2
-s.addShape(p.ShapeType.roundRect,{x:4.89,y:2.45,w:3.55,h:4.0,rectRadius:0.14,fill:{color:FOREST}});
-s.addText("Prototype → Pilot → Scale",{x:5.19,y:2.74,w:3.15,h:0.32,fontFace:HF,fontSize:15,bold:true,color:WHITE});
-[["PHASE 1","IoT + Farm Monitoring"],["PHASE 2","AI Recommendations"],["PHASE 3","Advanced Crop Intelligence"]].forEach((ph,i)=>{
-  const y=3.28+i*0.72;
-  s.addShape(p.ShapeType.roundRect,{x:5.19,y,w:2.95,h:0.6,rectRadius:0.1,fill:{color:WHITE,transparency:93},line:{color:WHITE,width:0.75,transparency:85}});
-  s.addText(ph[0],{x:5.35,y:y+0.06,w:2.6,h:0.22,fontFace:BF,fontSize:9,bold:true,charSpacing:1,color:GOLD});
-  s.addText(ph[1],{x:5.35,y:y+0.28,w:2.6,h:0.26,fontFace:BF,fontSize:11,color:WHITE,transparency:18});
+s.addShape(p.ShapeType.roundRect,{x:1.0,y:4.95,w:5.55,h:1.6,rectRadius:0.14,fill:{color:FOREST}});
+s.addText("MARKET POTENTIAL",{x:1.3,y:5.15,w:3,h:0.24,fontFace:BF,fontSize:10,bold:true,charSpacing:1.6,color:GOLD});
+s.addText("Indian agriculture is moving towards data-driven practice. Starting from district-level pilots, the same low-cost sensing + edge AI stack can extend farm by farm and through FPO clusters.",{x:1.3,y:5.42,w:5.0,h:0.95,fontFace:BF,fontSize:12,color:WHITE,transparency:14,lineSpacing:17});
+[["ENTRY","District pilot farms"],["GROWTH","FPO & MSME clusters"],["SCALE","State-level adoption"]].forEach((m,i)=>{
+  const y=4.95+i*0.55;
+  card(s,{x:6.8,y,w:5.53,h:0.48});
+  s.addShape(p.ShapeType.rect,{x:6.8,y,w:0.05,h:0.48,fill:{color:GOLD}});
+  s.addText(m[0],{x:7.02,y,w:1.5,h:0.48,valign:"middle",fontFace:BF,fontSize:10,bold:true,charSpacing:1.2,color:LEAF});
+  s.addText(m[1],{x:8.5,y,w:3.7,h:0.48,valign:"middle",fontFace:BF,fontSize:12,color:CHAR,transparency:22});
 });
-s.addShape(p.ShapeType.roundRect,{x:5.19,y:5.48,w:2.95,h:0.8,rectRadius:0.08,fill:{color:WHITE,transparency:92}});
-s.addShape(p.ShapeType.rect,{x:5.19,y:5.48,w:0.05,h:0.8,fill:{color:GOLD}});
-s.addText("TARGET PROTOTYPE",{x:5.38,y:5.54,w:2.6,h:0.2,fontFace:BF,fontSize:9,color:WHITE,transparency:42});
-s.addText("TRL 4 – 5",{x:5.38,y:5.74,w:1.6,h:0.26,fontFace:BF,fontSize:13,bold:true,color:WHITE});
-s.addText("To be confirmed against prototype validation",{x:5.38,y:6.0,w:2.6,h:0.22,fontFace:BF,fontSize:8,color:WHITE,transparency:55});
-// col3
-card(s,{x:8.78,y:2.45,w:3.55,h:4.0});
-s.addText("Prototype Requirements",{x:9.08,y:2.72,w:3.1,h:0.35,fontFace:HF,fontSize:17,bold:true,color:FOREST});
-["Soil sensors","Weather sensors","Edge device","Camera","Connectivity","Web / mobile application"].forEach((r,i)=>{
-  const y=3.28+i*0.34;
-  s.addShape(p.ShapeType.ellipse,{x:9.1,y:y+0.1,w:0.11,h:0.11,fill:{color:LEAF}});
-  s.addText(r,{x:9.35,y:y-0.02,w:2.8,h:0.3,valign:"middle",fontFace:BF,fontSize:12,color:CHAR,transparency:25});
-});
-s.addShape(p.ShapeType.roundRect,{x:9.08,y:5.45,w:2.95,h:0.85,rectRadius:0.1,fill:{color:"8A6A3B",transparency:92},line:{color:"8A6A3B",width:0.75,dashType:"dash",transparency:50}});
-s.addText("PROTOTYPE COST",{x:9.26,y:5.52,w:2.6,h:0.22,fontFace:BF,fontSize:9,bold:true,charSpacing:1,color:"8A6A3B"});
-s.addText("₹ ________",{x:9.26,y:5.74,w:2.6,h:0.3,fontFace:HF,fontSize:16,bold:true,color:FOREST});
-s.addText("To be finalised after component costing",{x:9.26,y:6.04,w:2.6,h:0.22,fontFace:BF,fontSize:8,color:CHAR,transparency:55});
 footer(s,9);
 
-/* ---------- 10 IMPACT ---------- */
+/* ---------- 10 DEVELOPMENT PLAN & TRL ---------- */
+s=p.addSlide(); shell(s,{dark:true});
+kicker(s,"09 — Development Plan & TRL",true);
+title(s,"Prototype → Pilot → Scale.",true,{fs:32});
+s.addText("A staged build-out, where each phase adds intelligence on top of a working field setup.",{x:1.02,y:2.05,w:8.6,h:0.4,fontFace:BF,fontSize:14,color:WHITE,transparency:32});
+s.addShape(p.ShapeType.line,{x:1.3,y:3.55,w:10.7,h:0,line:{color:LEAF,width:1.25,transparency:45}});
+const phasesX=[["PHASE 1","IoT + FARM MONITORING","Sensor nodes, gateway and live field dashboard."],["PHASE 2","AI RECOMMENDATIONS","Irrigation, fertilizer and risk advisories to the farmer."],["PHASE 3","ADVANCED CROP INTELLIGENCE","Crop imaging, disease/pest prediction and market insight."]];
+phasesX.forEach((ph,i)=>{
+  const x=1.0+i*3.9;
+  s.addShape(p.ShapeType.ellipse,{x:x+1.62,y:3.42,w:0.26,h:0.26,fill:{color:GOLD}});
+  s.addShape(p.ShapeType.roundRect,{x,y:3.9,w:3.5,h:1.85,rectRadius:0.14,fill:{color:WHITE,transparency:93},line:{color:WHITE,width:0.75,transparency:82}});
+  s.addText(ph[0],{x:x+0.3,y:4.08,w:2.9,h:0.26,fontFace:BF,fontSize:10,bold:true,charSpacing:1.6,color:GOLD});
+  s.addText(ph[1],{x:x+0.3,y:4.38,w:2.9,h:0.55,fontFace:HF,fontSize:15,bold:true,color:WHITE,lineSpacing:19});
+  s.addText(ph[2],{x:x+0.3,y:4.98,w:2.9,h:0.65,fontFace:BF,fontSize:11,color:WHITE,transparency:35,lineSpacing:15});
+});
+s.addShape(p.ShapeType.roundRect,{x:1.0,y:6.02,w:5.4,h:0.72,rectRadius:0.1,fill:{color:GOLD,transparency:86},line:{color:GOLD,width:0.75,transparency:50}});
+s.addText("TARGET PROTOTYPE",{x:1.3,y:6.09,w:2.4,h:0.22,fontFace:BF,fontSize:9,bold:true,charSpacing:1.2,color:GOLD});
+s.addText("TRL 4 – 5",{x:1.3,y:6.3,w:1.6,h:0.3,fontFace:HF,fontSize:16,bold:true,color:WHITE});
+s.addText("To be confirmed against actual prototype validation",{x:3.2,y:6.02,w:3.05,h:0.72,valign:"middle",align:"right",fontFace:BF,fontSize:9,color:WHITE,transparency:45,lineSpacing:12});
+s.addText([{text:"Working field setup ",options:{color:WHITE}},{text:"→ ",options:{color:GOLD}},{text:"validated advisories ",options:{color:WHITE}},{text:"→ ",options:{color:GOLD}},{text:"scalable deployment",options:{color:WHITE}}],{x:6.9,y:6.02,w:5.43,h:0.72,align:"right",valign:"middle",fontFace:BF,fontSize:12.5,transparency:18});
+footer(s,10,true);
+
+/* ---------- 11 COST & RESOURCES ---------- */
+s=p.addSlide(); shell(s);
+kicker(s,"10 — Project Cost & Resource Requirement");
+title(s,"What the prototype needs.",false,{fs:32});
+s.addText("A deliberately low-cost hardware set, so the same setup stays affordable when replicated across farms.",{x:1.02,y:2.05,w:8.6,h:0.4,fontFace:BF,fontSize:14,color:CHAR,transparency:30});
+const res=[["SOIL SENSORS","pH, NPK and moisture sensing at root level","soil"],["WEATHER SENSORS","Temperature, humidity and rainfall","cloud"],["EDGE DEVICE","Raspberry Pi / Jetson for local AI","dot"],["CAMERA MODULE","Crop imaging for visual monitoring","ring"],["CONNECTIVITY","Gateway link for field-to-cloud sync","water"],["WEB / MOBILE APP","Farmer dashboard with voice support","sun"]];
+res.forEach((r,i)=>{
+  const x=1.0+(i%3)*2.87, y=2.78+Math.floor(i/3)*1.32;
+  card(s,{x,y,w:2.62,h:1.15});
+  iconBadge(s,{x:x+0.24,y:y+0.2,d:0.4,kind:r[2]});
+  s.addText(r[0],{x:x+0.76,y:y+0.24,w:1.75,h:0.3,fontFace:BF,fontSize:11,bold:true,charSpacing:0.8,color:FOREST});
+  s.addText(r[1],{x:x+0.24,y:y+0.64,w:2.2,h:0.42,fontFace:BF,fontSize:10.5,color:CHAR,transparency:32,lineSpacing:13});
+});
+s.addShape(p.ShapeType.roundRect,{x:9.0,y:2.78,w:3.33,h:2.69,rectRadius:0.14,fill:{color:FOREST}});
+s.addText("PROTOTYPE COST",{x:9.3,y:3.0,w:2.8,h:0.24,fontFace:BF,fontSize:10,bold:true,charSpacing:1.6,color:GOLD});
+s.addText("₹ ________",{x:9.3,y:3.32,w:2.8,h:0.55,fontFace:HF,fontSize:30,bold:true,color:WHITE});
+s.addShape(p.ShapeType.line,{x:9.3,y:4.02,w:2.7,h:0,line:{color:WHITE,width:0.75,transparency:75}});
+s.addText("To be finalised after component costing. Cost is kept low by using off-the-shelf sensors and a single shared edge device per field cluster.",{x:9.3,y:4.16,w:2.8,h:1.15,fontFace:BF,fontSize:11,color:WHITE,transparency:30,lineSpacing:15});
+s.addShape(p.ShapeType.roundRect,{x:1.0,y:5.52,w:7.74,h:1.0,rectRadius:0.14,fill:{color:LEAF,transparency:90},line:{color:LEAF,width:0.75,transparency:60}});
+s.addText("BEYOND HARDWARE",{x:1.28,y:5.66,w:3,h:0.22,fontFace:BF,fontSize:9,bold:true,charSpacing:1.4,color:LEAF});
+s.addText("Student development effort, dataset collection from the pilot field, and college lab support for testing and validation.",{x:1.28,y:5.9,w:7.2,h:0.5,fontFace:BF,fontSize:12,color:CHAR,transparency:22,lineSpacing:16});
+s.addShape(p.ShapeType.roundRect,{x:9.0,y:5.62,w:3.33,h:0.8,rectRadius:0.1,fill:{color:"8A6A3B",transparency:90},line:{color:"8A6A3B",width:0.75,dashType:"dash",transparency:50}});
+s.addText("Costing to be presented with the working prototype.",{x:9.2,y:5.62,w:2.95,h:0.8,valign:"middle",fontFace:BF,fontSize:10.5,color:"8A6A3B",lineSpacing:14});
+footer(s,11);
+
+/* ---------- 12 IMPACT ---------- */
 s=p.addSlide();
 s.addImage({...img("aerial-field.jpg"),x:0,y:0,w:W,h:H});
 s.addShape(p.ShapeType.rect,{x:0,y:0,w:W,h:H,fill:{color:DEEP,transparency:14}});
