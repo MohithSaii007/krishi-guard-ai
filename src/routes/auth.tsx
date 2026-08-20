@@ -60,7 +60,6 @@ function AuthPage() {
     try {
       if (isSignup) {
         if (fullName.trim().length < 2) throw new Error("Please enter your full name.");
-        if (password.length < 6) throw new Error("Password must be at least 6 characters.");
         const { data, error: err } = await supabase.auth.signUp({
           email: email.trim(),
           password,
