@@ -15,7 +15,7 @@ export function LanguageToggle({ className }: { className?: string }) {
       <Languages className="size-3.5 text-earth" aria-hidden />
       {(
         [
-          { code: "en" as const, label: "English" },
+          { code: "en" as const, label: "EN" },
           { code: "te" as const, label: "తెలుగు" },
         ]
       ).map(({ code, label }) => (
