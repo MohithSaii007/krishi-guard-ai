@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { TE, translateString } from "./dictionary";
+import { translateString } from "./dictionary";
 
 export type Lang = "en" | "te";
 const STORAGE_KEY = "kg-lang";
