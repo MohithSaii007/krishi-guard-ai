@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { TE } from "./dictionary";
+import { TE, translateString } from "./dictionary";
 
 export type Lang = "en" | "te";
 const STORAGE_KEY = "kg-lang";
@@ -29,7 +29,7 @@ function translateTree(root: Node, lang: Lang) {
     const key = base.trim();
     if (!key) continue;
     if (lang === "te") {
-      const hit = TE[key];
+      const hit = translateString(key);
       if (!hit) continue;
       if (!originals.has(node)) originals.set(node, node.data);
       const next = node.data.replace(key, hit);
@@ -49,7 +49,7 @@ function translateTree(root: Node, lang: Lang) {
       const orig = el.dataset[attr === "placeholder" ? "i18nPlaceholder" : "i18nAria"];
       if (lang === "te") {
         const base = orig ?? cur;
-        const hit = TE[base.trim()];
+        const hit = translateString(base.trim());
         if (!hit) continue;
         if (!orig) el.dataset[attr === "placeholder" ? "i18nPlaceholder" : "i18nAria"] = base;
         if (cur !== hit) el.setAttribute(attr, hit);
@@ -100,7 +100,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   }, [lang]);
 
   const value = useMemo<Ctx>(
-    () => ({ lang, setLang, t: (s: string) => (lang === "te" ? TE[s] ?? s : s) }),
+    () => ({ lang, setLang, t: (s: string) => (lang === "te" ? translateString(s) ?? s : s) }),
     [lang, setLang],
   );
 
