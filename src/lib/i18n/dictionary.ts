@@ -289,7 +289,8 @@ export const TE_PATTERNS: Array<[RegExp, (m: RegExpMatchArray) => string]> = [
   [/^Field status: (.+) \((\d+)\/100\)$/, (m) => `పొలం స్థితి: ${w(m[1])} (${m[2]}/100)`],
 ];
 
-function w(s: string) {
+function w(s: string | undefined) {
+  if (!s) return "";
   const key = s.trim();
   return TE[key] ?? TE[key.charAt(0).toUpperCase() + key.slice(1)] ?? key;
 }
