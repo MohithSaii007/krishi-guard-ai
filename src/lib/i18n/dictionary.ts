@@ -222,4 +222,16 @@ export const TE: Record<string, string> = {
   "Groundnut": "వేరుశనగ",
   "Tomato": "టమోటా",
   "Red loam": "ఎర్ర నేల",
+
+  "Continue with Google": "గూగుల్‌తో కొనసాగించండి",
+  "Forgot password?": "పాస్‌వర్డ్ మర్చిపోయారా?",
+  "Your farm, monitored and understood.": "మీ పొలం, పర్యవేక్షణలో మరియు అర్థమయ్యేలా.",
+  "Save changes": "మార్పులు సేవ్ చేయండి",
+  "Save": "సేవ్ చేయండి",
+  "Preferred language": "ఇష్టపడే భాష",
+  "Export CSV": "CSV డౌన్‌లోడ్",
+  "Connect": "కలపండి",
+  "Disconnect": "తీసివేయండి",
+  "Demo mode": "డెమో మోడ్",
+  "Refresh": "రిఫ్రెష్",
 };
