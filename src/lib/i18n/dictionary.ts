@@ -109,56 +109,71 @@ export const TE: Record<string, string> = {
   "Bluetooth Low Energy": "బ్లూటూత్ లో ఎనర్జీ",
   "Wi-Fi REST": "Wi-Fi REST",
 
-  // Statuses
-  "Healthy": "ఆరోగ్యంగా ఉంది",
-  "Optimal": "సరైన స్థాయి",
+  // Statuses — simple farm words
+  "Healthy": "బాగుంది",
+  "Optimal": "సరిగ్గా ఉంది",
   "Low": "తక్కువ",
-  "Moderate": "మధ్యస్థం",
-  "Warning": "హెచ్చరిక",
-  "Critical": "తీవ్రమైనది",
-  "At Risk": "ప్రమాదంలో",
-  "Watch": "గమనించండి",
-  "Needs Attention": "శ్రద్ధ అవసరం",
+  "Moderate": "కొంచెం జాగ్రత్త",
+  "Warning": "జాగ్రత్త",
+  "Critical": "ప్రమాదం",
+  "At Risk": "పంటకు ప్రమాదం",
+  "Watch": "కనిపెట్టండి",
+  "Needs Attention": "కొంచెం చూడాలి",
   "DEMO MODE": "డెమో మోడ్",
   "LIVE SENSOR DATA": "ప్రత్యక్ష సెన్సార్ డేటా",
   "DISCONNECTED": "కనెక్షన్ లేదు",
   "SYNCING": "సింక్ అవుతోంది",
   "SENSOR ERROR": "సెన్సార్ లోపం",
-  "HIGH": "అధికం",
-  "MODERATE": "మధ్యస్థం",
-  "LOW": "తక్కువ",
+  "HIGH": "ఎక్కువ ప్రమాదం",
+  "MODERATE": "కొంచెం ప్రమాదం",
+  "LOW": "ప్రమాదం లేదు",
+  "HIGH RISK": "ఎక్కువ ప్రమాదం",
+  "MODERATE RISK": "కొంచెం ప్రమాదం",
+  "LOW RISK": "ప్రమాదం లేదు",
 
-  // AI messages
-  "Irrigation Recommended": "నీరు పెట్టమని సూచన",
-  "Soil moisture is low.": "నేల తేమ తక్కువగా ఉంది.",
-  "Field Conditions Are Healthy": "పొలం పరిస్థితులు బాగున్నాయి",
-  "All sensor values are inside their healthy range.": "అన్ని సెన్సార్ విలువలు ఆరోగ్యకర పరిధిలో ఉన్నాయి.",
-  "No action needed. Keep monitoring.": "ఇప్పుడు ఏమీ చేయనవసరం లేదు. గమనిస్తూ ఉండండి.",
-  "Fungal Disease Risk": "శిలీంధ్ర వ్యాధి ప్రమాదం",
-  "The field is warm and very humid.": "పొలం వెచ్చగా మరియు ఎక్కువ తేమతో ఉంది.",
-  "Humidity is climbing. Inspect lower leaves every two days.": "తేమ పెరుగుతోంది. రెండు రోజులకోసారి కింది ఆకులను పరిశీలించండి.",
-  "Current field conditions do not favour fungal outbreaks.": "ప్రస్తుత పరిస్థితులు శిలీంధ్ర వ్యాధులకు అనుకూలం కాదు.",
-  "High Heat Stress Risk": "అధిక వేడి ఒత్తిడి ప్రమాదం",
-  "Possible Nitrogen Deficiency": "నత్రజని లోపం ఉండవచ్చు",
-  "Crops are using nitrogen faster than the soil can supply it.": "నేల ఇవ్వగలిగే దానికంటే పంట ఎక్కువ నత్రజని వాడుతోంది.",
-  "Nutrient Balance Needs Attention": "పోషకాల సమతుల్యతకు శ్రద్ధ అవసరం",
-  "Phosphorus or potassium levels are low.": "భాస్వరం లేదా పొటాషియం స్థాయిలు తక్కువగా ఉన్నాయి.",
-  "Water Storage Running Low": "నీటి నిల్వ తగ్గుతోంది",
-  "Continuous irrigation has drawn down the stored water.": "నిరంతర నీటిపారుదల వల్ల నిల్వ నీరు తగ్గింది.",
-  "Refill storage before the next irrigation cycle.": "తదుపరి తడి ముందు నీటి నిల్వను నింపండి.",
-  "Check Soil pH": "నేల pH పరీక్షించండి",
-  "The soil has turned acidic.": "నేల ఆమ్లంగా మారింది.",
-  "The soil has turned alkaline.": "నేల క్షారంగా మారింది.",
-  "Apply agricultural lime and re-test after a week.": "సున్నం వేసి ఒక వారం తర్వాత మళ్లీ పరీక్షించండి.",
-  "Apply gypsum or organic matter and re-test after a week.": "జిప్సం లేదా సేంద్రియ ఎరువు వేసి వారం తర్వాత మళ్లీ పరీక్షించండి.",
-  "Irrigate now": "ఇప్పుడు నీరు పెట్టండి",
-  "No irrigation needed": "నీరు పెట్టనవసరం లేదు",
-  "Wait — rain expected": "ఆగండి — వర్షం వచ్చే అవకాశం",
-  "Irrigation action recorded": "నీటిపారుదల చర్య నమోదైంది",
-  "Skipped irrigation": "నీరు పెట్టడం వాయిదా",
-  "Could not record the action": "చర్యను నమోదు చేయలేకపోయాం",
-  "Connect a sensor or stay in demo mode to see a decision.": "నిర్ణయం చూడటానికి సెన్సార్ కలపండి లేదా డెమో మోడ్‌లో ఉండండి.",
-  "Every sensor channel checked against its healthy range": "ప్రతి సెన్సార్ విలువను ఆరోగ్యకర పరిధితో సరిపోల్చాం",
+  // AI advice — written the way a farmer would say it
+  "Irrigation Recommended": "పొలానికి నీరు పెట్టండి",
+  "Soil moisture is low.": "నేలలో తడి తగ్గిపోయింది.",
+  "Field Conditions Are Healthy": "పొలం బాగుంది",
+  "All sensor values are inside their healthy range.": "పొలంలో అన్నీ సరిగ్గానే ఉన్నాయి.",
+  "No action needed. Keep monitoring.": "ఇప్పుడు ఏమీ చేయాల్సిన పని లేదు. అలాగే కనిపెట్టుకుని ఉండండి.",
+  "Fungal Disease Risk": "ఆకు తెగులు వచ్చే ప్రమాదం",
+  "The field is warm and very humid.": "పొలంలో వేడి, తడి గాలి ఎక్కువగా ఉంది — తెగులుకు అనుకూలం.",
+  "Humidity is climbing. Inspect lower leaves every two days.": "గాలిలో తడి పెరుగుతోంది. రెండు రోజులకోసారి కింది ఆకులు తిప్పి చూడండి.",
+  "Current field conditions do not favour fungal outbreaks.": "ఇప్పుడున్న వాతావరణంలో తెగులు వచ్చే అవకాశం లేదు.",
+  "High Heat Stress Risk": "ఎండ వేడిమితో పంట వాడిపోయే ప్రమాదం",
+  "Possible Nitrogen Deficiency": "పంటకు నత్రజని (యూరియా) సరిపోలేదు",
+  "Crops are using nitrogen faster than the soil can supply it.": "నేల ఇచ్చే దానికంటే పంట ఎక్కువ నత్రజని తీసుకుంటోంది.",
+  "Nutrient Balance Needs Attention": "ఎరువుల మోతాదు సరిచేయాలి",
+  "Phosphorus or potassium levels are low.": "భాస్వరం (P) లేదా పొటాష్ (K) తగ్గింది.",
+  "Water Storage Running Low": "నీటి నిల్వ అడుగంటుతోంది",
+  "Continuous irrigation has drawn down the stored water.": "వరుసగా తడులు పెట్టడంతో నిల్వ నీరు తగ్గిపోయింది.",
+  "Refill storage before the next irrigation cycle.": "తర్వాత తడి పెట్టే ముందు ట్యాంక్/బోరు నీరు నింపుకోండి.",
+  "Check Soil pH": "నేల చౌడు/పుల్లదనం చూడండి",
+  "The soil has turned acidic.": "నేల పుల్లగా (ఆమ్లం) మారింది.",
+  "The soil has turned alkaline.": "నేల చౌడుగా (క్షారం) మారింది.",
+  "Apply agricultural lime and re-test after a week.": "సున్నం చల్లి, వారం తర్వాత మళ్ళీ పరీక్ష చేయించండి.",
+  "Apply gypsum or organic matter and re-test after a week.": "జిప్సం లేదా పశువుల ఎరువు వేసి, వారం తర్వాత మళ్ళీ పరీక్ష చేయించండి.",
+  "Irrigate the field now, preferably in the early morning or evening.":
+    "ఇప్పుడే తడి పెట్టండి — పొద్దుపోయే వేళ లేదా తెల్లవారుజామున పెడితే మంచిది.",
+  "Apply a nitrogen-rich fertiliser such as urea in a split dose.":
+    "యూరియా వంటి ఎరువును ఒకేసారి కాకుండా రెండు దఫాలుగా వేయండి.",
+  "Apply a balanced NPK mix as advised by your local agriculture officer.":
+    "మీ వ్యవసాయ అధికారి చెప్పిన మోతాదులో NPK ఎరువు కలిపి వేయండి.",
+  "Irrigate lightly, add mulch and avoid spraying during peak afternoon heat.":
+    "తక్కువగా తడి పెట్టండి, మొక్కల మొదట్లో ఎండుగడ్డి కప్పండి, మధ్యాహ్నం ఎండలో మందు కొట్టకండి.",
+  "Inspect lower leaves and keep a preventive bio-fungicide ready.":
+    "కింది ఆకులు తిప్పి చూడండి, తెగులు మందు (జీవ శిలీంద్ర నాశిని) సిద్ధంగా పెట్టుకోండి.",
+  "Hot, dry air pulls moisture out of the crop faster than the roots can replace it.":
+    "వేడి పొడి గాలి వల్ల వేర్లు పీల్చే దానికంటే ఎక్కువ తడి పంట నుంచి పోతోంది.",
+  "Irrigate now": "ఇప్పుడే తడి పెట్టండి",
+  "No irrigation needed": "ఇప్పుడు తడి అవసరం లేదు",
+  "Wait — rain expected": "ఆగండి — వర్షం పడే సూచన ఉంది",
+  "Irrigation action recorded": "తడి పెట్టిన వివరం నమోదైంది",
+  "Skipped irrigation": "తడి పెట్టడం వాయిదా వేశారు",
+  "Could not record the action": "వివరం నమోదు కాలేదు",
+  "Connect a sensor or stay in demo mode to see a decision.": "సలహా చూడాలంటే సెన్సార్ కలపండి లేదా డెమో మోడ్‌లోనే ఉండండి.",
+  "Every sensor channel checked against its healthy range": "ప్రతి సెన్సార్ విలువను పంటకు సరిపడే స్థాయితో పోల్చి చూశాం",
 
   // Pests / layers
   "Aphid infestation": "పేనుబంక ఉధృతి",
@@ -235,3 +250,56 @@ export const TE: Record<string, string> = {
   "Demo mode": "డెమో మోడ్",
   "Refresh": "రిఫ్రెష్",
 };
+
+/**
+ * Sentences that carry live numbers (sensor values, %) can't be matched exactly,
+ * so they are translated with patterns. Captured sensor names are looked up in TE.
+ */
+export const TE_PATTERNS: Array<[RegExp, (m: RegExpMatchArray) => string]> = [
+  // Alerts
+  [/^(.+) is critical$/, (m) => `${w(m[1])} ప్రమాదకర స్థాయిలో ఉంది`],
+  [/^(.+) needs attention$/, (m) => `${w(m[1])} కొంచెం చూడాల్సిన స్థాయిలో ఉంది`],
+  [/^(.+) is healthy$/, (m) => `${w(m[1])} బాగుంది`],
+  [/^(.+) is far outside the recommended range\.$/, (m) => `${w(m[1])} పంటకు సరిపడే స్థాయికి చాలా దూరంగా ఉంది.`],
+  [/^(.+) is drifting away from the recommended range\.$/, (m) => `${w(m[1])} పంటకు సరిపడే స్థాయి నుంచి జారిపోతోంది.`],
+  [/^(.+) is within the recommended range\.$/, (m) => `${w(m[1])} పంటకు సరిపడే స్థాయిలోనే ఉంది.`],
+  // AI advice with values
+  [
+    /^The field is dry \((\d+(?:\.\d+)?)% moisture\) and rainfall probability is only (\d+(?:\.\d+)?)%\.$/,
+    (m) => `పొలం ఎండిపోయింది (నేల తడి ${m[1]}%), వర్షం పడే అవకాశం ${m[2]}% మాత్రమే.`,
+  ],
+  [/^Soil pH is (\S+), outside the healthy range\.$/, (m) => `నేల pH ${m[1]} — పంటకు సరిపడే స్థాయిలో లేదు.`],
+  [
+    /^Nitrogen is (\S+) mg\/kg — below the preferred level\.$/,
+    (m) => `నత్రజని ${m[1]} mg/kg మాత్రమే — పంటకు కావాల్సిన స్థాయి కంటే తక్కువ.`,
+  ],
+  [/^P is (\S+) mg\/kg and K is (\S+) mg\/kg\.$/, (m) => `భాస్వరం ${m[1]} mg/kg, పొటాష్ ${m[2]} mg/kg ఉంది.`],
+  [
+    /^Temperature is (\S+)°C with only (\S+)% humidity\.$/,
+    (m) => `ఉష్ణోగ్రత ${m[1]}°C, గాలిలో తడి ${m[2]}% మాత్రమే.`,
+  ],
+  [
+    /^Humidity is (\S+)% — ideal conditions for leaf fungus\.$/,
+    (m) => `గాలిలో తడి ${m[1]}% — ఆకు తెగులు వ్యాపించడానికి అనుకూలం.`,
+  ],
+  [
+    /^Water tank \/ borewell level is at (\S+)%\.$/,
+    (m) => `ట్యాంక్ / బోరు నీటి మట్టం ${m[1]}% వద్ద ఉంది.`,
+  ],
+  [/^Field status: (.+) \((\d+)\/100\)$/, (m) => `పొలం స్థితి: ${w(m[1])} (${m[2]}/100)`],
+];
+
+function w(s: string) {
+  const key = s.trim();
+  return TE[key] ?? TE[key.charAt(0).toUpperCase() + key.slice(1)] ?? key;
+}
+
+export function translateString(key: string): string | undefined {
+  const exact = TE[key];
+  if (exact) return exact;
+  for (const [re, fn] of TE_PATTERNS) {
+    const m = key.match(re);
+    if (m) return fn(m);
+  }
+  return undefined;
+}
