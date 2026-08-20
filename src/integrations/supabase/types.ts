@@ -14,7 +14,195 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      alerts: {
+        Row: {
+          created_at: string
+          id: string
+          is_read: boolean
+          message: string
+          severity: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message?: string
+          severity?: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message?: string
+          severity?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      irrigation_events: {
+        Row: {
+          action: string
+          created_at: string
+          duration_minutes: number | null
+          id: string
+          soil_moisture: number | null
+          source: string
+          user_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          duration_minutes?: number | null
+          id?: string
+          soil_moisture?: number | null
+          source?: string
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          duration_minutes?: number | null
+          id?: string
+          soil_moisture?: number | null
+          source?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          district: string | null
+          farm_name: string | null
+          farm_size: string | null
+          full_name: string
+          id: string
+          language: string
+          main_crop: string | null
+          mobile: string | null
+          setup_complete: boolean
+          soil_type: string | null
+          state: string | null
+          updated_at: string
+          village: string | null
+        }
+        Insert: {
+          created_at?: string
+          district?: string | null
+          farm_name?: string | null
+          farm_size?: string | null
+          full_name?: string
+          id: string
+          language?: string
+          main_crop?: string | null
+          mobile?: string | null
+          setup_complete?: boolean
+          soil_type?: string | null
+          state?: string | null
+          updated_at?: string
+          village?: string | null
+        }
+        Update: {
+          created_at?: string
+          district?: string | null
+          farm_name?: string | null
+          farm_size?: string | null
+          full_name?: string
+          id?: string
+          language?: string
+          main_crop?: string | null
+          mobile?: string | null
+          setup_complete?: boolean
+          soil_type?: string | null
+          state?: string | null
+          updated_at?: string
+          village?: string | null
+        }
+        Relationships: []
+      }
+      sensor_devices: {
+        Row: {
+          connection: string
+          created_at: string
+          id: string
+          last_seen: string | null
+          name: string
+          sensor_type: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          connection?: string
+          created_at?: string
+          id?: string
+          last_seen?: string | null
+          name: string
+          sensor_type: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          connection?: string
+          created_at?: string
+          id?: string
+          last_seen?: string | null
+          name?: string
+          sensor_type?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      sensor_readings: {
+        Row: {
+          humidity: number | null
+          id: string
+          nitrogen: number | null
+          phosphorus: number | null
+          potassium: number | null
+          recorded_at: string
+          soil_moisture: number | null
+          soil_ph: number | null
+          source: string
+          temperature: number | null
+          user_id: string
+          water_level: number | null
+        }
+        Insert: {
+          humidity?: number | null
+          id?: string
+          nitrogen?: number | null
+          phosphorus?: number | null
+          potassium?: number | null
+          recorded_at?: string
+          soil_moisture?: number | null
+          soil_ph?: number | null
+          source?: string
+          temperature?: number | null
+          user_id: string
+          water_level?: number | null
+        }
+        Update: {
+          humidity?: number | null
+          id?: string
+          nitrogen?: number | null
+          phosphorus?: number | null
+          potassium?: number | null
+          recorded_at?: string
+          soil_moisture?: number | null
+          soil_ph?: number | null
+          source?: string
+          temperature?: number | null
+          user_id?: string
+          water_level?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
