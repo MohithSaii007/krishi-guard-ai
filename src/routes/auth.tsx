@@ -131,9 +131,6 @@ function AuthPage() {
             </Link>
             <LanguageToggle />
           </div>
-          <div className="hidden">
-            <Brand />
-          </Link>
           <h1 className="mt-8 font-display text-2xl font-semibold text-forest">
             {isSignup ? "Create your farmer account" : "Welcome back, farmer"}
           </h1>
