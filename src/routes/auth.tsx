@@ -7,8 +7,8 @@ import { Brand } from "@/components/kg/Brand";
 import heroImg from "@/assets/farmer-inspect.jpg";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    mode: search['mode'] === "signup" ? ("signup" as const) : ("login" as const),
+  validateSearch: (search: Record<string, unknown>): { mode?: "login" | "signup" } => ({
+    ...(search['mode'] === "signup" ? { mode: "signup" as const } : {}),
   }),
   head: () => ({
     meta: [
