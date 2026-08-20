@@ -24,6 +24,7 @@ import { useSensors } from "@/lib/sensors/SensorProvider";
 import { buildAlerts } from "@/lib/ai/engine";
 import { Brand } from "./Brand";
 import { ModeBadge } from "./ModeBadge";
+import { LanguageToggle } from "./LanguageToggle";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -122,7 +123,8 @@ export function AppShell({ title, subtitle, children }: { title: string; subtitl
               <h1 className="truncate font-display text-lg font-semibold text-forest">{title}</h1>
               {subtitle && <p className="truncate text-xs text-earth">{subtitle}</p>}
             </div>
-            <ModeBadge className="hidden sm:inline-flex" />
+            <LanguageToggle />
+            <ModeBadge className="hidden md:inline-flex" />
             <span className="hidden items-center gap-1 rounded-full bg-white px-2.5 py-1 text-[11px] text-earth shadow-sm md:inline-flex">
               <MapPin className="size-3" />
               {profile?.village || profile?.district || "Field location"}

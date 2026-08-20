@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { AppShell } from "@/components/kg/AppShell";
 import { useProfile, useUpdateProfile, type FarmerProfile } from "@/hooks/useProfile";
 import { useSensors } from "@/lib/sensors/SensorProvider";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 export const Route = createFileRoute("/_authenticated/settings")({
   component: Settings,
@@ -12,19 +13,19 @@ export const Route = createFileRoute("/_authenticated/settings")({
 const LANGUAGES = [
   { value: "en", label: "English" },
   { value: "te", label: "తెలుగు (Telugu)" },
-  { value: "hi", label: "हिन्दी (Hindi)" },
-  { value: "ta", label: "தமிழ் (Tamil)" },
 ];
 
 function Settings() {
   const { data: profile } = useProfile();
   const update = useUpdateProfile();
   const { mode, state, deviceName } = useSensors();
+  const { lang, setLang } = useI18n();
   const [form, setForm] = useState<Partial<FarmerProfile>>({});
 
   useEffect(() => {
     if (profile) setForm(profile);
-  }, [profile]);
+    if (profile?.language === "te" || profile?.language === "en") setLang(profile.language);
+  }, [profile, setLang]);
 
   function set<K extends keyof FarmerProfile>(key: K, value: FarmerProfile[K]) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -58,8 +59,11 @@ function Settings() {
                 Preferred language
               </span>
               <select
-                value={form.language ?? "en"}
-                onChange={(e) => set("language", e.target.value)}
+                value={form.language ?? lang}
+                onChange={(e) => {
+                  set("language", e.target.value);
+                  if (e.target.value === "te" || e.target.value === "en") setLang(e.target.value);
+                }}
                 className="w-full rounded-xl border border-forest/15 bg-white px-3.5 py-2.5 text-sm text-forest outline-none focus:border-fresh"
               >
                 {LANGUAGES.map((l) => (

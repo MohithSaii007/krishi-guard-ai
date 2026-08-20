@@ -4,6 +4,7 @@ import { Loader2, Sprout } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { Brand } from "@/components/kg/Brand";
+import { LanguageToggle } from "@/components/kg/LanguageToggle";
 import heroImg from "@/assets/farmer-inspect.jpg";
 
 export const Route = createFileRoute("/auth")({
@@ -124,9 +125,12 @@ function AuthPage() {
 
       <div className="flex flex-col justify-center px-5 py-12 sm:px-10">
         <div className="mx-auto w-full max-w-md">
-          <Link to="/" className="inline-block">
-            <Brand />
-          </Link>
+          <div className="flex items-center justify-between gap-3">
+            <Link to="/" className="inline-block">
+              <Brand />
+            </Link>
+            <LanguageToggle />
+          </div>
           <h1 className="mt-8 font-display text-2xl font-semibold text-forest">
             {isSignup ? "Create your farmer account" : "Welcome back, farmer"}
           </h1>
