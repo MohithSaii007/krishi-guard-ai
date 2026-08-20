@@ -1,7 +1,8 @@
+import { memo, useMemo } from "react";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import type { SensorReading } from "@/lib/sensors/types";
 
-export function TrendChart({
+function TrendChartBase({
   history,
   metric,
   label,
@@ -12,10 +13,14 @@ export function TrendChart({
   label: string;
   color?: string;
 }) {
-  const data = history.slice(-60).map((r) => ({
-    time: new Date(r.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" }),
-    value: r[metric],
-  }));
+  const data = useMemo(
+    () =>
+      history.slice(-40).map((r) => ({
+        time: new Date(r.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        value: r[metric],
+      })),
+    [history, metric],
+  );
 
   return (
     <div className="kg-card p-5">
@@ -39,7 +44,15 @@ export function TrendChart({
                 contentStyle={{ borderRadius: 12, border: "1px solid var(--mint)", fontSize: 12 }}
                 labelStyle={{ color: "var(--earth)" }}
               />
-              <Area type="monotone" dataKey="value" stroke={color} strokeWidth={2} fill={`url(#g-${String(metric)})`} />
+              <Area
+                type="monotone"
+                dataKey="value"
+                stroke={color}
+                strokeWidth={2}
+                fill={`url(#g-${String(metric)})`}
+                isAnimationActive={false}
+                dot={false}
+              />
             </AreaChart>
           </ResponsiveContainer>
         )}
@@ -47,3 +60,5 @@ export function TrendChart({
     </div>
   );
 }
+
+export const TrendChart = memo(TrendChartBase);
