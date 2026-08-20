@@ -150,7 +150,7 @@ function AuthPage() {
               type="password"
               value={password}
               onChange={setPassword}
-              placeholder="At least 6 characters"
+              placeholder="Your password"
               required
               maxLength={72}
             />
