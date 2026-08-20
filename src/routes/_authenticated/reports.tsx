@@ -9,7 +9,7 @@ import { fetchWeather } from "@/lib/weather";
 import { SENSOR_META, type SensorKey } from "@/lib/sensors/types";
 
 export const Route = createFileRoute("/_authenticated/reports")({
-  component: Reports;
+  component: Reports,
 });
 
 const KEYS: SensorKey[] = [
