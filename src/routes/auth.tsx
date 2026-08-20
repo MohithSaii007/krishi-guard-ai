@@ -109,7 +109,7 @@ function AuthPage() {
   return (
     <div className="grid min-h-screen bg-cream lg:grid-cols-2">
       <div className="relative hidden lg:block">
-        <img src={heroImg} alt="Farmer inspecting crop leaves in a field" className="absolute inset-0 size-full object-cover" />
+        <img src={heroImg} alt="Farmer inspecting crop leaves in a field" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-forest via-forest/70 to-forest/25" />
         <div className="relative flex h-full flex-col justify-end p-10 text-white">
           <Sprout className="size-9 text-fresh" />

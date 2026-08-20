@@ -25,7 +25,7 @@ function Monitoring() {
     <AppShell title="Farm Monitoring" subtitle="Field zones, live readings and historical trends">
       <div className="grid gap-4 lg:grid-cols-3">
         <section className="kg-card overflow-hidden lg:col-span-2">
-          <img src={fieldImg} alt="Aerial view of the monitored farm field" className="h-56 w-full object-cover" />
+          <img src={fieldImg} alt="Aerial view of the monitored farm field" loading="lazy" decoding="async" className="h-56 w-full object-cover" />
           <div className="p-5">
             <p className="flex items-center gap-1.5 text-sm text-earth">
               <MapPin className="size-4" />
