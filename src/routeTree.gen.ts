@@ -14,11 +14,15 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedAlertsRouteImport } from './routes/_authenticated/alerts'
+import { Route as AuthenticatedCropHealthRouteImport } from './routes/_authenticated/crop-health'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedDroneRouteImport } from './routes/_authenticated/drone'
 import { Route as AuthenticatedInsightsRouteImport } from './routes/_authenticated/insights'
 import { Route as AuthenticatedIrrigationRouteImport } from './routes/_authenticated/irrigation'
 import { Route as AuthenticatedMonitoringRouteImport } from './routes/_authenticated/monitoring'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedSensorsRouteImport } from './routes/_authenticated/sensors'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedWeatherRouteImport } from './routes/_authenticated/weather'
 
 const IndexRoute = IndexRouteImport.update({
@@ -45,9 +49,19 @@ const AuthenticatedAlertsRoute = AuthenticatedAlertsRouteImport.update({
   path: '/alerts',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCropHealthRoute = AuthenticatedCropHealthRouteImport.update({
+  id: '/crop-health',
+  path: '/crop-health',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDroneRoute = AuthenticatedDroneRouteImport.update({
+  id: '/drone',
+  path: '/drone',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedInsightsRoute = AuthenticatedInsightsRouteImport.update({
@@ -65,9 +79,19 @@ const AuthenticatedMonitoringRoute = AuthenticatedMonitoringRouteImport.update({
   path: '/monitoring',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedSensorsRoute = AuthenticatedSensorsRouteImport.update({
   id: '/sensors',
   path: '/sensors',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedWeatherRoute = AuthenticatedWeatherRouteImport.update({
@@ -81,11 +105,15 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/alerts': typeof AuthenticatedAlertsRoute
+  '/crop-health': typeof AuthenticatedCropHealthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/drone': typeof AuthenticatedDroneRoute
   '/insights': typeof AuthenticatedInsightsRoute
   '/irrigation': typeof AuthenticatedIrrigationRoute
   '/monitoring': typeof AuthenticatedMonitoringRoute
+  '/reports': typeof AuthenticatedReportsRoute
   '/sensors': typeof AuthenticatedSensorsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/weather': typeof AuthenticatedWeatherRoute
 }
 export interface FileRoutesByTo {
@@ -93,11 +121,15 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/alerts': typeof AuthenticatedAlertsRoute
+  '/crop-health': typeof AuthenticatedCropHealthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/drone': typeof AuthenticatedDroneRoute
   '/insights': typeof AuthenticatedInsightsRoute
   '/irrigation': typeof AuthenticatedIrrigationRoute
   '/monitoring': typeof AuthenticatedMonitoringRoute
+  '/reports': typeof AuthenticatedReportsRoute
   '/sensors': typeof AuthenticatedSensorsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/weather': typeof AuthenticatedWeatherRoute
 }
 export interface FileRoutesById {
@@ -107,11 +139,15 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/alerts': typeof AuthenticatedAlertsRoute
+  '/_authenticated/crop-health': typeof AuthenticatedCropHealthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/drone': typeof AuthenticatedDroneRoute
   '/_authenticated/insights': typeof AuthenticatedInsightsRoute
   '/_authenticated/irrigation': typeof AuthenticatedIrrigationRoute
   '/_authenticated/monitoring': typeof AuthenticatedMonitoringRoute
+  '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/sensors': typeof AuthenticatedSensorsRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/weather': typeof AuthenticatedWeatherRoute
 }
 export interface FileRouteTypes {
@@ -121,11 +157,15 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/alerts'
+    | '/crop-health'
     | '/dashboard'
+    | '/drone'
     | '/insights'
     | '/irrigation'
     | '/monitoring'
+    | '/reports'
     | '/sensors'
+    | '/settings'
     | '/weather'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -133,11 +173,15 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/alerts'
+    | '/crop-health'
     | '/dashboard'
+    | '/drone'
     | '/insights'
     | '/irrigation'
     | '/monitoring'
+    | '/reports'
     | '/sensors'
+    | '/settings'
     | '/weather'
   id:
     | '__root__'
@@ -146,11 +190,15 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/_authenticated/alerts'
+    | '/_authenticated/crop-health'
     | '/_authenticated/dashboard'
+    | '/_authenticated/drone'
     | '/_authenticated/insights'
     | '/_authenticated/irrigation'
     | '/_authenticated/monitoring'
+    | '/_authenticated/reports'
     | '/_authenticated/sensors'
+    | '/_authenticated/settings'
     | '/_authenticated/weather'
   fileRoutesById: FileRoutesById
 }
@@ -198,11 +246,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAlertsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/crop-health': {
+      id: '/_authenticated/crop-health'
+      path: '/crop-health'
+      fullPath: '/crop-health'
+      preLoaderRoute: typeof AuthenticatedCropHealthRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/drone': {
+      id: '/_authenticated/drone'
+      path: '/drone'
+      fullPath: '/drone'
+      preLoaderRoute: typeof AuthenticatedDroneRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/insights': {
@@ -226,11 +288,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMonitoringRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/sensors': {
       id: '/_authenticated/sensors'
       path: '/sensors'
       fullPath: '/sensors'
       preLoaderRoute: typeof AuthenticatedSensorsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/weather': {
@@ -245,21 +321,29 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAlertsRoute: typeof AuthenticatedAlertsRoute
+  AuthenticatedCropHealthRoute: typeof AuthenticatedCropHealthRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDroneRoute: typeof AuthenticatedDroneRoute
   AuthenticatedInsightsRoute: typeof AuthenticatedInsightsRoute
   AuthenticatedIrrigationRoute: typeof AuthenticatedIrrigationRoute
   AuthenticatedMonitoringRoute: typeof AuthenticatedMonitoringRoute
+  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedSensorsRoute: typeof AuthenticatedSensorsRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedWeatherRoute: typeof AuthenticatedWeatherRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAlertsRoute: AuthenticatedAlertsRoute,
+  AuthenticatedCropHealthRoute: AuthenticatedCropHealthRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDroneRoute: AuthenticatedDroneRoute,
   AuthenticatedInsightsRoute: AuthenticatedInsightsRoute,
   AuthenticatedIrrigationRoute: AuthenticatedIrrigationRoute,
   AuthenticatedMonitoringRoute: AuthenticatedMonitoringRoute,
+  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedSensorsRoute: AuthenticatedSensorsRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedWeatherRoute: AuthenticatedWeatherRoute,
 }
 
