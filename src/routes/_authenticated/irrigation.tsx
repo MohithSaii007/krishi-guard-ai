@@ -15,7 +15,7 @@ export const Route = createFileRoute("/_authenticated/irrigation")({
 interface IrrigationEvent {
   id: string;
   action: string;
-  note: string | null;
+  source: string;
   soil_moisture: number | null;
   created_at: string;
 }
@@ -30,11 +30,11 @@ function Irrigation() {
     queryFn: async (): Promise<IrrigationEvent[]> => {
       const { data, error } = await supabase
         .from("irrigation_events")
-        .select("id, action, note, soil_moisture, created_at")
+        .select("id, action, source, soil_moisture, created_at")
         .order("created_at", { ascending: false })
         .limit(20);
       if (error) throw error;
-      return (data ?? []) as IrrigationEvent[];
+      return (data ?? []) as unknown as IrrigationEvent[];
     },
   });
 
@@ -46,7 +46,7 @@ function Irrigation() {
         user_id: auth.user.id,
         action,
         soil_moisture: reading?.soilMoisture ?? null,
-        note: `Rain chance ${weather?.rainProbability ?? "?"}%`,
+        source: `manual · rain ${weather?.rainProbability ?? "?"}%`,
       });
       if (error) throw error;
     },
@@ -121,7 +121,7 @@ function Irrigation() {
             <div>
               <p className="text-sm font-semibold text-forest">{e.action}</p>
               <p className="text-xs text-earth">
-                {new Date(e.created_at).toLocaleString()} · Moisture {e.soil_moisture ?? "--"}% · {e.note}
+                {new Date(e.created_at).toLocaleString()} · Moisture {e.soil_moisture ?? "--"}% · {e.source}
               </p>
             </div>
           </div>
