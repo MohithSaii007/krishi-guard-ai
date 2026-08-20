@@ -3,10 +3,12 @@ import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
+  // getSession() reads the locally cached session (no network round-trip),
+  // so navigating between authenticated pages stays instant.
   beforeLoad: async () => {
-    const { data, error } = await supabase.auth.getUser();
-    if (error || !data.user) throw redirect({ to: "/auth" });
-    return { user: data.user };
+    const { data } = await supabase.auth.getSession();
+    if (!data.session?.user) throw redirect({ to: "/auth" });
+    return { user: data.session.user };
   },
   component: () => <Outlet />,
 });
