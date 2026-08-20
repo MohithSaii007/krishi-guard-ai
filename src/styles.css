@@ -14,6 +14,8 @@
   --color-earth: var(--earth);
   --color-amber-warn: var(--amber-warn);
   --color-danger: var(--danger);
+  --color-sky: var(--sky);
+  --color-charcoal: var(--charcoal);
   --font-display: var(--font-heading);
   --font-sans: var(--font-body);
 }
@@ -27,6 +29,8 @@
   --earth: oklch(0.545 0.056 71.9); /* #8B6F47 */
   --amber-warn: oklch(0.771 0.121 61.9); /* #F4A261 */
   --danger: oklch(0.646 0.157 32.4); /* #E76F51 */
+  --sky: oklch(0.702 0.093 236.5); /* #4A9FD8 */
+  --charcoal: oklch(0.253 0.017 152.6); /* #1F2923 */
   --font-heading: "Poppins", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
 }
