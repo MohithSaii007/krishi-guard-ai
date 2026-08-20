@@ -4,81 +4,74 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── KRISHI-GUARD AI deck design system ───────────────────────────── */
+/* ── KRISHI-GUARD AI agriculture design system ─────────────────────── */
 @theme inline {
   --color-forest: var(--forest);
-  --color-forest-deep: var(--forest-deep);
-  --color-leaf: var(--leaf);
+  --color-agri: var(--agri);
+  --color-fresh: var(--fresh);
+  --color-mint: var(--mint);
   --color-cream: var(--cream);
   --color-earth: var(--earth);
-  --color-gold: var(--gold);
+  --color-amber-warn: var(--amber-warn);
+  --color-danger: var(--danger);
+  --color-sky: var(--sky);
   --color-charcoal: var(--charcoal);
   --font-display: var(--font-heading);
   --font-sans: var(--font-body);
 }
 
 :root {
-  --forest: oklch(0.323 0.061 158.3);
-  --forest-deep: oklch(0.245 0.05 158.3);
-  --leaf: oklch(0.577 0.117 138.5);
-  --cream: oklch(0.955 0.019 89.5);
-  --earth: oklch(0.462 0.058 62.4);
-  --gold: oklch(0.789 0.121 88.6);
-  --charcoal: oklch(0.238 0.014 152.6);
+  --forest: oklch(0.322 0.056 160.5); /* #1B4332 */
+  --agri: oklch(0.418 0.072 162.3); /* #2D6A4F */
+  --fresh: oklch(0.706 0.113 159.5); /* #52B788 */
+  --mint: oklch(0.949 0.043 152.5); /* #D8F3DC */
+  --cream: oklch(0.976 0.011 95.5); /* #F8F6EF */
+  --earth: oklch(0.545 0.056 71.9); /* #8B6F47 */
+  --amber-warn: oklch(0.771 0.121 61.9); /* #F4A261 */
+  --danger: oklch(0.646 0.157 32.4); /* #E76F51 */
+  --sky: oklch(0.702 0.093 236.5); /* #4A9FD8 */
+  --charcoal: oklch(0.253 0.017 152.6); /* #1F2923 */
   --font-heading: "Poppins", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
 }
 
-.slide-content {
-  width: 1920px;
-  height: 1080px;
-  overflow: hidden;
-  position: relative;
-  font-family: var(--font-body);
+.font-display { font-family: var(--font-heading); letter-spacing: -0.02em; }
 
-  --slide-title-lg: 104px;
-  --slide-title: 84px;
-  --slide-subtitle: 46px;
-  --slide-body-lg: 38px;
-  --slide-body: 30px;
-  --slide-caption: 24px;
-  --slide-kicker: 22px;
-  --slide-chrome: 20px;
+.kg-gradient {
+  background-image: linear-gradient(135deg, var(--forest) 0%, var(--agri) 55%, var(--fresh) 130%);
+}
+.kg-soft-gradient {
+  background-image: linear-gradient(160deg, var(--cream) 0%, var(--mint) 100%);
+}
+.kg-glass {
+  background-color: color-mix(in oklab, white 78%, transparent);
+  backdrop-filter: blur(14px);
+}
+.kg-card {
+  border-radius: 1.25rem;
+  background-color: white;
+  border: 1px solid color-mix(in oklab, var(--forest) 10%, transparent);
+  box-shadow: 0 1px 2px oklch(0.32 0.056 160 / 0.04), 0 12px 28px -20px oklch(0.32 0.056 160 / 0.35);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.kg-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px oklch(0.32 0.056 160 / 0.06), 0 18px 36px -20px oklch(0.32 0.056 160 / 0.45);
+}
+.kg-leaf-pattern {
+  background-image: radial-gradient(
+      circle at 20% 20%,
+      color-mix(in oklab, var(--fresh) 22%, transparent) 0,
+      transparent 45%
+    ),
+    radial-gradient(circle at 80% 0%, color-mix(in oklab, var(--mint) 60%, transparent) 0, transparent 40%);
 }
 
-.slide-title-lg { font-family: var(--font-heading); font-weight: 700; font-size: var(--slide-title-lg); line-height: 1; letter-spacing: -0.045em; }
-.slide-title { font-family: var(--font-heading); font-weight: 600; font-size: var(--slide-title); line-height: 1.05; letter-spacing: -0.035em; }
-.slide-subtitle { font-family: var(--font-heading); font-weight: 500; font-size: var(--slide-subtitle); line-height: 1.15; letter-spacing: -0.02em; }
-.slide-body-lg { font-size: var(--slide-body-lg); line-height: 1.25; }
-.slide-body { font-size: var(--slide-body); line-height: 1.35; }
-.slide-caption { font-size: var(--slide-caption); line-height: 1.3; }
-.slide-kicker { font-family: var(--font-heading); font-weight: 600; font-size: var(--slide-kicker); line-height: 1.1; letter-spacing: 0.18em; text-transform: uppercase; }
-.slide-chrome, .slide-badge, .slide-footer, .slide-page {
-  font-size: var(--slide-chrome); line-height: 1.15; letter-spacing: 0.06em;
-}
-.slide-badge, .slide-page { white-space: nowrap; }
-
-.slide-wrapper {
-  position: absolute;
-  width: 1920px;
-  height: 1080px;
-  left: 50%;
-  top: 50%;
-  margin-left: -960px;
-  margin-top: -540px;
-  transform-origin: center center;
-}
-
-@keyframes slide-in {
-  from { opacity: 0; transform: translateY(14px); }
+@keyframes kg-rise {
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: none; }
 }
-.anim { animation: slide-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-
-@media print {
-  @page { size: 1920px 1080px landscape; margin: 0; }
-  .print-slide { page-break-after: always; break-after: page; }
-}
+.kg-rise { animation: kg-rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 
 /*
  * Design system definition.
