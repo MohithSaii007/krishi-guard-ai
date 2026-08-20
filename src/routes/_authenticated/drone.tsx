@@ -20,7 +20,7 @@ function Drone() {
     <AppShell title="Drone & Field Monitoring" subtitle="Aerial survey layers for large-field decision making">
       <div className="grid gap-4 lg:grid-cols-2">
         <section className="kg-card overflow-hidden">
-          <img src={fieldImg} alt="Aerial drone view of farm field blocks" className="h-64 w-full object-cover" />
+          <img src={fieldImg} alt="Aerial drone view of farm field blocks" loading="lazy" decoding="async" className="h-64 w-full object-cover" />
           <div className="p-5">
             <p className="flex items-center gap-2 font-display text-base font-semibold text-forest">
               <Plane className="size-4" /> Latest field imagery
@@ -32,7 +32,7 @@ function Drone() {
           </div>
         </section>
         <section className="kg-card overflow-hidden">
-          <img src={techImg} alt="Smart farming sensor hardware in a field" className="h-64 w-full object-cover" />
+          <img src={techImg} alt="Smart farming sensor hardware in a field" loading="lazy" decoding="async" className="h-64 w-full object-cover" />
           <div className="p-5">
             <p className="font-display text-base font-semibold text-forest">Ground truth pairing</p>
             <p className="mt-2 text-sm text-muted-foreground">

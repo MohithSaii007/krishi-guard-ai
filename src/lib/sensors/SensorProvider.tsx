@@ -21,7 +21,7 @@ interface SensorContextValue {
 
 const SensorContext = createContext<SensorContextValue | null>(null);
 
-const MAX_HISTORY = 240;
+const MAX_HISTORY = 60;
 
 export function SensorProvider({ children }: { children: ReactNode }) {
   const transports = useRef<Record<SensorMode, SensorTransport>>({

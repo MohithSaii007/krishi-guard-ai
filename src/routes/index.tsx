@@ -86,7 +86,7 @@ function Landing() {
       </header>
 
       <section className="relative overflow-hidden">
-        <img src={heroImg} alt="Indian farmer inspecting a healthy green crop field" className="absolute inset-0 size-full object-cover" />
+        <img src={heroImg} alt="Indian farmer inspecting a healthy green crop field" loading="eager" fetchPriority="high" decoding="async" className="absolute inset-0 size-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-forest via-forest/85 to-forest/35" />
         <div className="relative mx-auto max-w-6xl px-5 py-20 sm:py-28">
           <span className="kg-rise inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur">
@@ -164,7 +164,7 @@ function Landing() {
 
       <section className="mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 lg:grid-cols-2">
         <div className="overflow-hidden rounded-3xl">
-          <img src={fieldImg} alt="Aerial view of green agricultural fields" className="h-72 w-full object-cover lg:h-96" />
+          <img src={fieldImg} alt="Aerial view of green agricultural fields" loading="lazy" decoding="async" className="h-72 w-full object-cover lg:h-96" />
         </div>
         <div>
           <h2 className="font-display text-2xl font-semibold text-forest sm:text-3xl">
