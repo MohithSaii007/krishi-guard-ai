@@ -39,6 +39,22 @@ export function SensorProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<ConnectionState>("DEMO MODE");
   const [error, setError] = useState<string | null>(null);
   const [deviceName, setDeviceName] = useState<string | null>(null);
+  const [gatewayUrl, setGatewayUrlState] = useState("");
+  const [bleBlockedByFrame, setBleBlockedByFrame] = useState(false);
+  const [bleSupported, setBleSupported] = useState(false);
+
+  useEffect(() => {
+    const wifi = transports.current.wifi as WifiSensorTransport;
+    setGatewayUrlState(wifi.getEndpoint());
+    setBleSupported(transports.current.ble.isSupported());
+    setBleBlockedByFrame((transports.current.ble as BleSensorTransport).isBlockedByFrame());
+  }, []);
+
+  const setGatewayUrl = useCallback((url: string) => {
+    const wifi = transports.current.wifi as WifiSensorTransport;
+    wifi.setEndpoint(url);
+    setGatewayUrlState(wifi.getEndpoint());
+  }, []);
 
   const active = transports.current[mode];
 
