@@ -57,17 +57,49 @@ export function ConnectionPanel() {
       {error && (
         <p className="mt-4 rounded-xl border border-danger/30 bg-danger/10 p-3 text-sm text-danger">{error}</p>
       )}
+      <div className="mt-5 rounded-xl border border-forest/15 bg-mint/40 p-4">
+        <label htmlFor="gateway-url" className="text-xs font-semibold uppercase tracking-wide text-earth">
+          Wi-Fi device address
+        </label>
+        <div className="mt-2 flex flex-col gap-2 sm:flex-row">
+          <input
+            id="gateway-url"
+            value={draftUrl}
+            onChange={(e) => setDraftUrl(e.target.value)}
+            placeholder="192.168.1.50/api/readings"
+            className="flex-1 rounded-xl border border-forest/20 bg-white px-3 py-2.5 text-sm text-forest outline-none focus:border-forest"
+          />
+          <button
+            onClick={() => {
+              setGatewayUrl(draftUrl);
+              if (draftUrl.trim()) void connectWifi();
+            }}
+            className="rounded-xl bg-forest px-4 py-2.5 text-sm font-medium text-white hover:opacity-90"
+          >
+            Save & Connect
+          </button>
+        </div>
+        <p className="mt-2 text-xs text-earth">
+          Type the address your ESP32 or Raspberry Pi shows on your Wi-Fi, then press Save & Connect. Your phone or
+          laptop must be on the same Wi-Fi network as the device.
+        </p>
+      </div>
+
       {!bleSupported && (
         <p className="mt-3 text-xs text-earth">
-          Bluetooth sensor connection is supported in compatible browsers such as Chrome/Edge on supported devices.
+          Bluetooth pairing needs Chrome or Edge on Android, Windows or macOS. It does not work on iPhone or in Safari.
+        </p>
+      )}
+      {bleSupported && bleBlockedByFrame && (
+        <p className="mt-3 text-xs text-earth">
+          Bluetooth pairing is blocked inside this preview window. Open the app in its own browser tab, then tap Connect
+          BLE Device.
         </p>
       )}
       {!gatewayConfigured && (
-        <p className="mt-1 text-xs text-earth">
-          No Wi-Fi gateway configured yet. Set the VITE_SENSOR_API_URL environment variable to point at your ESP32 /
-          Raspberry Pi endpoint.
-        </p>
+        <p className="mt-1 text-xs text-earth">No Wi-Fi device saved yet — add its address above to connect.</p>
       )}
+
 
       <div className="mt-5 flex flex-wrap gap-2">
         <button
