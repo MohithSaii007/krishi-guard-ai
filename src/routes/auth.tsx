@@ -65,40 +65,31 @@ function AuthPage() {
     try {
       if (isSignup) {
         if (fullName.trim().length < 2) throw new Error("Please enter your full name.");
-        const { data, error: err } = await supabase.auth.signUp({
-          email: email.trim(),
-          password,
-          options: {
-            emailRedirectTo: window.location.origin,
-            data: { full_name: fullName.trim(), mobile: mobile.trim(), village: village.trim() },
-          },
-        });
-        if (err) throw err;
-        if (!data.session) setMessage("Check your email to confirm your account, then sign in.");
-      } else if (useOtp) {
-        const id = email.trim();
-        const isPhone = /^\+?\d{8,15}$/.test(id.replace(/[\s-]/g, ""));
         if (!otpSent) {
-          if (isPhone) {
-            const phone = id.replace(/[\s-]/g, "");
-            const { error: err } = await supabase.auth.signInWithOtp({ phone: phone.startsWith("+") ? phone : `+91${phone}` });
-            if (err) throw err;
-          } else {
-            const { error: err } = await supabase.auth.signInWithOtp({ email: id });
-            if (err) throw err;
-          }
+          const { error: err } = await supabase.auth.signInWithOtp({
+            email: email.trim(),
+            options: {
+              data: { full_name: fullName.trim(), mobile: mobile.trim(), village: village.trim() },
+            },
+          });
+          if (err) throw err;
           setOtpSent(true);
-          setMessage(`OTP sent to your ${isPhone ? "mobile number" : "email"}. Enter the 6-digit code below.`);
+          setMessage("OTP sent to your email. Enter the 6-digit code to create your account.");
         } else {
           if (otp.trim().length !== 6) throw new Error("Enter the 6-digit OTP.");
-          if (isPhone) {
-            const phone = id.replace(/[\s-]/g, "");
-            const { error: err } = await supabase.auth.verifyOtp({ phone: phone.startsWith("+") ? phone : `+91${phone}`, token: otp.trim(), type: "sms" });
-            if (err) throw err;
-          } else {
-            const { error: err } = await supabase.auth.verifyOtp({ email: id, token: otp.trim(), type: "email" });
-            if (err) throw err;
-          }
+          const { error: err } = await supabase.auth.verifyOtp({ email: email.trim(), token: otp.trim(), type: "email" });
+          if (err) throw err;
+        }
+      } else if (useOtp) {
+        if (!otpSent) {
+          const { error: err } = await supabase.auth.signInWithOtp({ email: email.trim() });
+          if (err) throw err;
+          setOtpSent(true);
+          setMessage("OTP sent to your email. Enter the 6-digit code below.");
+        } else {
+          if (otp.trim().length !== 6) throw new Error("Enter the 6-digit OTP.");
+          const { error: err } = await supabase.auth.verifyOtp({ email: email.trim(), token: otp.trim(), type: "email" });
+          if (err) throw err;
         }
       } else {
         const { error: err } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
