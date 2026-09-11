@@ -32,12 +32,12 @@ function Dashboard() {
 
   return (
     <AppShell
-      title={`Namaste, ${profile?.full_name?.split(" ")[0] ?? "Farmer"}`}
-      subtitle={`${profile?.farm_name ?? "My Farm"} · ${profile?.main_crop ?? "Crop not set"}`}
+      title="Farm Overview"
+      subtitle={`Namaste, ${profile?.full_name?.split(" ")[0] ?? "Farmer"} · ${profile?.farm_name ?? "My Farm"} · ${profile?.main_crop ?? "Crop not set"}`}
     >
       <div className="grid gap-4 lg:grid-cols-3">
         <section className="kg-card kg-leaf-pattern p-6 lg:col-span-2">
-          <p className="text-xs font-semibold uppercase tracking-widest text-earth">Farm Health Score</p>
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-earth">Farm Health Score</h2>
           <div className="mt-3 flex flex-wrap items-end gap-4">
             <p className="font-display text-5xl font-bold text-forest">
               {score.total}
@@ -65,9 +65,9 @@ function Dashboard() {
         </section>
 
         <section className="kg-card p-6">
-          <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-earth">
+          <h2 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-earth">
             <CloudSun className="size-4" /> Weather Now
-          </p>
+          </h2>
           <p className="mt-3 font-display text-4xl font-bold text-forest">{weather?.temperature ?? "--"}°C</p>
           <p className="text-sm text-muted-foreground">{weather?.condition ?? "Loading…"}</p>
           <dl className="mt-4 space-y-2 text-sm">
