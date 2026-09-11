@@ -80,16 +80,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "KRISHI-GUARD AI — Smart Farming Pitch Deck" },
+      { title: "KRISHI-GUARD AI — Smart Farming & Crop Protection Platform" },
       {
         name: "description",
         content:
-          "Intelligent Smart Farming & Crop Protection Ecosystem — AI, IoT and Edge Computing pitch deck for MSME Idea Hackathon 6.0.",
+          "AI and IoT platform that turns soil, weather and crop sensor data into simple farming actions in English or Telugu.",
       },
-      { property: "og:title", content: "KRISHI-GUARD AI" },
+      { property: "og:title", content: "KRISHI-GUARD AI — Smart Farming & Crop Protection Platform" },
       {
         property: "og:description",
-        content: "Intelligent Smart Farming & Crop Protection Ecosystem.",
+        content: "AI and IoT platform turning soil, weather and crop sensor data into simple farming actions.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
