@@ -1,10 +1,29 @@
+import { useEffect, useState } from "react";
 import { Bluetooth, RefreshCw, Unplug, Wifi } from "lucide-react";
 import { useSensors } from "@/lib/sensors/SensorProvider";
 import { ModeBadge } from "./ModeBadge";
 
 export function ConnectionPanel() {
-  const { state, mode, deviceName, error, bleSupported, gatewayConfigured, connectBle, connectWifi, disconnect, refresh, setMode } =
-    useSensors();
+  const {
+    state,
+    mode,
+    deviceName,
+    error,
+    bleSupported,
+    bleBlockedByFrame,
+    gatewayConfigured,
+    gatewayUrl,
+    setGatewayUrl,
+    connectBle,
+    connectWifi,
+    disconnect,
+    refresh,
+    setMode,
+  } = useSensors();
+
+  const [draftUrl, setDraftUrl] = useState("");
+  useEffect(() => setDraftUrl(gatewayUrl), [gatewayUrl]);
+
 
   return (
     <section className="kg-card p-5 sm:p-6">
