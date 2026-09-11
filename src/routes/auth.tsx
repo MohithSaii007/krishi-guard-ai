@@ -8,6 +8,7 @@ import { LanguageToggle } from "@/components/kg/LanguageToggle";
 import heroImg from "@/assets/farmer-inspect.jpg";
 
 export const Route = createFileRoute("/auth")({
+  staticData: { sitemap: true },
   validateSearch: (search: Record<string, unknown>): { mode?: "login" | "signup" } => ({
     ...(search['mode'] === "signup" ? { mode: "signup" as const } : {}),
   }),

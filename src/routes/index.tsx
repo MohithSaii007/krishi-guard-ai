@@ -5,6 +5,7 @@ import heroImg from "@/assets/hero-farmer.jpg";
 import fieldImg from "@/assets/aerial-field.jpg";
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "KRISHI-GUARD AI — Smart Crop Protection & Decision Support" },
