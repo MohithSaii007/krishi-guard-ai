@@ -31,7 +31,7 @@ function AuthPage() {
   const { mode } = Route.useSearch();
   const navigate = useNavigate();
   const [isSignup, setIsSignup] = useState(mode === "signup");
-  const [useOtp, setUseOtp] = useState(false);
+  const [useOtp, setUseOtp] = useState(true);
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
   const [email, setEmail] = useState("");
