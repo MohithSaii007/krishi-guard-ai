@@ -44,6 +44,234 @@ export type Database = {
         }
         Relationships: []
       }
+      customer_domains: {
+        Row: {
+          auto_renew: boolean
+          created_at: string
+          domain_name: string
+          expires_at: string | null
+          id: string
+          nameservers: string[]
+          order_item_id: string | null
+          provider_reference: string | null
+          registered_at: string | null
+          registrar_provider: string
+          status: Database["public"]["Enums"]["domain_registration_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          auto_renew?: boolean
+          created_at?: string
+          domain_name: string
+          expires_at?: string | null
+          id?: string
+          nameservers?: string[]
+          order_item_id?: string | null
+          provider_reference?: string | null
+          registered_at?: string | null
+          registrar_provider?: string
+          status?: Database["public"]["Enums"]["domain_registration_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          auto_renew?: boolean
+          created_at?: string
+          domain_name?: string
+          expires_at?: string | null
+          id?: string
+          nameservers?: string[]
+          order_item_id?: string | null
+          provider_reference?: string | null
+          registered_at?: string | null
+          registrar_provider?: string
+          status?: Database["public"]["Enums"]["domain_registration_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customer_domains_order_item_id_fkey"
+            columns: ["order_item_id"]
+            isOneToOne: true
+            referencedRelation: "domain_order_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      domain_dns_records: {
+        Row: {
+          created_at: string
+          domain_id: string
+          host: string
+          id: string
+          priority: number | null
+          provider_reference: string | null
+          record_type: string
+          ttl: number
+          updated_at: string
+          user_id: string
+          value: string
+        }
+        Insert: {
+          created_at?: string
+          domain_id: string
+          host: string
+          id?: string
+          priority?: number | null
+          provider_reference?: string | null
+          record_type: string
+          ttl?: number
+          updated_at?: string
+          user_id: string
+          value: string
+        }
+        Update: {
+          created_at?: string
+          domain_id?: string
+          host?: string
+          id?: string
+          priority?: number | null
+          provider_reference?: string | null
+          record_type?: string
+          ttl?: number
+          updated_at?: string
+          user_id?: string
+          value?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "domain_dns_records_domain_id_fkey"
+            columns: ["domain_id"]
+            isOneToOne: false
+            referencedRelation: "customer_domains"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      domain_order_items: {
+        Row: {
+          created_at: string
+          domain_name: string
+          id: string
+          order_id: string
+          provider_reference: string | null
+          registration_status: Database["public"]["Enums"]["domain_registration_status"]
+          renewal_price: number
+          unit_price: number
+          user_id: string
+          years: number
+        }
+        Insert: {
+          created_at?: string
+          domain_name: string
+          id?: string
+          order_id: string
+          provider_reference?: string | null
+          registration_status?: Database["public"]["Enums"]["domain_registration_status"]
+          renewal_price: number
+          unit_price: number
+          user_id: string
+          years?: number
+        }
+        Update: {
+          created_at?: string
+          domain_name?: string
+          id?: string
+          order_id?: string
+          provider_reference?: string | null
+          registration_status?: Database["public"]["Enums"]["domain_registration_status"]
+          renewal_price?: number
+          unit_price?: number
+          user_id?: string
+          years?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "domain_order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "domain_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      domain_orders: {
+        Row: {
+          created_at: string
+          currency: string
+          failure_reason: string | null
+          id: string
+          idempotency_key: string
+          payment_reference: string | null
+          status: Database["public"]["Enums"]["domain_order_status"]
+          total_amount: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          failure_reason?: string | null
+          id?: string
+          idempotency_key: string
+          payment_reference?: string | null
+          status?: Database["public"]["Enums"]["domain_order_status"]
+          total_amount?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          failure_reason?: string | null
+          id?: string
+          idempotency_key?: string
+          payment_reference?: string | null
+          status?: Database["public"]["Enums"]["domain_order_status"]
+          total_amount?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      domain_products: {
+        Row: {
+          created_at: string
+          currency: string
+          extension: string
+          id: string
+          is_active: boolean
+          registration_price: number
+          renewal_price: number
+          transfer_price: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          extension: string
+          id?: string
+          is_active?: boolean
+          registration_price: number
+          renewal_price: number
+          transfer_price: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          extension?: string
+          id?: string
+          is_active?: boolean
+          registration_price?: number
+          renewal_price?: number
+          transfer_price?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       irrigation_events: {
         Row: {
           action: string
@@ -203,15 +431,57 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["marketplace_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["marketplace_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["marketplace_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_marketplace_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["marketplace_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      domain_order_status:
+        | "draft"
+        | "payment_pending"
+        | "paid"
+        | "registering"
+        | "completed"
+        | "failed"
+        | "refunded"
+      domain_registration_status:
+        | "pending"
+        | "active"
+        | "expiring"
+        | "expired"
+        | "failed"
+        | "transferring"
+      marketplace_role: "admin" | "support" | "customer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -338,6 +608,25 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      domain_order_status: [
+        "draft",
+        "payment_pending",
+        "paid",
+        "registering",
+        "completed",
+        "failed",
+        "refunded",
+      ],
+      domain_registration_status: [
+        "pending",
+        "active",
+        "expiring",
+        "expired",
+        "failed",
+        "transferring",
+      ],
+      marketplace_role: ["admin", "support", "customer"],
+    },
   },
 } as const
