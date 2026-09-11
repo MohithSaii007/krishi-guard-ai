@@ -227,7 +227,7 @@ function AuthPage() {
           </button>
 
           <div className="mt-6 flex flex-wrap items-center justify-between gap-2 text-sm">
-            <button onClick={() => setIsSignup((v) => !v)} className="font-medium text-agri hover:underline">
+            <button onClick={() => { setIsSignup((v) => !v); setOtpSent(false); setOtp(""); setError(null); setMessage(null); }} className="font-medium text-agri hover:underline">
               {isSignup ? "Already have an account? Sign in" : "New here? Create an account"}
             </button>
             {!isSignup && !useOtp && (
