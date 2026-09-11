@@ -177,16 +177,29 @@ function AuthPage() {
                 </div>
               </>
             )}
-            <Field label="Email" type="email" value={email} onChange={setEmail} placeholder="farmer@example.com" required maxLength={255} />
             <Field
-              label="Password"
-              type="password"
-              value={password}
-              onChange={setPassword}
-              placeholder="Your password"
+              label={useOtp ? "Email or mobile number" : "Email"}
+              type={useOtp ? "text" : "email"}
+              value={email}
+              onChange={(v) => { setEmail(v); setOtpSent(false); setOtp(""); }}
+              placeholder={useOtp ? "farmer@example.com or 98765 43210" : "farmer@example.com"}
               required
-              maxLength={72}
+              maxLength={255}
             />
+            {!useOtp && (
+              <Field
+                label="Password"
+                type="password"
+                value={password}
+                onChange={setPassword}
+                placeholder="Your password"
+                required
+                maxLength={72}
+              />
+            )}
+            {useOtp && otpSent && (
+              <Field label="6-digit OTP" value={otp} onChange={setOtp} placeholder="123456" required maxLength={6} />
+            )}
 
             {error && <p className="rounded-xl bg-danger/10 p-3 text-sm text-danger">{error}</p>}
             {message && <p className="rounded-xl bg-fresh/15 p-3 text-sm text-agri">{message}</p>}
