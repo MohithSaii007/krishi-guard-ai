@@ -168,6 +168,50 @@ function CropHealth() {
             )}
           </div>
         </div>
+
+        {result && (
+          <div className="mt-6 rounded-2xl border border-forest/15 bg-mint/30 p-5">
+            <div className="flex flex-wrap items-center gap-3">
+              <h3 className="font-display text-xl font-semibold text-forest">{result.crop}</h3>
+              <span
+                className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide ${
+                  SEVERITY_STYLE[result.severity] ?? SEVERITY_STYLE['unknown']
+                }`}
+              >
+                {result.severity}
+              </span>
+              <span className="text-xs text-earth">Confidence {Math.round(result.confidence)}%</span>
+            </div>
+            <p className="mt-2 text-sm font-semibold text-forest">{result.condition}</p>
+            <p className="mt-2 text-sm text-muted-foreground">{result.situation}</p>
+
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              {(
+                [
+                  ["What is visible", result.symptoms],
+                  ["Likely reasons", result.causes],
+                  ["Do this now", result.actions],
+                  ["Prevent next time", result.prevention],
+                ] as [string, string[]][]
+              )
+                .filter(([, items]) => items.length > 0)
+                .map(([title, items]) => (
+                  <div key={title} className="rounded-xl bg-white/70 p-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-earth">{title}</p>
+                    <ul className="mt-2 space-y-1.5 text-sm text-forest">
+                      {items.map((item) => (
+                        <li key={item}>· {item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+            </div>
+            <p className="mt-4 text-xs text-earth">
+              This is guidance from a photo. For severe damage, confirm with your local agriculture officer before
+              spraying.
+            </p>
+          </div>
+        )}
       </section>
 
       <h2 className="mt-8 flex items-center gap-2 font-display text-lg font-semibold text-forest">
