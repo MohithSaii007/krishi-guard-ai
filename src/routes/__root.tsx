@@ -82,16 +82,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "DomainNest — Find and Manage Your Perfect Domain" },
+      { title: "KRISHI-GUARD AI — Smart Crop Protection & Decision Support" },
       {
         name: "description",
         content:
-          "Search, buy and manage domain names with clear pricing, secure checkout and simple DNS tools.",
+          "AI-powered smart farming platform turning soil, weather and crop sensor data into simple, actionable advice for farmers.",
       },
-      { property: "og:title", content: "DomainNest — Your next idea starts here" },
+      { property: "og:title", content: "KRISHI-GUARD AI — Smart Crop Protection" },
       {
         property: "og:description",
-        content: "Search, buy and manage domain names with transparent pricing.",
+        content: "Intelligent farming. Better decisions. Healthier crops.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
