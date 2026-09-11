@@ -144,7 +144,7 @@ export class WifiSensorTransport implements SensorTransport {
 
   private async poll() {
     if (!this.isSupported()) {
-      this.onState?.("ERROR", "Sensor gateway URL is not configured.");
+      this.onState?.("ERROR", "Enter your device address first (for example 192.168.1.50/api/readings).");
       return;
     }
     this.onState?.("SYNCING");
@@ -166,7 +166,11 @@ export class WifiSensorTransport implements SensorTransport {
       this.onReading?.(reading);
       this.onState?.("CONNECTED");
     } catch (err) {
-      this.onState?.("ERROR", err instanceof Error ? err.message : "Gateway unreachable");
+      const base = err instanceof Error ? err.message : "Gateway unreachable";
+      this.onState?.(
+        "ERROR",
+        `${base}. Check that the device is switched on, on the same Wi-Fi as this phone/laptop, and that its address allows requests from the browser (CORS).`,
+      );
     }
   }
 
@@ -174,7 +178,7 @@ export class WifiSensorTransport implements SensorTransport {
     this.onReading = onReading;
     this.onState = onState;
     if (!this.isSupported()) {
-      onState("DISCONNECTED", "No gateway configured. Add VITE_SENSOR_API_URL to connect a real ESP32 / Raspberry Pi.");
+      onState("DISCONNECTED", "No device address saved yet. Enter your ESP32 / Raspberry Pi address below to connect.");
       return () => {};
     }
     void this.poll();
