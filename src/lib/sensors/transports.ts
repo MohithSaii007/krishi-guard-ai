@@ -82,23 +82,53 @@ export class DemoSensorTransport implements SensorTransport {
  * The endpoint comes from VITE_SENSOR_API_URL; nothing is hardcoded.
  * A WebSocket/MQTT transport can replace the polling loop without UI changes.
  */
+const GATEWAY_STORAGE_KEY = "kg.gatewayUrl";
+
+function normalizeEndpoint(raw: string) {
+  const value = raw.trim();
+  if (!value) return "";
+  if (/^https?:\/\//i.test(value)) return value;
+  return `http://${value}`;
+}
+
 export class WifiSensorTransport implements SensorTransport {
   readonly mode = "wifi" as const;
   readonly label = "Wi-Fi / ESP32 Gateway";
   private timer: ReturnType<typeof setInterval> | null = null;
-  private endpoint = (import.meta.env['VITE_SENSOR_API_URL'] as string | undefined) ?? "";
+  private endpoint = normalizeEndpoint(
+    (typeof localStorage !== "undefined" ? localStorage.getItem(GATEWAY_STORAGE_KEY) : null) ??
+      (import.meta.env['VITE_SENSOR_API_URL'] as string | undefined) ??
+      "",
+  );
   private onReading: ((r: SensorReading) => void) | null = null;
   private onState: ((s: ConnectionState, e?: string) => void) | null = null;
 
   isSupported() {
     return this.endpoint.length > 0;
   }
+  getEndpoint() {
+    return this.endpoint;
+  }
+  setEndpoint(raw: string) {
+    this.endpoint = normalizeEndpoint(raw);
+    if (typeof localStorage !== "undefined") {
+      if (this.endpoint) localStorage.setItem(GATEWAY_STORAGE_KEY, this.endpoint);
+      else localStorage.removeItem(GATEWAY_STORAGE_KEY);
+    }
+  }
   deviceName() {
     return this.endpoint ? `Gateway @ ${this.endpoint}` : null;
   }
 
   async connect() {
-    if (!this.isSupported()) throw new Error("No sensor gateway URL configured (VITE_SENSOR_API_URL).");
+    if (!this.isSupported()) {
+      throw new Error("Enter your device address first (for example 192.168.1.50/api/readings).");
+    }
+    if (typeof location !== "undefined" && location.protocol === "https:" && this.endpoint.startsWith("http://")) {
+      throw new Error(
+        "This page is secure (https) but the device address is plain http, so the browser blocks it. Serve the device over https, or open this app over http on the same network.",
+      );
+    }
     await this.poll();
   }
 
@@ -114,7 +144,7 @@ export class WifiSensorTransport implements SensorTransport {
 
   private async poll() {
     if (!this.isSupported()) {
-      this.onState?.("ERROR", "Sensor gateway URL is not configured.");
+      this.onState?.("ERROR", "Enter your device address first (for example 192.168.1.50/api/readings).");
       return;
     }
     this.onState?.("SYNCING");
@@ -136,7 +166,11 @@ export class WifiSensorTransport implements SensorTransport {
       this.onReading?.(reading);
       this.onState?.("CONNECTED");
     } catch (err) {
-      this.onState?.("ERROR", err instanceof Error ? err.message : "Gateway unreachable");
+      const base = err instanceof Error ? err.message : "Gateway unreachable";
+      this.onState?.(
+        "ERROR",
+        `${base}. Check that the device is switched on, on the same Wi-Fi as this phone/laptop, and that its address allows requests from the browser (CORS).`,
+      );
     }
   }
 
@@ -144,7 +178,7 @@ export class WifiSensorTransport implements SensorTransport {
     this.onReading = onReading;
     this.onState = onState;
     if (!this.isSupported()) {
-      onState("DISCONNECTED", "No gateway configured. Add VITE_SENSOR_API_URL to connect a real ESP32 / Raspberry Pi.");
+      onState("DISCONNECTED", "No device address saved yet. Enter your ESP32 / Raspberry Pi address below to connect.");
       return () => {};
     }
     void this.poll();
@@ -196,6 +230,10 @@ export class BleSensorTransport implements SensorTransport {
   isSupported() {
     return typeof navigator !== "undefined" && "bluetooth" in navigator;
   }
+  /** True when the app is displayed inside a frame, where browsers block Bluetooth pairing. */
+  isBlockedByFrame() {
+    return typeof window !== "undefined" && window.self !== window.top;
+  }
   deviceName() {
     return this.device?.name ?? null;
   }
@@ -203,15 +241,29 @@ export class BleSensorTransport implements SensorTransport {
   async connect() {
     if (!this.isSupported()) {
       throw new Error(
-        "Bluetooth sensor connection is supported in compatible browsers such as Chrome/Edge on supported devices.",
+        "This browser cannot pair Bluetooth devices. Use Chrome or Edge on Android, Windows, or macOS (Bluetooth is not available in Safari or on iPhone).",
+      );
+    }
+    if (this.isBlockedByFrame()) {
+      throw new Error(
+        "Bluetooth pairing is blocked while the app is shown inside the editor preview. Open the app in its own browser tab and try again.",
       );
     }
     this.onState?.("SYNCING");
     const bt = (navigator as unknown as { bluetooth: BluetoothLike }).bluetooth;
-    const device = await bt.requestDevice({
-      filters: [{ services: [BleSensorTransport.SERVICE_UUID] }],
-      optionalServices: [BleSensorTransport.SERVICE_UUID],
-    });
+    let device: BleDevice;
+    try {
+      device = await bt.requestDevice({
+        filters: [{ services: [BleSensorTransport.SERVICE_UUID] }],
+        optionalServices: [BleSensorTransport.SERVICE_UUID],
+      });
+    } catch {
+      // Some ESP32 firmware does not advertise the service UUID; show every nearby device instead.
+      device = await bt.requestDevice({
+        acceptAllDevices: true,
+        optionalServices: [BleSensorTransport.SERVICE_UUID],
+      });
+    }
     const server = await device.gatt?.connect();
     if (!server) throw new Error("Could not open a GATT connection to the device.");
     const service = await server.getPrimaryService(BleSensorTransport.SERVICE_UUID);

@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { BleSensorTransport, DemoSensorTransport, WifiSensorTransport } from "./transports";
+
 import type { ConnectionState, SensorMode, SensorReading, SensorTransport } from "./types";
 
 interface SensorContextValue {
@@ -11,7 +12,10 @@ interface SensorContextValue {
   deviceName: string | null;
   error: string | null;
   bleSupported: boolean;
+  bleBlockedByFrame: boolean;
   gatewayConfigured: boolean;
+  gatewayUrl: string;
+  setGatewayUrl: (url: string) => void;
   setMode: (mode: SensorMode) => void;
   connectBle: () => Promise<void>;
   connectWifi: () => Promise<void>;
@@ -36,6 +40,22 @@ export function SensorProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<ConnectionState>("DEMO MODE");
   const [error, setError] = useState<string | null>(null);
   const [deviceName, setDeviceName] = useState<string | null>(null);
+  const [gatewayUrl, setGatewayUrlState] = useState("");
+  const [bleBlockedByFrame, setBleBlockedByFrame] = useState(false);
+  const [bleSupported, setBleSupported] = useState(false);
+
+  useEffect(() => {
+    const wifi = transports.current.wifi as WifiSensorTransport;
+    setGatewayUrlState(wifi.getEndpoint());
+    setBleSupported(transports.current.ble.isSupported());
+    setBleBlockedByFrame((transports.current.ble as BleSensorTransport).isBlockedByFrame());
+  }, []);
+
+  const setGatewayUrl = useCallback((url: string) => {
+    const wifi = transports.current.wifi as WifiSensorTransport;
+    wifi.setEndpoint(url);
+    setGatewayUrlState(wifi.getEndpoint());
+  }, []);
 
   const active = transports.current[mode];
 
@@ -105,15 +125,34 @@ export function SensorProvider({ children }: { children: ReactNode }) {
       isDemo: mode === "demo",
       deviceName,
       error,
-      bleSupported: transports.current.ble.isSupported(),
-      gatewayConfigured: transports.current.wifi.isSupported(),
+      bleSupported,
+      bleBlockedByFrame,
+      gatewayConfigured: gatewayUrl.length > 0,
+      gatewayUrl,
+      setGatewayUrl,
       setMode,
       connectBle,
       connectWifi,
       disconnect,
       refresh,
     }),
-    [reading, history, state, mode, deviceName, error, setMode, connectBle, connectWifi, disconnect, refresh],
+    [
+      reading,
+      history,
+      state,
+      mode,
+      deviceName,
+      error,
+      bleSupported,
+      bleBlockedByFrame,
+      gatewayUrl,
+      setGatewayUrl,
+      setMode,
+      connectBle,
+      connectWifi,
+      disconnect,
+      refresh,
+    ],
   );
 
   return <SensorContext.Provider value={value}>{children}</SensorContext.Provider>;
