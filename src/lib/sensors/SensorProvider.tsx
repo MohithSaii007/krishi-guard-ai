@@ -11,7 +11,10 @@ interface SensorContextValue {
   deviceName: string | null;
   error: string | null;
   bleSupported: boolean;
+  bleBlockedByFrame: boolean;
   gatewayConfigured: boolean;
+  gatewayUrl: string;
+  setGatewayUrl: (url: string) => void;
   setMode: (mode: SensorMode) => void;
   connectBle: () => Promise<void>;
   connectWifi: () => Promise<void>;
