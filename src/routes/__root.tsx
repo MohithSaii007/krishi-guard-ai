@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SensorProvider } from "@/lib/sensors/SensorProvider";
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import { Toaster } from "@/components/ui/sonner";
+import { DomainCartProvider } from "@/lib/domains/cart";
 
 function NotFoundComponent() {
   return (
@@ -81,20 +82,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "KRISHI-GUARD AI — Smart Farming & Crop Protection Platform" },
+      { title: "DomainNest — Find and Manage Your Perfect Domain" },
       {
         name: "description",
         content:
-          "AI and IoT platform that turns soil, weather and crop sensor data into simple farming actions in English or Telugu.",
+          "Search, buy and manage domain names with clear pricing, secure checkout and simple DNS tools.",
       },
-      { property: "og:title", content: "KRISHI-GUARD AI — Smart Farming & Crop Protection Platform" },
+      { property: "og:title", content: "DomainNest — Your next idea starts here" },
       {
         property: "og:description",
-        content: "AI and IoT platform turning soil, weather and crop sensor data into simple farming actions.",
+        content: "Search, buy and manage domain names with transparent pricing.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
       {
         name: "google-site-verification",
         content: "ScPGR7Wv4u4tD5p8eFNpopyTqthIDlPtnXbVe5RA9bY",
@@ -140,11 +140,13 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
-        <SensorProvider>
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-        <Toaster />
-      </SensorProvider>
+        <DomainCartProvider>
+          <SensorProvider>
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+            <Toaster />
+          </SensorProvider>
+        </DomainCartProvider>
       </I18nProvider>
     </QueryClientProvider>
   );

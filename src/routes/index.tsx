@@ -1,209 +1,114 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Bot, Bug, CloudSun, Droplets, Leaf, Plane, Radio, ShieldCheck } from "lucide-react";
-import { Brand } from "@/components/kg/Brand";
-import heroImg from "@/assets/hero-farmer.jpg";
-import fieldImg from "@/assets/aerial-field.jpg";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo, useState, type FormEvent } from "react";
+import { ArrowRight, Check, CheckCircle2, Headphones, LockKeyhole, Search, ShieldCheck, Sparkles, X } from "lucide-react";
+import { MarketplaceHeader } from "@/components/domains/MarketplaceHeader";
+import { DomainBrand } from "@/components/domains/DomainBrand";
+import { supabase } from "@/integrations/supabase/client";
+import { useDomainCart, type CartDomain } from "@/lib/domains/cart";
 
 export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
-  head: () => ({
-    meta: [
-      { title: "KRISHI-GUARD AI — Smart Crop Protection & Decision Support" },
-      {
-        name: "description",
-        content:
-          "AI-powered smart farming platform combining soil, weather, crop and field sensor data into simple, actionable recommendations for farmers.",
-      },
-      { property: "og:title", content: "KRISHI-GUARD AI — Smart Crop Protection" },
-      {
-        property: "og:description",
-        content: "Intelligent farming. Better decisions. Healthier crops. Works in Demo Mode today, real sensors tomorrow.",
-      },
-    ],
-  }),
-  component: Landing,
+  head: () => ({ meta: [
+    { title: "DomainNest — Find the Perfect Domain for Your Next Idea" },
+    { name: "description", content: "Search domain names with transparent registration and renewal pricing, then manage every domain from one simple dashboard." },
+    { property: "og:title", content: "DomainNest — Your next idea starts here" },
+    { property: "og:description", content: "Find a memorable domain with transparent pricing and simple management." },
+  ] }),
+  component: MarketplaceHome,
 });
 
-const FEATURES = [
-  {
-    icon: Radio,
-    title: "Smart Sensors",
-    body: "Soil moisture, pH, NPK, temperature, humidity and water level from ESP32, Raspberry Pi or BLE field nodes.",
-  },
-  {
-    icon: Bot,
-    title: "AI Recommendations",
-    body: "A transparent decision engine turns raw readings into plain-language actions: what happened, why, what to do.",
-  },
-  {
-    icon: Droplets,
-    title: "Smart Irrigation",
-    body: "Moisture, water level and rainfall probability combine into a single irrigate-or-wait decision.",
-  },
-  {
-    icon: Bug,
-    title: "Crop Health",
-    body: "Upload a crop photo and log the issue, ready for a trained disease model to be connected.",
-  },
-  {
-    icon: Plane,
-    title: "Drone & Field Monitoring",
-    body: "Field zones today, NDVI and multispectral drone layers when your survey data arrives.",
-  },
-  {
-    icon: CloudSun,
-    title: "Weather Intelligence",
-    body: "Current conditions and a 5-day outlook feeding straight into every recommendation.",
-  },
+type Product = { extension: string; registration_price: number; renewal_price: number; currency: string };
+const FALLBACK_PRODUCTS: Product[] = [
+  { extension: ".com", registration_price: 12.99, renewal_price: 17.99, currency: "USD" },
+  { extension: ".in", registration_price: 8.99, renewal_price: 11.99, currency: "USD" },
+  { extension: ".co", registration_price: 24.99, renewal_price: 29.99, currency: "USD" },
+  { extension: ".org", registration_price: 10.99, renewal_price: 16.99, currency: "USD" },
+  { extension: ".net", registration_price: 13.99, renewal_price: 18.99, currency: "USD" },
+  { extension: ".ai", registration_price: 79.99, renewal_price: 89.99, currency: "USD" },
 ];
 
-const STEPS = [
-  { n: "01", t: "Data Collection", d: "Field sensors stream soil, water and climate readings." },
-  { n: "02", t: "AI Analysis", d: "Rules evaluate every value against agronomic thresholds." },
-  { n: "03", t: "Risk Detection", d: "Water stress, heat stress, nutrient and disease risks are scored." },
-  { n: "04", t: "Recommendation", d: "Simple advice in the farmer's own language." },
-  { n: "05", t: "Farmer Action", d: "Irrigate, fertilise or inspect — then track the result." },
-];
+function cleanDomain(value: string) {
+  return value.toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").split("/")[0]?.replace(/[^a-z0-9.-]/g, "") ?? "";
+}
 
-function Landing() {
-  return (
-    <div className="min-h-screen bg-cream">
-      <header className="sticky top-0 z-30 border-b border-forest/10 bg-cream/85 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
-          <Brand />
-          <div className="flex items-center gap-2">
-            <Link to="/auth" className="rounded-xl px-3 py-2 text-sm font-medium text-forest hover:bg-mint">
-              Login
-            </Link>
-            <Link
-              to="/auth"
-              search={{ mode: "signup" }}
-              className="rounded-xl bg-forest px-4 py-2 text-sm font-medium text-white hover:opacity-90"
-            >
-              Get Started
-            </Link>
-          </div>
-        </div>
-      </header>
+function MarketplaceHome() {
+  const [input, setInput] = useState("");
+  const [query, setQuery] = useState("");
+  const { add, remove, has } = useDomainCart();
+  const { data: products = FALLBACK_PRODUCTS } = useQuery({
+    queryKey: ["domain-products"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("domain_products").select("extension,registration_price,renewal_price,currency").eq("is_active", true).order("registration_price");
+      if (error) throw error;
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
 
-      <section className="relative overflow-hidden">
-        <img src={heroImg} alt="Indian farmer inspecting a healthy green crop field" loading="eager" fetchPriority="high" decoding="async" className="absolute inset-0 size-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-forest via-forest/85 to-forest/35" />
-        <div className="relative mx-auto max-w-6xl px-5 py-20 sm:py-28">
-          <span className="kg-rise inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur">
-            <Leaf className="size-3.5" /> AI · IoT · Edge Computing
-          </span>
-          <h1 className="kg-rise mt-5 max-w-3xl font-display text-4xl font-bold leading-tight text-white sm:text-6xl">
-            Intelligent Farming. Better Decisions. Healthier Crops.
-          </h1>
-          <p className="kg-rise mt-5 max-w-2xl text-base text-white/85 sm:text-lg">
-            An AI-powered smart farming system that combines soil, weather, crop and field data to provide actionable
-            recommendations for farmers.
-          </p>
-          <div className="kg-rise mt-8 flex flex-wrap gap-3">
-            <Link
-              to="/auth"
-              search={{ mode: "signup" }}
-              className="rounded-xl bg-fresh px-5 py-3 text-sm font-semibold text-forest shadow-lg transition-transform hover:-translate-y-0.5"
-            >
-              Explore Dashboard
-            </Link>
-            <Link
-              to="/auth"
-              className="rounded-xl border border-white/30 bg-white/10 px-5 py-3 text-sm font-semibold text-white backdrop-blur hover:bg-white/20"
-            >
-              View Live Monitoring
-            </Link>
-          </div>
-          <div className="mt-10 grid max-w-xl grid-cols-3 gap-4 text-white">
-            {[
-              ["8", "Live sensor streams"],
-              ["BLE + Wi-Fi", "Hardware ready"],
-              ["100%", "Farmer-friendly advice"],
-            ].map(([v, l]) => (
-              <div key={l} className="rounded-2xl border border-white/15 bg-white/10 p-3 backdrop-blur">
-                <p className="font-display text-lg font-semibold">{v}</p>
-                <p className="text-[11px] text-white/75">{l}</p>
-              </div>
-            ))}
-          </div>
+  const results = useMemo(() => {
+    if (!query) return [];
+    const normalized = cleanDomain(query);
+    const label = normalized.includes(".") ? normalized.slice(0, normalized.lastIndexOf(".")) : normalized;
+    const preferredExtension = normalized.includes(".") ? `.${normalized.split(".").pop()}` : ".com";
+    return [...products].sort((a, b) => a.extension === preferredExtension ? -1 : b.extension === preferredExtension ? 1 : 0).map((product, index) => ({
+      ...product,
+      domain: `${label || "youridea"}${product.extension}`,
+      recommended: index === 0,
+    }));
+  }, [products, query]);
+
+  function search(event: FormEvent) {
+    event.preventDefault();
+    const value = cleanDomain(input);
+    if (value) setQuery(value);
+  }
+
+  function toggle(item: CartDomain) { has(item.name) ? remove(item.name) : add(item); }
+
+  return <div className="min-h-screen bg-white text-slate-950">
+    <MarketplaceHeader />
+    <main>
+      <section className="domain-hero relative overflow-hidden px-5 pb-24 pt-20 text-white sm:pb-28 sm:pt-24">
+        <div className="domain-grid absolute inset-0 opacity-30" />
+        <div className="relative mx-auto max-w-5xl text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-indigo-100 backdrop-blur"><Sparkles className="size-3.5" /> Simple names. Serious ideas.</span>
+          <h1 className="mx-auto mt-6 max-w-4xl font-display text-4xl font-bold leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl">Your next big idea deserves the <span className="domain-shimmer">perfect domain.</span></h1>
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">Search memorable names, see honest renewal pricing, and manage everything from one beautifully simple dashboard.</p>
+          <form onSubmit={search} className="mx-auto mt-9 flex max-w-3xl flex-col gap-2 rounded-2xl bg-white p-2 shadow-2xl shadow-indigo-950/40 sm:flex-row">
+            <label className="flex min-w-0 flex-1 items-center gap-3 px-3"><Search className="size-5 shrink-0 text-slate-400" /><span className="sr-only">Search for a domain</span><input value={input} onChange={(event) => setInput(event.target.value)} placeholder="Enter your idea or domain" className="h-12 w-full bg-transparent text-base text-slate-950 outline-none placeholder:text-slate-400" autoComplete="off" /></label>
+            <button type="submit" className="h-12 rounded-xl bg-indigo-600 px-7 text-sm font-bold text-white transition hover:bg-indigo-500">Search domains</button>
+          </form>
+          <div className="mt-5 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-slate-400"><span className="flex items-center gap-1.5"><Check className="size-3.5 text-emerald-400" />No hidden fees</span><span className="flex items-center gap-1.5"><Check className="size-3.5 text-emerald-400" />Renewal prices upfront</span><span className="flex items-center gap-1.5"><Check className="size-3.5 text-emerald-400" />Secure checkout</span></div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 py-16">
-        <h2 className="font-display text-2xl font-semibold text-forest sm:text-3xl">How It Works</h2>
-        <p className="mt-2 max-w-2xl text-sm text-earth">
-          From the field to the farmer in five transparent steps — no black boxes.
-        </p>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {STEPS.map((s) => (
-            <div key={s.n} className="kg-card kg-card-hover p-5">
-              <span className="font-display text-sm font-bold text-fresh">{s.n}</span>
-              <p className="mt-2 font-display text-base font-semibold text-forest">{s.t}</p>
-              <p className="mt-1.5 text-xs text-muted-foreground">{s.d}</p>
-            </div>
-          ))}
+      {query && <section className="relative z-10 mx-auto -mt-10 max-w-5xl px-5" aria-live="polite">
+        <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-xl shadow-slate-900/10 sm:p-7">
+          <div className="flex flex-wrap items-end justify-between gap-3"><div><p className="text-xs font-bold uppercase tracking-widest text-indigo-600">Search results</p><h2 className="mt-1 font-display text-2xl font-bold">Names for “{query}”</h2></div><p className="text-xs text-slate-500">Availability is confirmed before payment.</p></div>
+          <div className="mt-6 space-y-3">{results.map((result) => {
+            const selected = has(result.domain);
+            return <article key={result.domain} className={`flex flex-col gap-4 rounded-2xl border p-4 transition sm:flex-row sm:items-center sm:justify-between ${result.recommended ? "border-indigo-200 bg-indigo-50/60" : "border-slate-200 hover:border-indigo-200"}`}>
+              <div className="flex items-center gap-3"><span className="grid size-10 place-items-center rounded-xl bg-emerald-50 text-emerald-600"><CheckCircle2 className="size-5" /></span><div><div className="flex flex-wrap items-center gap-2"><h3 className="font-display text-lg font-bold">{result.domain}</h3>{result.recommended && <span className="rounded-full bg-indigo-600 px-2 py-0.5 text-[10px] font-bold uppercase text-white">Top pick</span>}</div><p className="text-xs text-emerald-700">Pricing preview</p></div></div>
+              <div className="flex items-center justify-between gap-5 sm:justify-end"><div className="text-right"><p className="font-display text-xl font-bold">${Number(result.registration_price).toFixed(2)}<span className="text-xs font-normal text-slate-500"> / first year</span></p><p className="text-[11px] text-slate-400">Renews ${Number(result.renewal_price).toFixed(2)}/yr</p></div><button onClick={() => toggle({ name: result.domain, price: Number(result.registration_price), renewalPrice: Number(result.renewal_price), currency: result.currency })} className={`min-w-24 rounded-xl px-4 py-2.5 text-sm font-bold ${selected ? "bg-slate-100 text-slate-700" : "bg-slate-950 text-white hover:bg-indigo-600"}`}>{selected ? <span className="flex items-center justify-center gap-1"><X className="size-3.5" />Remove</span> : "Add to cart"}</button></div>
+            </article>;
+          })}</div>
         </div>
+      </section>}
+
+      <section className="mx-auto max-w-7xl px-5 py-20">
+        <div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-indigo-600">Popular extensions</p><h2 className="mt-2 font-display text-3xl font-bold tracking-tight">A name for every ambition.</h2></div><button onClick={() => { setInput("mybrand"); setQuery("mybrand"); window.scrollTo({ top: 380, behavior: "smooth" }); }} className="flex items-center gap-1 text-sm font-bold text-indigo-600">Explore all domains <ArrowRight className="size-4" /></button></div>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{products.slice(0, 6).map((product) => <button key={product.extension} onClick={() => { setInput(`myidea${product.extension}`); setQuery(`myidea${product.extension}`); window.scrollTo({ top: 380, behavior: "smooth" }); }} className="group rounded-2xl border border-slate-200 p-6 text-left transition hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-950/5"><div className="flex items-start justify-between"><span className="font-display text-3xl font-bold tracking-tight text-slate-900 group-hover:text-indigo-600">{product.extension}</span><ArrowRight className="size-5 text-slate-300 transition group-hover:translate-x-1 group-hover:text-indigo-500" /></div><p className="mt-8 text-sm text-slate-500">From <strong className="text-slate-900">${Number(product.registration_price).toFixed(2)}</strong> first year</p><p className="mt-1 text-xs text-slate-400">${Number(product.renewal_price).toFixed(2)} renewal</p></button>)}</div>
       </section>
 
-      <section className="kg-leaf-pattern border-y border-forest/10 py-16">
-        <div className="mx-auto max-w-6xl px-5">
-          <h2 className="font-display text-2xl font-semibold text-forest sm:text-3xl">Built for real farms</h2>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {FEATURES.map(({ icon: Icon, title, body }) => (
-              <div key={title} className="kg-card kg-card-hover p-6">
-                <span className="grid size-11 place-items-center rounded-xl kg-gradient text-white">
-                  <Icon className="size-5" />
-                </span>
-                <h3 className="mt-4 font-display text-lg font-semibold text-forest">{title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <section className="border-y border-slate-200 bg-slate-50 px-5 py-20"><div className="mx-auto max-w-7xl"><div className="mx-auto max-w-2xl text-center"><p className="text-xs font-bold uppercase tracking-[0.18em] text-indigo-600">Built for confidence</p><h2 className="mt-2 font-display text-3xl font-bold">Domains without the fine-print feeling.</h2></div><div className="mt-10 grid gap-5 md:grid-cols-3">{[
+        [ShieldCheck, "Transparent pricing", "Registration and renewal prices sit side by side, so future costs never surprise you."],
+        [LockKeyhole, "Secure by design", "Your account data is protected with row-level access controls and secure authentication."],
+        [Headphones, "Human-friendly control", "Manage domains, renewals and DNS in a dashboard designed for people, not specialists."],
+      ].map(([Icon, title, description]) => { const FeatureIcon = Icon as typeof ShieldCheck; return <div key={String(title)} className="rounded-3xl border border-slate-200 bg-white p-7"><span className="grid size-11 place-items-center rounded-xl bg-indigo-50 text-indigo-600"><FeatureIcon className="size-5" /></span><h3 className="mt-5 font-display text-lg font-bold">{String(title)}</h3><p className="mt-2 text-sm leading-relaxed text-slate-500">{String(description)}</p></div>; })}</div></div></section>
 
-      <section className="mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 lg:grid-cols-2">
-        <div className="overflow-hidden rounded-3xl">
-          <img src={fieldImg} alt="Aerial view of green agricultural fields" loading="lazy" decoding="async" className="h-72 w-full object-cover lg:h-96" />
-        </div>
-        <div>
-          <h2 className="font-display text-2xl font-semibold text-forest sm:text-3xl">
-            Start in Demo Mode today. Connect real hardware tomorrow.
-          </h2>
-          <p className="mt-4 text-sm text-muted-foreground">
-            Every screen reads from a single sensor service abstraction. Swap the demo simulator for a BLE node or an
-            ESP32 REST gateway and the entire dashboard becomes live — no redesign, no rewrite.
-          </p>
-          <ul className="mt-6 space-y-3 text-sm text-forest">
-            {[
-              "Web Bluetooth support for BLE field nodes",
-              "REST polling now, WebSocket / MQTT ready",
-              "Honest connection states — never a fake live badge",
-              "Per-farmer accounts with private farm data",
-            ].map((t) => (
-              <li key={t} className="flex items-start gap-2">
-                <ShieldCheck className="mt-0.5 size-4 text-fresh" />
-                {t}
-              </li>
-            ))}
-          </ul>
-          <Link
-            to="/auth"
-            search={{ mode: "signup" }}
-            className="mt-8 inline-block rounded-xl bg-forest px-5 py-3 text-sm font-semibold text-white hover:opacity-90"
-          >
-            Create your farmer account
-          </Link>
-        </div>
-      </section>
-
-      <footer className="border-t border-forest/10 bg-white py-8">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 sm:flex-row">
-          <Brand />
-          <p className="text-xs text-earth">KRISHI-GUARD AI · Smart Crop Protection & Decision Support System</p>
-        </div>
-      </footer>
-    </div>
-  );
+      <section className="px-5 py-20"><div className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] bg-indigo-600 px-6 py-12 text-center text-white shadow-2xl shadow-indigo-600/20 sm:px-12"><h2 className="font-display text-3xl font-bold sm:text-4xl">The right name is one search away.</h2><p className="mx-auto mt-3 max-w-xl text-sm text-indigo-100">Start with an idea. We’ll help you turn it into an address people remember.</p><button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="mt-7 rounded-xl bg-white px-6 py-3 text-sm font-bold text-indigo-700 hover:bg-indigo-50">Find your domain</button></div></section>
+    </main>
+    <footer className="border-t border-slate-200 bg-white"><div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 py-8 sm:flex-row"><DomainBrand /><p className="text-xs text-slate-400">Transparent domain registration and management.</p><div className="flex gap-5 text-xs font-medium text-slate-500"><Link to="/auth">Account</Link><Link to="/domains">My domains</Link></div></div></footer>
+  </div>;
 }

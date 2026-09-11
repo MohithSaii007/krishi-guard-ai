@@ -1,11 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Loader2, Sprout } from "lucide-react";
+import { Globe2, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
-import { Brand } from "@/components/kg/Brand";
-import { LanguageToggle } from "@/components/kg/LanguageToggle";
-import heroImg from "@/assets/farmer-inspect.jpg";
+import { DomainBrand } from "@/components/domains/DomainBrand";
 
 export const Route = createFileRoute("/auth")({
   staticData: { sitemap: true },
@@ -14,14 +12,14 @@ export const Route = createFileRoute("/auth")({
   }),
   head: () => ({
     meta: [
-      { title: "Farmer Login & Registration — KRISHI-GUARD AI" },
+      { title: "Sign in or Create an Account — DomainNest" },
       {
         name: "description",
         content:
-          "Create your KRISHI-GUARD AI farmer account or sign in to view your farm sensors, AI recommendations and alerts.",
+          "Create your DomainNest account or sign in to manage domains, orders, renewals and DNS.",
       },
-      { property: "og:title", content: "Farmer Login — KRISHI-GUARD AI" },
-      { property: "og:description", content: "Sign in to your smart farming dashboard." },
+      { property: "og:title", content: "Sign in — DomainNest" },
+      { property: "og:description", content: "Sign in to manage your domains." },
     ],
   }),
   component: AuthPage,
@@ -46,10 +44,10 @@ function AuthPage() {
   useEffect(() => {
     let mounted = true;
     void supabase.auth.getSession().then(({ data }) => {
-      if (mounted && data.session) navigate({ to: "/dashboard", replace: true });
+      if (mounted && data.session) navigate({ to: "/domains", replace: true });
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      if (session) navigate({ to: "/dashboard", replace: true });
+      if (session) navigate({ to: "/domains", replace: true });
     });
     return () => {
       mounted = false;
@@ -110,7 +108,7 @@ function AuthPage() {
       return;
     }
     if (result.redirected) return;
-    navigate({ to: "/dashboard", replace: true });
+    navigate({ to: "/domains", replace: true });
   }
 
   async function reset() {
@@ -128,34 +126,29 @@ function AuthPage() {
   }
 
   return (
-    <div className="grid min-h-screen bg-cream lg:grid-cols-2">
-      <div className="relative hidden lg:block">
-        <img src={heroImg} alt="Farmer inspecting crop leaves in a field" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-forest via-forest/70 to-forest/25" />
+    <div className="grid min-h-screen bg-slate-50 lg:grid-cols-2">
+      <div className="relative hidden overflow-hidden bg-slate-950 lg:block">
+        <div className="absolute -left-32 top-10 size-96 rounded-full bg-indigo-600/30 blur-3xl" />
+        <div className="absolute -bottom-32 right-0 size-[28rem] rounded-full bg-violet-500/20 blur-3xl" />
         <div className="relative flex h-full flex-col justify-end p-10 text-white">
-          <Sprout className="size-9 text-fresh" />
+          <Globe2 className="size-9 text-indigo-300" />
           <h2 className="mt-4 font-display text-3xl font-semibold leading-tight">
-            Your farm, monitored and understood.
+            Everything your domain needs, in one place.
           </h2>
           <p className="mt-3 max-w-sm text-sm text-white/80">
-            Soil, water, nutrients, weather and crop health — in one dashboard, with advice you can act on today.
+            Find the right name, register securely, manage renewals and control DNS without the usual complexity.
           </p>
         </div>
       </div>
 
       <div className="flex flex-col justify-center px-5 py-12 sm:px-10">
         <div className="mx-auto w-full max-w-md">
-          <div className="flex items-center justify-between gap-3">
-            <Link to="/" className="inline-block">
-              <Brand />
-            </Link>
-            <LanguageToggle />
-          </div>
-          <h1 className="mt-8 font-display text-2xl font-semibold text-forest">
-            {isSignup ? "Create your farmer account" : "Welcome back, farmer"}
+          <div className="flex items-center justify-between gap-3"><DomainBrand /></div>
+          <h1 className="mt-8 font-display text-2xl font-semibold text-slate-950">
+            {isSignup ? "Create your account" : "Welcome back"}
           </h1>
-          <p className="mt-1.5 text-sm text-earth">
-            {isSignup ? "A few details about you and your farm to get started." : "Sign in to view your live farm data."}
+          <p className="mt-1.5 text-sm text-slate-500">
+            {isSignup ? "Save your searches and manage every domain in one place." : "Sign in to manage your domains and orders."}
           </p>
 
           <form onSubmit={submit} className="mt-7 space-y-3.5">
@@ -164,7 +157,7 @@ function AuthPage() {
                 <Field label="Full name" value={fullName} onChange={setFullName} placeholder="Ramesh Kumar" required maxLength={80} />
                 <div className="grid gap-3.5 sm:grid-cols-2">
                   <Field label="Mobile number" value={mobile} onChange={setMobile} placeholder="98765 43210" maxLength={15} />
-                  <Field label="Village / Town" value={village} onChange={setVillage} placeholder="Tirupati" maxLength={60} />
+                  <Field label="City / Town" value={village} onChange={setVillage} placeholder="Bengaluru" maxLength={60} />
                 </div>
               </>
             )}
@@ -173,7 +166,7 @@ function AuthPage() {
               type="email"
               value={email}
               onChange={(v) => { setEmail(v); setOtpSent(false); setOtp(""); }}
-              placeholder="farmer@example.com"
+              placeholder="you@example.com"
               required
               maxLength={255}
             />
@@ -193,12 +186,12 @@ function AuthPage() {
             )}
 
             {error && <p className="rounded-xl bg-danger/10 p-3 text-sm text-danger">{error}</p>}
-            {message && <p className="rounded-xl bg-fresh/15 p-3 text-sm text-agri">{message}</p>}
+            {message && <p className="rounded-xl bg-emerald-50 p-3 text-sm text-emerald-700">{message}</p>}
 
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-forest px-4 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 disabled:opacity-60"
             >
               {loading && <Loader2 className="size-4 animate-spin" />}
               {isSignup ? (otpSent ? "Verify OTP & Create account" : "Send OTP") : useOtp ? (otpSent ? "Verify OTP & Sign in" : "Send OTP") : "Sign in"}
@@ -208,30 +201,30 @@ function AuthPage() {
               <button
                 type="button"
                 onClick={() => { setUseOtp((v) => !v); setOtpSent(false); setOtp(""); setError(null); setMessage(null); }}
-                className="w-full text-center text-sm font-medium text-agri hover:underline"
+                className="w-full text-center text-sm font-medium text-indigo-600 hover:underline"
               >
                 {useOtp ? "Sign in with password instead" : "Sign in with OTP instead (no password needed)"}
               </button>
             )}
           </form>
 
-          <div className="my-5 flex items-center gap-3 text-xs text-earth">
-            <span className="h-px flex-1 bg-forest/10" /> or <span className="h-px flex-1 bg-forest/10" />
+          <div className="my-5 flex items-center gap-3 text-xs text-slate-400">
+            <span className="h-px flex-1 bg-slate-200" /> or <span className="h-px flex-1 bg-slate-200" />
           </div>
 
           <button
             onClick={() => void google()}
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-forest/15 bg-white px-4 py-3 text-sm font-semibold text-forest hover:bg-mint"
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
           >
             Continue with Google
           </button>
 
           <div className="mt-6 flex flex-wrap items-center justify-between gap-2 text-sm">
-            <button onClick={() => { setIsSignup((v) => !v); setOtpSent(false); setOtp(""); setError(null); setMessage(null); }} className="font-medium text-agri hover:underline">
+            <button onClick={() => { setIsSignup((v) => !v); setOtpSent(false); setOtp(""); setError(null); setMessage(null); }} className="font-medium text-indigo-600 hover:underline">
               {isSignup ? "Already have an account? Sign in" : "New here? Create an account"}
             </button>
             {!isSignup && !useOtp && (
-              <button onClick={() => void reset()} className="text-earth hover:underline">
+              <button onClick={() => void reset()} className="text-slate-500 hover:underline">
                 Forgot password?
               </button>
             )}
@@ -261,7 +254,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-earth">{label}</span>
+      <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</span>
       <input
         type={type}
         value={value}
@@ -269,7 +262,7 @@ function Field({
         maxLength={maxLength}
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-xl border border-forest/15 bg-white px-3.5 py-2.5 text-sm text-forest outline-none transition-colors placeholder:text-earth/50 focus:border-fresh"
+        className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition-colors placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
       />
     </label>
   );
