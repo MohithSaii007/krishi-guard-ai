@@ -114,8 +114,8 @@ function CropHealth() {
           <Camera className="size-4" /> Photo inspection
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Capture an affected leaf and log what you observe. Images stay on your device until a trained disease-detection
-          model is connected.
+          Upload or capture a crop photo and get an instant read on the plant's current situation — crop, problem,
+          severity and what to do now.
         </p>
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
           <div>
@@ -126,7 +126,13 @@ function CropHealth() {
               className="hidden"
               onChange={(e) => {
                 const file = e.target.files?.[0];
-                if (file) setPreview(URL.createObjectURL(file));
+                if (!file) return;
+                setPreview(URL.createObjectURL(file));
+                setResult(null);
+                setAiError(null);
+                void readAsDataUrl(file)
+                  .then(setDataUrl)
+                  .catch((err: Error) => setAiError(err.message));
               }}
             />
             <button
@@ -142,6 +148,17 @@ function CropHealth() {
               placeholder="Describe what you see: yellow spots on lower leaves, curled tips…"
               className="mt-3 h-24 w-full rounded-xl border border-forest/15 bg-white p-3 text-sm text-forest outline-none focus:border-fresh"
             />
+            <button
+              onClick={() => void runAnalysis()}
+              disabled={!dataUrl || busy}
+              className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-forest px-4 py-3 text-sm font-semibold text-white hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {busy ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
+              {busy ? "Checking the photo…" : "Check crop condition"}
+            </button>
+            {aiError && (
+              <p className="mt-3 rounded-xl border border-danger/30 bg-danger/10 p-3 text-sm text-danger">{aiError}</p>
+            )}
           </div>
           <div className="grid place-items-center overflow-hidden rounded-2xl bg-mint/40">
             {preview ? (
