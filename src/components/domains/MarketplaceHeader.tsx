@@ -15,7 +15,7 @@ export function MarketplaceHeader() {
     return () => data.subscription.unsubscribe();
   }, []);
   const links = [
-    { label: "Find a domain", to: "/" as const },
+    { label: "Find a domain", to: "/domainnest" as const },
     { label: "My domains", to: "/domains" as const },
     { label: "Orders", to: "/orders" as const },
   ];

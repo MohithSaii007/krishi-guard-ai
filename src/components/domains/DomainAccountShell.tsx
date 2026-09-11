@@ -26,7 +26,7 @@ export function DomainAccountShell({ title, subtitle, children }: { title: strin
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
         <DomainBrand />
         <div className="flex items-center gap-1">
-          <Link to="/" className="rounded-xl p-2.5 text-slate-600 hover:bg-slate-100" aria-label="Search domains"><Search className="size-5" /></Link>
+          <Link to="/domainnest" className="rounded-xl p-2.5 text-slate-600 hover:bg-slate-100" aria-label="Search domains"><Search className="size-5" /></Link>
           <Link to="/cart" className="relative rounded-xl p-2.5 text-slate-600 hover:bg-slate-100" aria-label="Shopping cart"><ShoppingCart className="size-5" />{items.length > 0 && <span className="absolute right-0 top-0 grid size-4 place-items-center rounded-full bg-indigo-600 text-[9px] text-white">{items.length}</span>}</Link>
           <button onClick={() => void signOut()} className="rounded-xl p-2.5 text-slate-600 hover:bg-slate-100" aria-label="Sign out"><LogOut className="size-5" /></button>
         </div>

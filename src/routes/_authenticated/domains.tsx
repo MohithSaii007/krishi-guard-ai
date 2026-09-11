@@ -26,7 +26,7 @@ function DomainsPage() {
       <span className="mx-auto grid size-14 place-items-center rounded-2xl bg-indigo-50 text-indigo-600"><Globe2 className="size-7" /></span>
       <h2 className="mt-4 text-lg font-bold text-slate-950">No domains yet</h2>
       <p className="mx-auto mt-2 max-w-sm text-sm text-slate-500">Find a name for your next idea. Your registered domains will appear here after checkout.</p>
-      <Link to="/" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-700"><Plus className="size-4" />Find a domain</Link>
+      <Link to="/domainnest" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-700"><Plus className="size-4" />Find a domain</Link>
     </div> : <div className="grid gap-4">{data.map((domain) => <article key={domain.id} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex flex-wrap items-center justify-between gap-4"><div><h2 className="font-display text-lg font-bold text-slate-950">{domain.domain_name}</h2><p className="mt-1 flex items-center gap-1.5 text-xs text-slate-500"><CalendarDays className="size-3.5" />{domain.expires_at ? `Renews ${new Date(domain.expires_at).toLocaleDateString()}` : "Registration pending"}</p></div><span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold capitalize text-emerald-700">{domain.status}</span></div>
     </article>)}</div>}
