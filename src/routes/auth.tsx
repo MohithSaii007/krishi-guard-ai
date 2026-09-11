@@ -31,6 +31,9 @@ function AuthPage() {
   const { mode } = Route.useSearch();
   const navigate = useNavigate();
   const [isSignup, setIsSignup] = useState(mode === "signup");
+  const [useOtp, setUseOtp] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
+  const [otp, setOtp] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -72,6 +75,31 @@ function AuthPage() {
         });
         if (err) throw err;
         if (!data.session) setMessage("Check your email to confirm your account, then sign in.");
+      } else if (useOtp) {
+        const id = email.trim();
+        const isPhone = /^\+?\d{8,15}$/.test(id.replace(/[\s-]/g, ""));
+        if (!otpSent) {
+          if (isPhone) {
+            const phone = id.replace(/[\s-]/g, "");
+            const { error: err } = await supabase.auth.signInWithOtp({ phone: phone.startsWith("+") ? phone : `+91${phone}` });
+            if (err) throw err;
+          } else {
+            const { error: err } = await supabase.auth.signInWithOtp({ email: id });
+            if (err) throw err;
+          }
+          setOtpSent(true);
+          setMessage(`OTP sent to your ${isPhone ? "mobile number" : "email"}. Enter the 6-digit code below.`);
+        } else {
+          if (otp.trim().length !== 6) throw new Error("Enter the 6-digit OTP.");
+          if (isPhone) {
+            const phone = id.replace(/[\s-]/g, "");
+            const { error: err } = await supabase.auth.verifyOtp({ phone: phone.startsWith("+") ? phone : `+91${phone}`, token: otp.trim(), type: "sms" });
+            if (err) throw err;
+          } else {
+            const { error: err } = await supabase.auth.verifyOtp({ email: id, token: otp.trim(), type: "email" });
+            if (err) throw err;
+          }
+        }
       } else {
         const { error: err } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
         if (err) throw err;
@@ -149,16 +177,29 @@ function AuthPage() {
                 </div>
               </>
             )}
-            <Field label="Email" type="email" value={email} onChange={setEmail} placeholder="farmer@example.com" required maxLength={255} />
             <Field
-              label="Password"
-              type="password"
-              value={password}
-              onChange={setPassword}
-              placeholder="Your password"
+              label={useOtp ? "Email or mobile number" : "Email"}
+              type={useOtp ? "text" : "email"}
+              value={email}
+              onChange={(v) => { setEmail(v); setOtpSent(false); setOtp(""); }}
+              placeholder={useOtp ? "farmer@example.com or 98765 43210" : "farmer@example.com"}
               required
-              maxLength={72}
+              maxLength={255}
             />
+            {!useOtp && (
+              <Field
+                label="Password"
+                type="password"
+                value={password}
+                onChange={setPassword}
+                placeholder="Your password"
+                required
+                maxLength={72}
+              />
+            )}
+            {useOtp && otpSent && (
+              <Field label="6-digit OTP" value={otp} onChange={setOtp} placeholder="123456" required maxLength={6} />
+            )}
 
             {error && <p className="rounded-xl bg-danger/10 p-3 text-sm text-danger">{error}</p>}
             {message && <p className="rounded-xl bg-fresh/15 p-3 text-sm text-agri">{message}</p>}
@@ -169,8 +210,18 @@ function AuthPage() {
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-forest px-4 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
             >
               {loading && <Loader2 className="size-4 animate-spin" />}
-              {isSignup ? "Create account" : "Sign in"}
+              {isSignup ? "Create account" : useOtp ? (otpSent ? "Verify OTP & Sign in" : "Send OTP") : "Sign in"}
             </button>
+
+            {!isSignup && (
+              <button
+                type="button"
+                onClick={() => { setUseOtp((v) => !v); setOtpSent(false); setOtp(""); setError(null); setMessage(null); }}
+                className="w-full text-center text-sm font-medium text-agri hover:underline"
+              >
+                {useOtp ? "Sign in with password instead" : "Sign in with OTP instead (no password needed)"}
+              </button>
+            )}
           </form>
 
           <div className="my-5 flex items-center gap-3 text-xs text-earth">
@@ -188,7 +239,7 @@ function AuthPage() {
             <button onClick={() => setIsSignup((v) => !v)} className="font-medium text-agri hover:underline">
               {isSignup ? "Already have an account? Sign in" : "New here? Create an account"}
             </button>
-            {!isSignup && (
+            {!isSignup && !useOtp && (
               <button onClick={() => void reset()} className="text-earth hover:underline">
                 Forgot password?
               </button>
