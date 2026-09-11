@@ -34,7 +34,7 @@ const RESPONSE_SHAPE = `{
 
 function extractJson(text: string) {
   const fenced = text.match(/```(?:json)?\s*([\s\S]*?)```/i);
-  const raw = fenced ? fenced[1] : text;
+  const raw = (fenced?.[1] ?? text) as string;
   const start = raw.indexOf("{");
   const end = raw.lastIndexOf("}");
   if (start === -1 || end === -1) throw new Error("Model did not return a readable result.");
