@@ -230,6 +230,10 @@ export class BleSensorTransport implements SensorTransport {
   isSupported() {
     return typeof navigator !== "undefined" && "bluetooth" in navigator;
   }
+  /** True when the app is displayed inside a frame, where browsers block Bluetooth pairing. */
+  isBlockedByFrame() {
+    return typeof window !== "undefined" && window.self !== window.top;
+  }
   deviceName() {
     return this.device?.name ?? null;
   }
@@ -237,15 +241,29 @@ export class BleSensorTransport implements SensorTransport {
   async connect() {
     if (!this.isSupported()) {
       throw new Error(
-        "Bluetooth sensor connection is supported in compatible browsers such as Chrome/Edge on supported devices.",
+        "This browser cannot pair Bluetooth devices. Use Chrome or Edge on Android, Windows, or macOS (Bluetooth is not available in Safari or on iPhone).",
+      );
+    }
+    if (this.isBlockedByFrame()) {
+      throw new Error(
+        "Bluetooth pairing is blocked while the app is shown inside the editor preview. Open the app in its own browser tab and try again.",
       );
     }
     this.onState?.("SYNCING");
     const bt = (navigator as unknown as { bluetooth: BluetoothLike }).bluetooth;
-    const device = await bt.requestDevice({
-      filters: [{ services: [BleSensorTransport.SERVICE_UUID] }],
-      optionalServices: [BleSensorTransport.SERVICE_UUID],
-    });
+    let device: BleDevice;
+    try {
+      device = await bt.requestDevice({
+        filters: [{ services: [BleSensorTransport.SERVICE_UUID] }],
+        optionalServices: [BleSensorTransport.SERVICE_UUID],
+      });
+    } catch {
+      // Some ESP32 firmware does not advertise the service UUID; show every nearby device instead.
+      device = await bt.requestDevice({
+        acceptAllDevices: true,
+        optionalServices: [BleSensorTransport.SERVICE_UUID],
+      });
+    }
     const server = await device.gatt?.connect();
     if (!server) throw new Error("Could not open a GATT connection to the device.");
     const service = await server.getPrimaryService(BleSensorTransport.SERVICE_UUID);
