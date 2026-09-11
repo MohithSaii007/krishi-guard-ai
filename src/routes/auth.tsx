@@ -169,15 +169,15 @@ function AuthPage() {
               </>
             )}
             <Field
-              label={useOtp ? "Email or mobile number" : "Email"}
-              type={useOtp ? "text" : "email"}
+              label="Email"
+              type="email"
               value={email}
               onChange={(v) => { setEmail(v); setOtpSent(false); setOtp(""); }}
-              placeholder={useOtp ? "farmer@example.com or 98765 43210" : "farmer@example.com"}
+              placeholder="farmer@example.com"
               required
               maxLength={255}
             />
-            {!useOtp && (
+            {!isSignup && !useOtp && (
               <Field
                 label="Password"
                 type="password"
@@ -188,7 +188,7 @@ function AuthPage() {
                 maxLength={72}
               />
             )}
-            {useOtp && otpSent && (
+            {(useOtp || isSignup) && otpSent && (
               <Field label="6-digit OTP" value={otp} onChange={setOtp} placeholder="123456" required maxLength={6} />
             )}
 
