@@ -82,23 +82,53 @@ export class DemoSensorTransport implements SensorTransport {
  * The endpoint comes from VITE_SENSOR_API_URL; nothing is hardcoded.
  * A WebSocket/MQTT transport can replace the polling loop without UI changes.
  */
+const GATEWAY_STORAGE_KEY = "kg.gatewayUrl";
+
+function normalizeEndpoint(raw: string) {
+  const value = raw.trim();
+  if (!value) return "";
+  if (/^https?:\/\//i.test(value)) return value;
+  return `http://${value}`;
+}
+
 export class WifiSensorTransport implements SensorTransport {
   readonly mode = "wifi" as const;
   readonly label = "Wi-Fi / ESP32 Gateway";
   private timer: ReturnType<typeof setInterval> | null = null;
-  private endpoint = (import.meta.env['VITE_SENSOR_API_URL'] as string | undefined) ?? "";
+  private endpoint = normalizeEndpoint(
+    (typeof localStorage !== "undefined" ? localStorage.getItem(GATEWAY_STORAGE_KEY) : null) ??
+      (import.meta.env['VITE_SENSOR_API_URL'] as string | undefined) ??
+      "",
+  );
   private onReading: ((r: SensorReading) => void) | null = null;
   private onState: ((s: ConnectionState, e?: string) => void) | null = null;
 
   isSupported() {
     return this.endpoint.length > 0;
   }
+  getEndpoint() {
+    return this.endpoint;
+  }
+  setEndpoint(raw: string) {
+    this.endpoint = normalizeEndpoint(raw);
+    if (typeof localStorage !== "undefined") {
+      if (this.endpoint) localStorage.setItem(GATEWAY_STORAGE_KEY, this.endpoint);
+      else localStorage.removeItem(GATEWAY_STORAGE_KEY);
+    }
+  }
   deviceName() {
     return this.endpoint ? `Gateway @ ${this.endpoint}` : null;
   }
 
   async connect() {
-    if (!this.isSupported()) throw new Error("No sensor gateway URL configured (VITE_SENSOR_API_URL).");
+    if (!this.isSupported()) {
+      throw new Error("Enter your device address first (for example 192.168.1.50/api/readings).");
+    }
+    if (typeof location !== "undefined" && location.protocol === "https:" && this.endpoint.startsWith("http://")) {
+      throw new Error(
+        "This page is secure (https) but the device address is plain http, so the browser blocks it. Serve the device over https, or open this app over http on the same network.",
+      );
+    }
     await this.poll();
   }
 
