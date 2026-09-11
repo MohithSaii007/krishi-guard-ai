@@ -1,8 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { Bug, Camera, Leaf, ShieldCheck } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { Bug, Camera, Leaf, Loader2, ShieldCheck, Sparkles } from "lucide-react";
 import { AppShell } from "@/components/kg/AppShell";
 import { useSensors } from "@/lib/sensors/SensorProvider";
+import { analyzeCropImage, type CropDiagnosis } from "@/lib/crop-vision.functions";
+
+const SEVERITY_STYLE: Record<string, string> = {
+  healthy: "bg-fresh/15 text-agri border-fresh/40",
+  mild: "bg-mint text-agri border-fresh/30",
+  moderate: "bg-amber-warn/15 text-earth border-amber-warn/40",
+  severe: "bg-danger/15 text-danger border-danger/40",
+  unknown: "bg-muted text-muted-foreground border-border",
+};
+
+function readAsDataUrl(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onload = () => resolve(String(fr.result));
+    fr.onerror = () => reject(new Error("Could not read that image."));
+    fr.readAsDataURL(file);
+  });
+}
+
 
 export const Route = createFileRoute("/_authenticated/crop-health")({
   component: CropHealth,
@@ -20,6 +40,30 @@ function CropHealth() {
   const [preview, setPreview] = useState<string | null>(null);
   const [note, setNote] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const [dataUrl, setDataUrl] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
+  const [result, setResult] = useState<CropDiagnosis | null>(null);
+  const analyze = useServerFn(analyzeCropImage);
+
+  const runAnalysis = async () => {
+    if (!dataUrl) return;
+    setBusy(true);
+    setAiError(null);
+    setResult(null);
+    try {
+      const context = reading
+        ? `soil moisture ${reading.soilMoisture}%, soil pH ${reading.soilPH}, N ${reading.nitrogen} mg/kg, P ${reading.phosphorus} mg/kg, K ${reading.potassium} mg/kg, temperature ${reading.temperature}C, humidity ${reading.humidity}%`
+        : undefined;
+      const diagnosis = await analyze({ data: { imageDataUrl: dataUrl, note: note || undefined, context } });
+      setResult(diagnosis);
+    } catch (err) {
+      setAiError(err instanceof Error ? err.message : "Photo check failed. Please try again.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
 
   const diseaseRisk =
     reading && reading.humidity > 85 && reading.temperature > 24
@@ -70,8 +114,8 @@ function CropHealth() {
           <Camera className="size-4" /> Photo inspection
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Capture an affected leaf and log what you observe. Images stay on your device until a trained disease-detection
-          model is connected.
+          Upload or capture a crop photo and get an instant read on the plant's current situation — crop, problem,
+          severity and what to do now.
         </p>
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
           <div>
@@ -82,7 +126,13 @@ function CropHealth() {
               className="hidden"
               onChange={(e) => {
                 const file = e.target.files?.[0];
-                if (file) setPreview(URL.createObjectURL(file));
+                if (!file) return;
+                setPreview(URL.createObjectURL(file));
+                setResult(null);
+                setAiError(null);
+                void readAsDataUrl(file)
+                  .then(setDataUrl)
+                  .catch((err: Error) => setAiError(err.message));
               }}
             />
             <button
@@ -98,6 +148,17 @@ function CropHealth() {
               placeholder="Describe what you see: yellow spots on lower leaves, curled tips…"
               className="mt-3 h-24 w-full rounded-xl border border-forest/15 bg-white p-3 text-sm text-forest outline-none focus:border-fresh"
             />
+            <button
+              onClick={() => void runAnalysis()}
+              disabled={!dataUrl || busy}
+              className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-forest px-4 py-3 text-sm font-semibold text-white hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {busy ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
+              {busy ? "Checking the photo…" : "Check crop condition"}
+            </button>
+            {aiError && (
+              <p className="mt-3 rounded-xl border border-danger/30 bg-danger/10 p-3 text-sm text-danger">{aiError}</p>
+            )}
           </div>
           <div className="grid place-items-center overflow-hidden rounded-2xl bg-mint/40">
             {preview ? (
@@ -107,6 +168,50 @@ function CropHealth() {
             )}
           </div>
         </div>
+
+        {result && (
+          <div className="mt-6 rounded-2xl border border-forest/15 bg-mint/30 p-5">
+            <div className="flex flex-wrap items-center gap-3">
+              <h3 className="font-display text-xl font-semibold text-forest">{result.crop}</h3>
+              <span
+                className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide ${
+                  SEVERITY_STYLE[result.severity] ?? SEVERITY_STYLE['unknown']
+                }`}
+              >
+                {result.severity}
+              </span>
+              <span className="text-xs text-earth">Confidence {Math.round(result.confidence)}%</span>
+            </div>
+            <p className="mt-2 text-sm font-semibold text-forest">{result.condition}</p>
+            <p className="mt-2 text-sm text-muted-foreground">{result.situation}</p>
+
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              {(
+                [
+                  ["What is visible", result.symptoms],
+                  ["Likely reasons", result.causes],
+                  ["Do this now", result.actions],
+                  ["Prevent next time", result.prevention],
+                ] as [string, string[]][]
+              )
+                .filter(([, items]) => items.length > 0)
+                .map(([title, items]) => (
+                  <div key={title} className="rounded-xl bg-white/70 p-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-earth">{title}</p>
+                    <ul className="mt-2 space-y-1.5 text-sm text-forest">
+                      {items.map((item) => (
+                        <li key={item}>· {item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+            </div>
+            <p className="mt-4 text-xs text-earth">
+              This is guidance from a photo. For severe damage, confirm with your local agriculture officer before
+              spraying.
+            </p>
+          </div>
+        )}
       </section>
 
       <h2 className="mt-8 flex items-center gap-2 font-display text-lg font-semibold text-forest">
