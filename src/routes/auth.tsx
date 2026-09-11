@@ -143,15 +143,11 @@ function AuthPage() {
 
       <div className="flex flex-col justify-center px-5 py-12 sm:px-10">
         <div className="mx-auto w-full max-w-md">
-          <div className="flex items-center justify-between gap-3">
-            <Link to="/" className="inline-block">
-              <DomainBrand />
-            </Link>
-          </div>
-          <h1 className="mt-8 font-display text-2xl font-semibold text-forest">
+          <div className="flex items-center justify-between gap-3"><DomainBrand /></div>
+          <h1 className="mt-8 font-display text-2xl font-semibold text-slate-950">
             {isSignup ? "Create your account" : "Welcome back"}
           </h1>
-          <p className="mt-1.5 text-sm text-earth">
+          <p className="mt-1.5 text-sm text-slate-500">
             {isSignup ? "Save your searches and manage every domain in one place." : "Sign in to manage your domains and orders."}
           </p>
 
@@ -170,7 +166,7 @@ function AuthPage() {
               type="email"
               value={email}
               onChange={(v) => { setEmail(v); setOtpSent(false); setOtp(""); }}
-              placeholder="farmer@example.com"
+              placeholder="you@example.com"
               required
               maxLength={255}
             />
@@ -190,12 +186,12 @@ function AuthPage() {
             )}
 
             {error && <p className="rounded-xl bg-danger/10 p-3 text-sm text-danger">{error}</p>}
-            {message && <p className="rounded-xl bg-fresh/15 p-3 text-sm text-agri">{message}</p>}
+            {message && <p className="rounded-xl bg-emerald-50 p-3 text-sm text-emerald-700">{message}</p>}
 
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-forest px-4 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 disabled:opacity-60"
             >
               {loading && <Loader2 className="size-4 animate-spin" />}
               {isSignup ? (otpSent ? "Verify OTP & Create account" : "Send OTP") : useOtp ? (otpSent ? "Verify OTP & Sign in" : "Send OTP") : "Sign in"}
@@ -205,30 +201,30 @@ function AuthPage() {
               <button
                 type="button"
                 onClick={() => { setUseOtp((v) => !v); setOtpSent(false); setOtp(""); setError(null); setMessage(null); }}
-                className="w-full text-center text-sm font-medium text-agri hover:underline"
+                className="w-full text-center text-sm font-medium text-indigo-600 hover:underline"
               >
                 {useOtp ? "Sign in with password instead" : "Sign in with OTP instead (no password needed)"}
               </button>
             )}
           </form>
 
-          <div className="my-5 flex items-center gap-3 text-xs text-earth">
-            <span className="h-px flex-1 bg-forest/10" /> or <span className="h-px flex-1 bg-forest/10" />
+          <div className="my-5 flex items-center gap-3 text-xs text-slate-400">
+            <span className="h-px flex-1 bg-slate-200" /> or <span className="h-px flex-1 bg-slate-200" />
           </div>
 
           <button
             onClick={() => void google()}
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-forest/15 bg-white px-4 py-3 text-sm font-semibold text-forest hover:bg-mint"
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
           >
             Continue with Google
           </button>
 
           <div className="mt-6 flex flex-wrap items-center justify-between gap-2 text-sm">
-            <button onClick={() => { setIsSignup((v) => !v); setOtpSent(false); setOtp(""); setError(null); setMessage(null); }} className="font-medium text-agri hover:underline">
+            <button onClick={() => { setIsSignup((v) => !v); setOtpSent(false); setOtp(""); setError(null); setMessage(null); }} className="font-medium text-indigo-600 hover:underline">
               {isSignup ? "Already have an account? Sign in" : "New here? Create an account"}
             </button>
             {!isSignup && !useOtp && (
-              <button onClick={() => void reset()} className="text-earth hover:underline">
+              <button onClick={() => void reset()} className="text-slate-500 hover:underline">
                 Forgot password?
               </button>
             )}
@@ -258,7 +254,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-earth">{label}</span>
+      <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</span>
       <input
         type={type}
         value={value}
@@ -266,7 +262,7 @@ function Field({
         maxLength={maxLength}
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-xl border border-forest/15 bg-white px-3.5 py-2.5 text-sm text-forest outline-none transition-colors placeholder:text-earth/50 focus:border-fresh"
+        className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition-colors placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
       />
     </label>
   );

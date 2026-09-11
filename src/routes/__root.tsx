@@ -142,9 +142,9 @@ function RootComponent() {
       <I18nProvider>
         <DomainCartProvider>
           <SensorProvider>
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-        <Toaster />
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+            <Toaster />
           </SensorProvider>
         </DomainCartProvider>
       </I18nProvider>
