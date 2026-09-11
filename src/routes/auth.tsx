@@ -210,8 +210,18 @@ function AuthPage() {
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-forest px-4 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
             >
               {loading && <Loader2 className="size-4 animate-spin" />}
-              {isSignup ? "Create account" : "Sign in"}
+              {isSignup ? "Create account" : useOtp ? (otpSent ? "Verify OTP & Sign in" : "Send OTP") : "Sign in"}
             </button>
+
+            {!isSignup && (
+              <button
+                type="button"
+                onClick={() => { setUseOtp((v) => !v); setOtpSent(false); setOtp(""); setError(null); setMessage(null); }}
+                className="w-full text-center text-sm font-medium text-agri hover:underline"
+              >
+                {useOtp ? "Sign in with password instead" : "Sign in with OTP instead (no password needed)"}
+              </button>
+            )}
           </form>
 
           <div className="my-5 flex items-center gap-3 text-xs text-earth">
