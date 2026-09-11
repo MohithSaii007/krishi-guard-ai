@@ -75,6 +75,24 @@
 }
 .kg-rise { animation: kg-rise 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 
+.domain-hero {
+  background:
+    radial-gradient(circle at 15% 10%, oklch(0.55 0.2 275 / 0.36), transparent 35%),
+    radial-gradient(circle at 90% 70%, oklch(0.55 0.2 300 / 0.22), transparent 34%),
+    linear-gradient(145deg, oklch(0.16 0.045 275), oklch(0.22 0.075 274));
+}
+.domain-grid {
+  background-image: linear-gradient(oklch(1 0 0 / 0.06) 1px, transparent 1px), linear-gradient(90deg, oklch(1 0 0 / 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, black, transparent 92%);
+}
+.domain-shimmer {
+  background: linear-gradient(100deg, oklch(0.82 0.12 270), white 46%, oklch(0.8 0.14 310));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .kg-rise { animation: none; }
   .kg-card { transition: none; }
