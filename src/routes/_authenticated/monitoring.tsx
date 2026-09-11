@@ -8,6 +8,16 @@ import { useProfile } from "@/hooks/useProfile";
 import fieldImg from "@/assets/aerial-field.jpg";
 
 export const Route = createFileRoute("/_authenticated/monitoring")({
+  staticData: { sitemap: false },
+  head: () => ({
+    meta: [
+      { title: "Farm Monitoring — KRISHI-GUARD AI" },
+      { name: "description", content: "Track field zones, live soil and climate readings and historical trends across your farm blocks." },
+      { name: "robots", content: "noindex" },
+      { property: "og:title", content: "Farm Monitoring — KRISHI-GUARD AI" },
+      { property: "og:description", content: "Track field zones, live soil and climate readings and historical trends across your farm blocks." },
+    ],
+  }),
   component: Monitoring,
 });
 

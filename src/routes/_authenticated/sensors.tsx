@@ -4,6 +4,16 @@ import { ConnectionPanel } from "@/components/kg/ConnectionPanel";
 import { SensorGrid } from "@/components/kg/SensorGrid";
 
 export const Route = createFileRoute("/_authenticated/sensors")({
+  staticData: { sitemap: false },
+  head: () => ({
+    meta: [
+      { title: "Sensor Devices — KRISHI-GUARD AI" },
+      { name: "description", content: "Connect ESP32, Raspberry Pi or Bluetooth field nodes and check the live status of every sensor channel." },
+      { name: "robots", content: "noindex" },
+      { property: "og:title", content: "Sensor Devices — KRISHI-GUARD AI" },
+      { property: "og:description", content: "Connect ESP32, Raspberry Pi or Bluetooth field nodes and check the live status of every sensor channel." },
+    ],
+  }),
   component: Sensors,
 });
 

@@ -7,6 +7,16 @@ import { useSensors } from "@/lib/sensors/SensorProvider";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
 export const Route = createFileRoute("/_authenticated/settings")({
+  staticData: { sitemap: false },
+  head: () => ({
+    meta: [
+      { title: "Farm & Profile Settings — KRISHI-GUARD AI" },
+      { name: "description", content: "Update your farm details, crop, location and preferred language for advice in English or Telugu." },
+      { name: "robots", content: "noindex" },
+      { property: "og:title", content: "Farm & Profile Settings — KRISHI-GUARD AI" },
+      { property: "og:description", content: "Update your farm details, crop, location and preferred language for advice in English or Telugu." },
+    ],
+  }),
   component: Settings,
 });
 

@@ -5,6 +5,16 @@ import fieldImg from "@/assets/aerial-field.jpg";
 import techImg from "@/assets/smart-farm-tech.jpg";
 
 export const Route = createFileRoute("/_authenticated/drone")({
+  staticData: { sitemap: false },
+  head: () => ({
+    meta: [
+      { title: "Drone & Field Monitoring — KRISHI-GUARD AI" },
+      { name: "description", content: "Aerial survey layers including NDVI vigour, thermal stress, weed detection and crop stand counts for large fields." },
+      { name: "robots", content: "noindex" },
+      { property: "og:title", content: "Drone & Field Monitoring — KRISHI-GUARD AI" },
+      { property: "og:description", content: "Aerial survey layers including NDVI vigour, thermal stress, weed detection and crop stand counts for large fields." },
+    ],
+  }),
   component: Drone,
 });
 
