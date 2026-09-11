@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { BleSensorTransport, DemoSensorTransport, WifiSensorTransport } from "./transports";
+
 import type { ConnectionState, SensorMode, SensorReading, SensorTransport } from "./types";
 
 interface SensorContextValue {
@@ -124,15 +125,34 @@ export function SensorProvider({ children }: { children: ReactNode }) {
       isDemo: mode === "demo",
       deviceName,
       error,
-      bleSupported: transports.current.ble.isSupported(),
-      gatewayConfigured: transports.current.wifi.isSupported(),
+      bleSupported,
+      bleBlockedByFrame,
+      gatewayConfigured: gatewayUrl.length > 0,
+      gatewayUrl,
+      setGatewayUrl,
       setMode,
       connectBle,
       connectWifi,
       disconnect,
       refresh,
     }),
-    [reading, history, state, mode, deviceName, error, setMode, connectBle, connectWifi, disconnect, refresh],
+    [
+      reading,
+      history,
+      state,
+      mode,
+      deviceName,
+      error,
+      bleSupported,
+      bleBlockedByFrame,
+      gatewayUrl,
+      setGatewayUrl,
+      setMode,
+      connectBle,
+      connectWifi,
+      disconnect,
+      refresh,
+    ],
   );
 
   return <SensorContext.Provider value={value}>{children}</SensorContext.Provider>;
