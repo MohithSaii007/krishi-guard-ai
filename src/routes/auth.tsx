@@ -1,9 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Globe2, Loader2 } from "lucide-react";
+import { Leaf, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
-import { DomainBrand } from "@/components/domains/DomainBrand";
+import { Brand } from "@/components/kg/Brand";
 
 export const Route = createFileRoute("/auth")({
   staticData: { sitemap: true },
@@ -12,14 +12,14 @@ export const Route = createFileRoute("/auth")({
   }),
   head: () => ({
     meta: [
-      { title: "Sign in or Create an Account — DomainNest" },
+      { title: "Sign in or Create an Account — KRISHI-GUARD AI" },
       {
         name: "description",
         content:
-          "Create your DomainNest account or sign in to manage domains, orders, renewals and DNS.",
+          "Create your KRISHI-GUARD AI farmer account or sign in to view your live farm dashboard, sensors and crop advice.",
       },
-      { property: "og:title", content: "Sign in — DomainNest" },
-      { property: "og:description", content: "Sign in to manage your domains." },
+      { property: "og:title", content: "Sign in — KRISHI-GUARD AI" },
+      { property: "og:description", content: "Sign in to your smart farming dashboard." },
     ],
   }),
   component: AuthPage,
@@ -44,10 +44,10 @@ function AuthPage() {
   useEffect(() => {
     let mounted = true;
     void supabase.auth.getSession().then(({ data }) => {
-      if (mounted && data.session) navigate({ to: "/domains", replace: true });
+      if (mounted && data.session) navigate({ to: "/dashboard", replace: true });
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      if (session) navigate({ to: "/domains", replace: true });
+      if (session) navigate({ to: "/dashboard", replace: true });
     });
     return () => {
       mounted = false;
@@ -108,7 +108,7 @@ function AuthPage() {
       return;
     }
     if (result.redirected) return;
-    navigate({ to: "/domains", replace: true });
+    navigate({ to: "/dashboard", replace: true });
   }
 
   async function reset() {
@@ -131,24 +131,24 @@ function AuthPage() {
         <div className="absolute -left-32 top-10 size-96 rounded-full bg-indigo-600/30 blur-3xl" />
         <div className="absolute -bottom-32 right-0 size-[28rem] rounded-full bg-violet-500/20 blur-3xl" />
         <div className="relative flex h-full flex-col justify-end p-10 text-white">
-          <Globe2 className="size-9 text-indigo-300" />
+          <Leaf className="size-9 text-fresh" />
           <h2 className="mt-4 font-display text-3xl font-semibold leading-tight">
-            Everything your domain needs, in one place.
+            Intelligent farming. Better decisions. Healthier crops.
           </h2>
           <p className="mt-3 max-w-sm text-sm text-white/80">
-            Find the right name, register securely, manage renewals and control DNS without the usual complexity.
+            Live soil, water and weather readings turned into simple advice for your field — in English or Telugu.
           </p>
         </div>
       </div>
 
       <div className="flex flex-col justify-center px-5 py-12 sm:px-10">
         <div className="mx-auto w-full max-w-md">
-          <div className="flex items-center justify-between gap-3"><DomainBrand /></div>
+          <div className="flex items-center justify-between gap-3"><Brand /></div>
           <h1 className="mt-8 font-display text-2xl font-semibold text-slate-950">
             {isSignup ? "Create your account" : "Welcome back"}
           </h1>
           <p className="mt-1.5 text-sm text-slate-500">
-            {isSignup ? "Save your searches and manage every domain in one place." : "Sign in to manage your domains and orders."}
+            {isSignup ? "Set up your farm profile and start monitoring your crop." : "Sign in to see your live farm dashboard."}
           </p>
 
           <form onSubmit={submit} className="mt-7 space-y-3.5">
