@@ -14,7 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SensorProvider } from "@/lib/sensors/SensorProvider";
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import { Toaster } from "@/components/ui/sonner";
-import { DomainCartProvider } from "@/lib/domains/cart";
+
 
 function NotFoundComponent() {
   return (
@@ -140,13 +140,11 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
-        <DomainCartProvider>
-          <SensorProvider>
-            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-            <Outlet />
-            <Toaster />
-          </SensorProvider>
-        </DomainCartProvider>
+        <SensorProvider>
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+          <Toaster />
+        </SensorProvider>
       </I18nProvider>
     </QueryClientProvider>
   );

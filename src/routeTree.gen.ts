@@ -12,19 +12,15 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as CartRouteImport } from './routes/cart'
-import { Route as DomainnestRouteImport } from './routes/domainnest'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthenticatedAlertsRouteImport } from './routes/_authenticated/alerts'
 import { Route as AuthenticatedCropHealthRouteImport } from './routes/_authenticated/crop-health'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedDomainsRouteImport } from './routes/_authenticated/domains'
 import { Route as AuthenticatedDroneRouteImport } from './routes/_authenticated/drone'
 import { Route as AuthenticatedInsightsRouteImport } from './routes/_authenticated/insights'
 import { Route as AuthenticatedIrrigationRouteImport } from './routes/_authenticated/irrigation'
 import { Route as AuthenticatedMonitoringRouteImport } from './routes/_authenticated/monitoring'
-import { Route as AuthenticatedOrdersRouteImport } from './routes/_authenticated/orders'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedSensorsRouteImport } from './routes/_authenticated/sensors'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
@@ -42,16 +38,6 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CartRoute = CartRouteImport.update({
-  id: '/cart',
-  path: '/cart',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DomainnestRoute = DomainnestRouteImport.update({
-  id: '/domainnest',
-  path: '/domainnest',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -79,11 +65,6 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedDomainsRoute = AuthenticatedDomainsRouteImport.update({
-  id: '/domains',
-  path: '/domains',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const AuthenticatedDroneRoute = AuthenticatedDroneRouteImport.update({
   id: '/drone',
   path: '/drone',
@@ -102,11 +83,6 @@ const AuthenticatedIrrigationRoute = AuthenticatedIrrigationRouteImport.update({
 const AuthenticatedMonitoringRoute = AuthenticatedMonitoringRouteImport.update({
   id: '/monitoring',
   path: '/monitoring',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedOrdersRoute = AuthenticatedOrdersRouteImport.update({
-  id: '/orders',
-  path: '/orders',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
@@ -133,19 +109,15 @@ const AuthenticatedWeatherRoute = AuthenticatedWeatherRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/cart': typeof CartRoute
-  '/domainnest': typeof DomainnestRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/alerts': typeof AuthenticatedAlertsRoute
   '/crop-health': typeof AuthenticatedCropHealthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/domains': typeof AuthenticatedDomainsRoute
   '/drone': typeof AuthenticatedDroneRoute
   '/insights': typeof AuthenticatedInsightsRoute
   '/irrigation': typeof AuthenticatedIrrigationRoute
   '/monitoring': typeof AuthenticatedMonitoringRoute
-  '/orders': typeof AuthenticatedOrdersRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/sensors': typeof AuthenticatedSensorsRoute
   '/settings': typeof AuthenticatedSettingsRoute
@@ -154,19 +126,15 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/cart': typeof CartRoute
-  '/domainnest': typeof DomainnestRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/alerts': typeof AuthenticatedAlertsRoute
   '/crop-health': typeof AuthenticatedCropHealthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/domains': typeof AuthenticatedDomainsRoute
   '/drone': typeof AuthenticatedDroneRoute
   '/insights': typeof AuthenticatedInsightsRoute
   '/irrigation': typeof AuthenticatedIrrigationRoute
   '/monitoring': typeof AuthenticatedMonitoringRoute
-  '/orders': typeof AuthenticatedOrdersRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/sensors': typeof AuthenticatedSensorsRoute
   '/settings': typeof AuthenticatedSettingsRoute
@@ -177,19 +145,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
-  '/cart': typeof CartRoute
-  '/domainnest': typeof DomainnestRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/alerts': typeof AuthenticatedAlertsRoute
   '/_authenticated/crop-health': typeof AuthenticatedCropHealthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/_authenticated/domains': typeof AuthenticatedDomainsRoute
   '/_authenticated/drone': typeof AuthenticatedDroneRoute
   '/_authenticated/insights': typeof AuthenticatedInsightsRoute
   '/_authenticated/irrigation': typeof AuthenticatedIrrigationRoute
   '/_authenticated/monitoring': typeof AuthenticatedMonitoringRoute
-  '/_authenticated/orders': typeof AuthenticatedOrdersRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/sensors': typeof AuthenticatedSensorsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
@@ -200,19 +164,15 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
-    | '/cart'
-    | '/domainnest'
     | '/reset-password'
     | '/sitemap.xml'
     | '/alerts'
     | '/crop-health'
     | '/dashboard'
-    | '/domains'
     | '/drone'
     | '/insights'
     | '/irrigation'
     | '/monitoring'
-    | '/orders'
     | '/reports'
     | '/sensors'
     | '/settings'
@@ -221,19 +181,15 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
-    | '/cart'
-    | '/domainnest'
     | '/reset-password'
     | '/sitemap.xml'
     | '/alerts'
     | '/crop-health'
     | '/dashboard'
-    | '/domains'
     | '/drone'
     | '/insights'
     | '/irrigation'
     | '/monitoring'
-    | '/orders'
     | '/reports'
     | '/sensors'
     | '/settings'
@@ -243,19 +199,15 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
-    | '/cart'
-    | '/domainnest'
     | '/reset-password'
     | '/sitemap.xml'
     | '/_authenticated/alerts'
     | '/_authenticated/crop-health'
     | '/_authenticated/dashboard'
-    | '/_authenticated/domains'
     | '/_authenticated/drone'
     | '/_authenticated/insights'
     | '/_authenticated/irrigation'
     | '/_authenticated/monitoring'
-    | '/_authenticated/orders'
     | '/_authenticated/reports'
     | '/_authenticated/sensors'
     | '/_authenticated/settings'
@@ -266,8 +218,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
-  CartRoute: typeof CartRoute
-  DomainnestRoute: typeof DomainnestRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
@@ -293,20 +243,6 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cart': {
-      id: '/cart'
-      path: '/cart'
-      fullPath: '/cart'
-      preLoaderRoute: typeof CartRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/domainnest': {
-      id: '/domainnest'
-      path: '/domainnest'
-      fullPath: '/domainnest'
-      preLoaderRoute: typeof DomainnestRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -344,13 +280,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/domains': {
-      id: '/_authenticated/domains'
-      path: '/domains'
-      fullPath: '/domains'
-      preLoaderRoute: typeof AuthenticatedDomainsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/drone': {
       id: '/_authenticated/drone'
       path: '/drone'
@@ -377,13 +306,6 @@ declare module '@tanstack/react-router' {
       path: '/monitoring'
       fullPath: '/monitoring'
       preLoaderRoute: typeof AuthenticatedMonitoringRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/orders': {
-      id: '/_authenticated/orders'
-      path: '/orders'
-      fullPath: '/orders'
-      preLoaderRoute: typeof AuthenticatedOrdersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/reports': {
@@ -421,12 +343,10 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAlertsRoute: typeof AuthenticatedAlertsRoute
   AuthenticatedCropHealthRoute: typeof AuthenticatedCropHealthRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedDomainsRoute: typeof AuthenticatedDomainsRoute
   AuthenticatedDroneRoute: typeof AuthenticatedDroneRoute
   AuthenticatedInsightsRoute: typeof AuthenticatedInsightsRoute
   AuthenticatedIrrigationRoute: typeof AuthenticatedIrrigationRoute
   AuthenticatedMonitoringRoute: typeof AuthenticatedMonitoringRoute
-  AuthenticatedOrdersRoute: typeof AuthenticatedOrdersRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedSensorsRoute: typeof AuthenticatedSensorsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
@@ -437,12 +357,10 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAlertsRoute: AuthenticatedAlertsRoute,
   AuthenticatedCropHealthRoute: AuthenticatedCropHealthRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
-  AuthenticatedDomainsRoute: AuthenticatedDomainsRoute,
   AuthenticatedDroneRoute: AuthenticatedDroneRoute,
   AuthenticatedInsightsRoute: AuthenticatedInsightsRoute,
   AuthenticatedIrrigationRoute: AuthenticatedIrrigationRoute,
   AuthenticatedMonitoringRoute: AuthenticatedMonitoringRoute,
-  AuthenticatedOrdersRoute: AuthenticatedOrdersRoute,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedSensorsRoute: AuthenticatedSensorsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
@@ -456,8 +374,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
-  CartRoute: CartRoute,
-  DomainnestRoute: DomainnestRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
