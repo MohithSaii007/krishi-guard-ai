@@ -1,8 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { Bug, Camera, Leaf, ShieldCheck } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { Bug, Camera, Leaf, Loader2, ShieldCheck, Sparkles } from "lucide-react";
 import { AppShell } from "@/components/kg/AppShell";
 import { useSensors } from "@/lib/sensors/SensorProvider";
+import { analyzeCropImage, type CropDiagnosis } from "@/lib/crop-vision.functions";
+
+const SEVERITY_STYLE: Record<string, string> = {
+  healthy: "bg-fresh/15 text-agri border-fresh/40",
+  mild: "bg-mint text-agri border-fresh/30",
+  moderate: "bg-amber-warn/15 text-earth border-amber-warn/40",
+  severe: "bg-danger/15 text-danger border-danger/40",
+  unknown: "bg-muted text-muted-foreground border-border",
+};
+
+function readAsDataUrl(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onload = () => resolve(String(fr.result));
+    fr.onerror = () => reject(new Error("Could not read that image."));
+    fr.readAsDataURL(file);
+  });
+}
+
 
 export const Route = createFileRoute("/_authenticated/crop-health")({
   component: CropHealth,
