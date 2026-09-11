@@ -5,6 +5,16 @@ import { useSensors } from "@/lib/sensors/SensorProvider";
 import { buildAlerts } from "@/lib/ai/engine";
 
 export const Route = createFileRoute("/_authenticated/alerts")({
+  staticData: { sitemap: false },
+  head: () => ({
+    meta: [
+      { title: "Alerts & Notifications — KRISHI-GUARD AI" },
+      { name: "description", content: "Every sensor channel checked against its healthy range, with critical, warning and healthy alerts in one place." },
+      { name: "robots", content: "noindex" },
+      { property: "og:title", content: "Alerts & Notifications — KRISHI-GUARD AI" },
+      { property: "og:description", content: "Every sensor channel checked against its healthy range, with critical, warning and healthy alerts in one place." },
+    ],
+  }),
   component: Alerts,
 });
 

@@ -11,6 +11,16 @@ import { fetchWeather } from "@/lib/weather";
 import { useProfile } from "@/hooks/useProfile";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
+  staticData: { sitemap: false },
+  head: () => ({
+    meta: [
+      { title: "Farm Dashboard — KRISHI-GUARD AI" },
+      { name: "description", content: "Live farm health score, sensor readings, weather snapshot and AI recommendations for your field in one dashboard." },
+      { name: "robots", content: "noindex" },
+      { property: "og:title", content: "Farm Dashboard — KRISHI-GUARD AI" },
+      { property: "og:description", content: "Live farm health score, sensor readings, weather snapshot and AI recommendations for your field in one dashboard." },
+    ],
+  }),
   component: Dashboard,
 });
 

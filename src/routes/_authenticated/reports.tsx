@@ -9,6 +9,16 @@ import { fetchWeather } from "@/lib/weather";
 import { SENSOR_META, type SensorKey } from "@/lib/sensors/types";
 
 export const Route = createFileRoute("/_authenticated/reports")({
+  staticData: { sitemap: false },
+  head: () => ({
+    meta: [
+      { title: "Farm Reports — KRISHI-GUARD AI" },
+      { name: "description", content: "Season summaries of sensor trends, irrigation events and crop health checks you can review or share." },
+      { name: "robots", content: "noindex" },
+      { property: "og:title", content: "Farm Reports — KRISHI-GUARD AI" },
+      { property: "og:description", content: "Season summaries of sensor trends, irrigation events and crop health checks you can review or share." },
+    ],
+  }),
   component: Reports,
 });
 

@@ -25,6 +25,16 @@ function readAsDataUrl(file: File) {
 
 
 export const Route = createFileRoute("/_authenticated/crop-health")({
+  staticData: { sitemap: false },
+  head: () => ({
+    meta: [
+      { title: "Crop Health & Disease Check — KRISHI-GUARD AI" },
+      { name: "description", content: "Upload a crop photo to identify the crop, spot disease or pest damage and get treatment and prevention steps." },
+      { name: "robots", content: "noindex" },
+      { property: "og:title", content: "Crop Health & Disease Check — KRISHI-GUARD AI" },
+      { property: "og:description", content: "Upload a crop photo to identify the crop, spot disease or pest damage and get treatment and prevention steps." },
+    ],
+  }),
   component: CropHealth,
 });
 

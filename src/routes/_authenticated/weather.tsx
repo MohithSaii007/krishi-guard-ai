@@ -5,6 +5,16 @@ import { AppShell } from "@/components/kg/AppShell";
 import { fetchWeather, weatherConfigured } from "@/lib/weather";
 
 export const Route = createFileRoute("/_authenticated/weather")({
+  staticData: { sitemap: false },
+  head: () => ({
+    meta: [
+      { title: "Weather Intelligence — KRISHI-GUARD AI" },
+      { name: "description", content: "Current field conditions and a 5-day outlook that feeds directly into every farming recommendation." },
+      { name: "robots", content: "noindex" },
+      { property: "og:title", content: "Weather Intelligence — KRISHI-GUARD AI" },
+      { property: "og:description", content: "Current field conditions and a 5-day outlook that feeds directly into every farming recommendation." },
+    ],
+  }),
   component: Weather,
 });
 

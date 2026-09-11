@@ -9,6 +9,16 @@ import { fetchWeather } from "@/lib/weather";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/irrigation")({
+  staticData: { sitemap: false },
+  head: () => ({
+    meta: [
+      { title: "Smart Irrigation Monitoring — KRISHI-GUARD AI" },
+      { name: "description", content: "Soil moisture, tank level and rainfall probability combine into a clear irrigate-or-wait decision with a watering log." },
+      { name: "robots", content: "noindex" },
+      { property: "og:title", content: "Smart Irrigation Monitoring — KRISHI-GUARD AI" },
+      { property: "og:description", content: "Soil moisture, tank level and rainfall probability combine into a clear irrigate-or-wait decision with a watering log." },
+    ],
+  }),
   component: Irrigation,
 });
 

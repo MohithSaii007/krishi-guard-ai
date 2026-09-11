@@ -7,6 +7,16 @@ import { useSensors } from "@/lib/sensors/SensorProvider";
 import { computeHealthScore } from "@/lib/ai/engine";
 
 export const Route = createFileRoute("/_authenticated/insights")({
+  staticData: { sitemap: false },
+  head: () => ({
+    meta: [
+      { title: "AI Insights — KRISHI-GUARD AI" },
+      { name: "description", content: "Transparent agronomic rules explain what happened in your field, why, and the action to take next." },
+      { name: "robots", content: "noindex" },
+      { property: "og:title", content: "AI Insights — KRISHI-GUARD AI" },
+      { property: "og:description", content: "Transparent agronomic rules explain what happened in your field, why, and the action to take next." },
+    ],
+  }),
   component: Insights,
 });
 
