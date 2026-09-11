@@ -40,6 +40,30 @@ function CropHealth() {
   const [preview, setPreview] = useState<string | null>(null);
   const [note, setNote] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const [dataUrl, setDataUrl] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
+  const [result, setResult] = useState<CropDiagnosis | null>(null);
+  const analyze = useServerFn(analyzeCropImage);
+
+  const runAnalysis = async () => {
+    if (!dataUrl) return;
+    setBusy(true);
+    setAiError(null);
+    setResult(null);
+    try {
+      const context = reading
+        ? `soil moisture ${reading.soilMoisture}%, soil pH ${reading.soilPH}, N ${reading.nitrogen} mg/kg, P ${reading.phosphorus} mg/kg, K ${reading.potassium} mg/kg, temperature ${reading.temperature}C, humidity ${reading.humidity}%`
+        : undefined;
+      const diagnosis = await analyze({ data: { imageDataUrl: dataUrl, note: note || undefined, context } });
+      setResult(diagnosis);
+    } catch (err) {
+      setAiError(err instanceof Error ? err.message : "Photo check failed. Please try again.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
 
   const diseaseRisk =
     reading && reading.humidity > 85 && reading.temperature > 24
