@@ -201,7 +201,7 @@ function AuthPage() {
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-forest px-4 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
             >
               {loading && <Loader2 className="size-4 animate-spin" />}
-              {isSignup ? "Create account" : useOtp ? (otpSent ? "Verify OTP & Sign in" : "Send OTP") : "Sign in"}
+              {isSignup ? (otpSent ? "Verify OTP & Create account" : "Send OTP") : useOtp ? (otpSent ? "Verify OTP & Sign in" : "Send OTP") : "Sign in"}
             </button>
 
             {!isSignup && (
