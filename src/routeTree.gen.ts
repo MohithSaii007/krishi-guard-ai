@@ -17,10 +17,12 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthenticatedAlertsRouteImport } from './routes/_authenticated/alerts'
 import { Route as AuthenticatedCropHealthRouteImport } from './routes/_authenticated/crop-health'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedDomainsRouteImport } from './routes/_authenticated/domains'
 import { Route as AuthenticatedDroneRouteImport } from './routes/_authenticated/drone'
 import { Route as AuthenticatedInsightsRouteImport } from './routes/_authenticated/insights'
 import { Route as AuthenticatedIrrigationRouteImport } from './routes/_authenticated/irrigation'
 import { Route as AuthenticatedMonitoringRouteImport } from './routes/_authenticated/monitoring'
+import { Route as AuthenticatedOrdersRouteImport } from './routes/_authenticated/orders'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedSensorsRouteImport } from './routes/_authenticated/sensors'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
@@ -65,6 +67,11 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedDomainsRoute = AuthenticatedDomainsRouteImport.update({
+  id: '/domains',
+  path: '/domains',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDroneRoute = AuthenticatedDroneRouteImport.update({
   id: '/drone',
   path: '/drone',
@@ -83,6 +90,11 @@ const AuthenticatedIrrigationRoute = AuthenticatedIrrigationRouteImport.update({
 const AuthenticatedMonitoringRoute = AuthenticatedMonitoringRouteImport.update({
   id: '/monitoring',
   path: '/monitoring',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedOrdersRoute = AuthenticatedOrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
@@ -114,10 +126,12 @@ export interface FileRoutesByFullPath {
   '/alerts': typeof AuthenticatedAlertsRoute
   '/crop-health': typeof AuthenticatedCropHealthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/domains': typeof AuthenticatedDomainsRoute
   '/drone': typeof AuthenticatedDroneRoute
   '/insights': typeof AuthenticatedInsightsRoute
   '/irrigation': typeof AuthenticatedIrrigationRoute
   '/monitoring': typeof AuthenticatedMonitoringRoute
+  '/orders': typeof AuthenticatedOrdersRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/sensors': typeof AuthenticatedSensorsRoute
   '/settings': typeof AuthenticatedSettingsRoute
@@ -131,10 +145,12 @@ export interface FileRoutesByTo {
   '/alerts': typeof AuthenticatedAlertsRoute
   '/crop-health': typeof AuthenticatedCropHealthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/domains': typeof AuthenticatedDomainsRoute
   '/drone': typeof AuthenticatedDroneRoute
   '/insights': typeof AuthenticatedInsightsRoute
   '/irrigation': typeof AuthenticatedIrrigationRoute
   '/monitoring': typeof AuthenticatedMonitoringRoute
+  '/orders': typeof AuthenticatedOrdersRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/sensors': typeof AuthenticatedSensorsRoute
   '/settings': typeof AuthenticatedSettingsRoute
@@ -150,10 +166,12 @@ export interface FileRoutesById {
   '/_authenticated/alerts': typeof AuthenticatedAlertsRoute
   '/_authenticated/crop-health': typeof AuthenticatedCropHealthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/domains': typeof AuthenticatedDomainsRoute
   '/_authenticated/drone': typeof AuthenticatedDroneRoute
   '/_authenticated/insights': typeof AuthenticatedInsightsRoute
   '/_authenticated/irrigation': typeof AuthenticatedIrrigationRoute
   '/_authenticated/monitoring': typeof AuthenticatedMonitoringRoute
+  '/_authenticated/orders': typeof AuthenticatedOrdersRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/sensors': typeof AuthenticatedSensorsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
@@ -169,10 +187,12 @@ export interface FileRouteTypes {
     | '/alerts'
     | '/crop-health'
     | '/dashboard'
+    | '/domains'
     | '/drone'
     | '/insights'
     | '/irrigation'
     | '/monitoring'
+    | '/orders'
     | '/reports'
     | '/sensors'
     | '/settings'
@@ -186,10 +206,12 @@ export interface FileRouteTypes {
     | '/alerts'
     | '/crop-health'
     | '/dashboard'
+    | '/domains'
     | '/drone'
     | '/insights'
     | '/irrigation'
     | '/monitoring'
+    | '/orders'
     | '/reports'
     | '/sensors'
     | '/settings'
@@ -204,10 +226,12 @@ export interface FileRouteTypes {
     | '/_authenticated/alerts'
     | '/_authenticated/crop-health'
     | '/_authenticated/dashboard'
+    | '/_authenticated/domains'
     | '/_authenticated/drone'
     | '/_authenticated/insights'
     | '/_authenticated/irrigation'
     | '/_authenticated/monitoring'
+    | '/_authenticated/orders'
     | '/_authenticated/reports'
     | '/_authenticated/sensors'
     | '/_authenticated/settings'
@@ -280,6 +304,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/domains': {
+      id: '/_authenticated/domains'
+      path: '/domains'
+      fullPath: '/domains'
+      preLoaderRoute: typeof AuthenticatedDomainsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/drone': {
       id: '/_authenticated/drone'
       path: '/drone'
@@ -306,6 +337,13 @@ declare module '@tanstack/react-router' {
       path: '/monitoring'
       fullPath: '/monitoring'
       preLoaderRoute: typeof AuthenticatedMonitoringRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/orders': {
+      id: '/_authenticated/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof AuthenticatedOrdersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/reports': {
@@ -343,10 +381,12 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAlertsRoute: typeof AuthenticatedAlertsRoute
   AuthenticatedCropHealthRoute: typeof AuthenticatedCropHealthRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDomainsRoute: typeof AuthenticatedDomainsRoute
   AuthenticatedDroneRoute: typeof AuthenticatedDroneRoute
   AuthenticatedInsightsRoute: typeof AuthenticatedInsightsRoute
   AuthenticatedIrrigationRoute: typeof AuthenticatedIrrigationRoute
   AuthenticatedMonitoringRoute: typeof AuthenticatedMonitoringRoute
+  AuthenticatedOrdersRoute: typeof AuthenticatedOrdersRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedSensorsRoute: typeof AuthenticatedSensorsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
@@ -357,10 +397,12 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAlertsRoute: AuthenticatedAlertsRoute,
   AuthenticatedCropHealthRoute: AuthenticatedCropHealthRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDomainsRoute: AuthenticatedDomainsRoute,
   AuthenticatedDroneRoute: AuthenticatedDroneRoute,
   AuthenticatedInsightsRoute: AuthenticatedInsightsRoute,
   AuthenticatedIrrigationRoute: AuthenticatedIrrigationRoute,
   AuthenticatedMonitoringRoute: AuthenticatedMonitoringRoute,
+  AuthenticatedOrdersRoute: AuthenticatedOrdersRoute,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedSensorsRoute: AuthenticatedSensorsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
