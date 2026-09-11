@@ -239,7 +239,7 @@ function AuthPage() {
             <button onClick={() => setIsSignup((v) => !v)} className="font-medium text-agri hover:underline">
               {isSignup ? "Already have an account? Sign in" : "New here? Create an account"}
             </button>
-            {!isSignup && (
+            {!isSignup && !useOtp && (
               <button onClick={() => void reset()} className="text-earth hover:underline">
                 Forgot password?
               </button>
